@@ -1,0 +1,1771 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, color, mathrsfs, amsthm, setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxtext,newtxmath}
+\numberwithin{equation}{section}
+
+\title{Monetary Economics}
+
+\begin{document}
+\onehalfspacing
+\maketitle
+\tableofcontents
+
+
+\newpage
+\section{New Keynesian Model}
+\subsection{Households}
+For the representative infinitely lived household, its optimal problem is:
+	\begin{align*}
+		&E_0 \sum\limits^\infty_{t=0} \beta^t U(C_t, N_t; Z_t)\\
+		s.t.&\\
+		&\int^1_0 P_t(i)C_t(i)di + Q_tB_t \leq B_{t-1} + W_tN_t + D_t
+	\end{align*}
+where $C_t$ is a consumption index:
+	\begin{align*}
+		C_t \equiv (\int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}}di)^{\frac{\epsilon}{\epsilon-1}}
+	\end{align*}
+and we define the aggregate price index $P_t$:
+	\begin{align*}
+		P_t \equiv (\int^1_0 P_t(i)^{1 - \epsilon} di)^{\frac{1}{1 - \epsilon}}
+	\end{align*}
+From the Appendix \eqref{app 1.1.6}, we have that:
+	\begin{align*}
+		C_t P_t = \int^1_0 P_t(i)C_t(i)di
+	\end{align*}
+So the budget constraints can be rewritten as:
+	\begin{align*}
+		C_t P_t + Q_tB_t \leq B_{t-1} + W_tN_t + D_t
+	\end{align*}
+Then we can use the Lagrangian method:
+	\begin{align*}
+		&\mathscr{L} = E_0 \sum\limits^\infty_{t=0} \beta^t U(C_t, N_t; Z_t) + \sum\limits^\infty_0 \lambda_t\bigg[B_{t-1} + W_tN_t + D_t - C_t P_t - Q_tB_t \bigg]\\
+		&\frac{\partial \mathscr{L}}{\partial C_t} = \beta^t U_{c,t} - \lambda_t P_t = 0\\
+		&\frac{\partial \mathscr{L}}{\partial C_{t+1}} = \beta^{t+1} U_{c,t+1} - \lambda_{t+1} P_{t+1} = 0\\
+		&\frac{\partial \mathscr{L}}{\partial N_t} = \beta^t U_{n,t} + \lambda_t W_t = 0\\
+		&\frac{\partial \mathscr{L}}{\partial B_t} = -\lambda_t Q_t + E_t\{\lambda_{t+1}\} = 0
+	\end{align*}
+Then we can have the optimal condition:
+	\begin{align*}
+		-\frac{U_{n.t}}{U_{c,t}} &= \frac{W_t}{P_t}\\
+		Q_t &= \beta E_t\left\{\frac{U_{c,t+1}}{U_{c,t}} \frac{P_t}{P_{t+1}}\right\}
+	\end{align*}
+Here, we give the form of $U$:
+	\begin{align*}
+		U(C_t, N_t; Z_t) = \left(\frac{C^{1-\sigma}_t - 1}{1 - \sigma} - \frac{N^{1 + \varphi}}{1 + \varphi}\right) Z_t
+	\end{align*}
+where $z_t \equiv log Z_t$ follows an exogenous AR(1) proces:
+	\begin{align*}
+		z_t = \rho_z z_{t-1} + \varepsilon^z_t,\ \rho \in [0, 1)
+	\end{align*}
+Then we can give the log-linear version of the optimal condition:
+	\begin{align}
+		w_t - p_t &= \sigma c_t + \varphi n_t \label{1.1-1}\\
+		c_t &= E_t\{c_{t+1}\} - \frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \label{1.1-2}
+	\end{align}
+where $i_t \equiv -log\,Q_t$ is the short term nominal interest rate and $\rho \equiv -log\,\beta$ is the discount rate.
+
+
+\subsection{Firms}
+Assume a continuum of firms indexed by $i \in [0, 1]$. Each firm produces a differentiated good, but they share an identical technology, represented by the production function:
+	\begin{align*}
+		Y_t(i) = A_tN_t(i)^{1-\alpha}
+	\end{align*}
+where $A_t$ represents the level of technology, assumed to be common to all firms and evolve exogenously over time according to the process:
+	\begin{align*}
+		a_t = \rho_a a_{t-1} + \varepsilon^a_t,\ \rho_a \in [0, 1].
+	\end{align*} 
+The important mechanism is that each firm in each period may reset its price only with probability $1 - \theta$, independent of the time elapsed since it last adjusted its price.
+
+\subsubsection{Aggregate Price Dynamics}
+As shown in the appendix, the aggregate price dynamics are described as:
+	\begin{align*}
+		\Pi^{1-\epsilon}_t = \theta + (1 - \theta)\left(\frac{P^\star_t}{P_{t-1}}\right)^{1-\epsilon}
+	\end{align*}
+We take the log-linear form:
+	\begin{align}
+		\pi_t = (1 - \theta)(p^\star_t - p_{t-1}) \label{1.2.1-1}
+	\end{align}
+or equivalently:
+	\begin{align*}
+		p_t = \theta p_{t-1} + (1 - \theta)p^\star_t
+	\end{align*}
+
+\subsubsection{Optimal Price Setting}
+A firm reoptimizing in period $t$ will choose the price $P^\star_t$ that maximizes the current value of the firm, as shown in the appendix \eqref{app 1.3.1}, this is equivalent to:
+	\begin{align*}
+		&\mathop{max}\limits_{P^\star_t} \sum\limits^\infty_{t=0} \theta^k E_t\{\Lambda_{t,t+k} (1/P_{t+k}) [P^\star_t Y_{t+k|t} - \mathscr{C}_{t_k}(Y_{t+k|t})]\}\\
+		s.t.&\\
+		&Y_{t+k|t} = \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon} C_{t+k}
+	\end{align*}
+Here an important assumption is that the demand is always met.\\\\
+To get the optimal condition:
+	\begin{align}
+		\mathscr{L} &= \sum\limits^\infty_{t=0} \theta^k E_t\{\Lambda_{t,t+k} (1/P_{t+k}) [P^\star_t Y_{t+k|t} - \mathscr{C}^\prime_{t_k} Y_{t+k|t} ]\} \nonumber\\
+		&= \sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon} C_{t+k} (P^\star_t - \mathscr{C}^\prime_{t_k})\right\} \nonumber\\
+		&= \sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon} C_{t+k} (P^\star_t - \Psi_{t+k|t})\right\} \nonumber\\
+		\frac{\partial \mathscr{L}}{\partial P^\star_t} &= \sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) C_{t+k}\bigg[(-\epsilon) \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon-1} (\frac{1}{P_{t+k}}) (P^\star_t - \Psi_{t+k|t}) + \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon}\bigg]\right\} \nonumber\\
+		&= \sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) \left(\frac{P^\star_t}{P_{t+k}}\right)^{-\epsilon}C_{t+k} \bigg[(-\epsilon) (\frac{1}{P^\star_t}) (P^\star - \Psi_{t+k|t}) + 1 \bigg]\right\} \nonumber\\
+		&= \sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) Y_{t+k|t} \left(1 - \epsilon + \frac{\epsilon \Psi_{t+k|t}}{P^\star_t}\right)\right\} = 0 \label{1.2.2-1}
+	\end{align}
+From \eqref{1.2.2-1}, we can get:
+	\begin{align}
+		\sum\limits^\infty_{t=0} \theta^k E_t\left\{\Lambda_{t,t+k} (1/P_{t+k}) Y_{t+k|t} (P^\star_t - \mathscr{M} \Psi_{t+k|t}) \right\} = 0 \label{1.2.2-2}
+	\end{align}
+where $\Psi_{t+k|t} \equiv \mathscr{C}^\prime_{t+k}(Y_{t+k|t})$, denotes the nominal marginal cost in period $t+k$ for a firm which last reset its prices in $t$ and $\mathscr{M} \equiv \frac{\epsilon}{\epsilon-1}$.\\\\
+Here we can see that if the firm can always reset the price, then we have that:
+	\begin{align*}
+		P^\star_t = \mathscr{M} \Psi_{t|t}
+	\end{align*}
+which we can interpret $\mathscr{M}$ as the 'natural' markup, which means the firms do not face the constraints to reset the price.\\
+Also, in the perfect foresight zero inflation steady state, which means that:
+	\begin{align*}
+		\Lambda_{t,t+k} = \beta^k\\
+		\frac{P^\star_t}{P_{t+k}} = \frac{P_{t}}{P_{t+k}} = 1
+	\end{align*} 
+All firms will produce the same quantity of output and face the same marginal cost, which means:
+	\begin{align*}
+		Y_{t+k|t} &= Y\\
+		\Psi_{t+k|t} &= \Psi_{t+k} = \Psi_t
+	\end{align*}
+Then we from \eqref{1.2.2-2} we have that:
+	\begin{align*}
+		\sum\limits^\infty_{t=0} (\theta \beta)^k E_t\left\{(P_t - \mathscr{M} \Psi_{t}) \right\} = 0
+	\end{align*}
+which means $P_t = \mathscr{M} \Psi_{t}$, the actual markup is the just the 'natural' markup.\\
+Around the steady state, we can use log to approximate $P^\star_t - \mathscr{M} \Psi_{t+k|t}$:
+	\begin{align}
+		&\sum\limits^\infty_{t=0} (\theta \beta)^k E_t\left\{(p^\star_t - \mu - \psi_{t+k|t}) \right\} = 0 \nonumber\\
+		 &\sum\limits^\infty_{t=0} (\theta \beta)^k(p^\star_t - \mu) = \sum\limits^\infty_{t=0} (\theta \beta)^k E_t\left\{\psi_{t+k|t} \right\} \nonumber\\
+		 &p^\star_t = \mu + (1 - \beta \theta)\sum\limits^\infty_{t=0} (\theta \beta)^k E_t\left\{\psi_{t+k|t} \right\} \label{1.2.2-3}
+	\end{align}
+where $\psi_{t+k|t} \equiv log\,\Psi_{t+k|t}$, $\mu \equiv log\,\mathscr{M}$.\\
+Hence, we can say that firm choose price that corresponds to their 'natural' markup over a weighted average of their current and expected nominal marginal costs, with weights being proportional to the probability of the price remaining effective at each horizon, $\theta^k$, times the cumulative discount factor, $\beta^k$.
+
+
+\subsection{Equilibrium}
+\textbf{Goods Market}\\
+First in the goods market, the equilibrium is:
+	\begin{align*}
+		Y_t(i) = C_t(i),\ \forall\ i \in [0, 1],\ \forall\ t 
+	\end{align*}
+If we define:
+	\begin{align*}
+		Y_t \equiv \left(\int^1_0 Y_t(i)^{\frac{\epsilon-1}{\epsilon}} di \right)^{\frac{\epsilon}{\epsilon-1}}
+	\end{align*}
+Then we have:
+	\begin{align}
+		Y_t = C_t \label{1.4-1}
+	\end{align}
+Then, we take \eqref{1.4-1} into \eqref{1.1-2}:
+	\begin{align}
+		y_t &= E_t\{y_{t+1}\} - \frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \label{1.4-y}
+	\end{align}
+We solve it forward:
+	\begin{align*}
+		y_{t+1} &= E_{t+1}\{y_{t+2}\} - \frac{1}{\sigma}(i_{t+1} - E_{t+1}\{\pi_{t+2}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_{t+1}\\
+		E_t\{y_{t+1}\} &= E_t\left\{E_{t+1}\{y_{t+2}\} - \frac{1}{\sigma}(i_{t+1} - E_{t+1}\{\pi_{t+2}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_{t+1}\right\}\\
+		E_t\{y_{t+1}\} &= E_{t}\{y_{t+2}\} - \frac{1}{\sigma}E_t\{i_{t+1} - E_{t+1}\{\pi_{t+2}\} - \rho\} + \frac{1}{\sigma}(1 - \rho_z)\rho_z z_{t}\\
+		y_t &= \frac{1}{\rho}z_t - \frac{1}{\rho} \sum\limits^\infty_{k=0} E_t\{i_{t+k} - E_{t}\{\pi_{t+1+k}\} - \rho\} + \lim\limits_{T\to\infty} E_t\{y_{t+T}\} 
+	\end{align*}
+\textbf{Labor Market}
+We define the aggregate employment:
+	\begin{align*}
+		N_t = \int^1_0 N_t(i) di
+	\end{align*}
+From the production function we know that:
+	\begin{align*}
+		N_t &= \int^1_0 \left( \frac{Y_t(i)}{A_t} \right)^{\frac{1}{1-\alpha}} di\\
+		&= \int^1_0 \left( \frac{C_t(i)}{A_t} \right)^{\frac{1}{1-\alpha}} di\\
+		&= \int^1_0 \left( \frac{\left( \frac{P_t(i)}{P_t} \right)^{-\epsilon} C_t}{A_t} \right)^{\frac{1}{1-\alpha}} di\\
+		&= \left( \frac{C_t}{A_t} \right)^{\frac{1}{1-\alpha}} \int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1-\alpha}} di\\
+		&= \left( \frac{Y_t}{A_t} \right)^{\frac{1}{1-\alpha}} \int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1-\alpha}} di
+	\end{align*}
+We take the log-linear:
+	\begin{align*}
+		(1 - \alpha) n_t = y_t - a_t + d_t
+	\end{align*}
+where $d_t \equiv (1 - \alpha)log\,\int^1_0 (P_t(i) / P_t)^{-\frac{\epsilon}{1-\alpha}} di$ is a measure of price dispersion across firms. From the appendix, in the neighborhood of the zero inflation steady state, $d_t$ is zero. Then we have:
+	\begin{align*}
+		n_t = \frac{1}{1 - \alpha}(y_t - a_t)
+	\end{align*}
+We know that $\Psi_{t+k|t}$ is the marginal cost of the firm for an additional output is the labor needed to produce an additional unit of output, $\frac{1}{MPN_{t+k|t}}$ times the wage:
+	\begin{align*}
+		\Psi_{t+k|t} = \frac{1}{(1 - \alpha) A_{t+k} N^{-\alpha}_{t+k|t}} W_{t+k}
+	\end{align*}
+The log-linear form:
+	\begin{align*}
+		\psi_{t+k|t} = w_{t+k} - [a_{t+k} - \alpha n_{t+k|t} + log\,(1 - \alpha)]
+	\end{align*}
+Let $\psi_t \equiv \int^1_0 \psi_t(i) di$, then in $t$, $(1 - \theta)$ firms can change their price and their cost are $\psi_t$. The other $\theta$ firms cannot change their prices. Among them, $\theta(1 - \theta)$ firms change their price in $t - 1$, their cost is $\psi_{t-1}$, we repeat this process:
+	\begin{align*}
+		\psi_t &= (1 - \theta) \sum\limits^\infty_{k=0} \theta^k \psi_{t|t-k}\\
+		&= w_t - [a_t + \alpha n_t + log(1 - \alpha)]
+	\end{align*}
+where $n_t \equiv \int^1_0 n_t(i) di$.\\\\
+We have that:
+	\begin{align}
+		\psi_{t+k|t} &= \psi_{t+k} + \alpha(n_{t+k|t} - n_{t+k}) \nonumber\\
+		&= \psi_{t+k} + \frac{\alpha}{1 - \alpha} (y_{t+k|t} - y_{t+k}) \nonumber\\
+		&= \psi_{t+k} + \frac{\alpha}{1 - \alpha} \bigg[ log\,\left( \frac{P^\star_t}{P_{t+k}} \right)^{-\epsilon} C_{t+k} - log\,\left( \frac{P_{t+k}}{P_{t+k}} \right)^{-\epsilon} C_{t+k} \bigg] \nonumber\\
+		&= \psi_{t+k} - \frac{\alpha\epsilon}{1 - \alpha} (p^\star_t - p_{t+k}) \label{1.3-1}
+	\end{align}
+Then we take \eqref{1.3-1} into \eqref{1.2.2-3}:
+	\begin{align}
+		p^\star_t &= \mu + (1 - \beta\theta) \sum\limits^\infty_{k=0} (\beta\theta)^k E_t \left\{ \psi_{t+k} - \frac{\alpha\epsilon}{1 - \alpha} (p^\star_t - p_{t+k}) \right\} \nonumber\\
+		p^\star_t &= \mu - \frac{\alpha\epsilon}{1 - \alpha} p^\star_t + (1 - \beta\theta) \sum\limits^\infty_{k=0} (\beta\theta)^k E_t \left\{ \psi_{t+k} + \frac{\alpha\epsilon}{1 - \alpha} p_{t+k}) \right\} \nonumber\\
+		p^\star_t &= (1 - \beta\theta) \sum\limits^\infty_{k=0} (\beta\theta)^k E_t \left\{ p_{t+k} - \Theta \hat{\mu}_{t+k} \right\} \label{1.3-2}
+	\end{align}
+where:
+	\begin{align*}
+		\mu_t &\equiv p_t - \psi_t\\
+		\hat{\mu}_t &\equiv \mu_t - \mu\\
+		\Theta &\equiv \frac{1 - \alpha}{1 - \alpha + \alpha\epsilon}
+	\end{align*}
+Then we can rewrite \eqref{1.3-2}:
+	\begin{align}
+		p^\star_t = \beta\theta E_t \left\{ p^\star_{t+1} \right\} + (1 - \beta\theta)(p_t - \Theta \hat{\mu}_t) \label{1.3-3}
+	\end{align}
+We take it into \eqref{1.2.1-1}:
+	\begin{align}
+		\pi_t = \beta E_t \left\{ \pi_{t+1} \right\} - \lambda \hat{\mu}_t \label{1.3-4}
+	\end{align}
+where $\lambda \equiv \frac{(1 - \theta)(1 - \beta\theta)}{\theta} \Theta$.\\
+If we solve \eqref{1.3-4} forward:
+	\begin{align*}
+		\pi_t = -\lambda \sum\limits^\infty_{k=0} \beta^k E_t \left\{ \hat{\mu}_{t+k} \right\}
+	\end{align*}
+which means that the inflation will be positive when firms expect average markups, $\mu_t$, to be below their 'natural' level, $\mu$, for in that case firms that have the opportunity to reset prices will, on average, choose a price above the economy's average price level.\\\\
+For $\mu_t$ we have:
+	\begin{align}
+		\mu_t &= p_t - \psi_t \nonumber\\
+		&= -(w_t - p_t) + [a_t - \alpha n_t + log\,(1 - \alpha)] \nonumber\\
+		&= -(\sigma y_t + \varphi n_t) + [a_t - \alpha n_t + log\,(1 - \alpha)],\ \text{comes from \eqref{1.1-1}} \nonumber\\
+		&= -[\sigma y_t + \varphi \frac{1}{1 - \alpha}(y_t - a_t)] + [a_t - \alpha \frac{1}{1 - \alpha}(y_t - a_t) + log\,(1 - \alpha)] \nonumber\\
+		&= -\left(\sigma + \frac{\varphi + \alpha}{1 - \alpha}\right)y_t + \left( \frac{1 + \varphi}{1 - \alpha}\right)a_t + log\,(1 - \alpha) \label{1.3-5}
+	\end{align}
+And $\mu$ is defined as the 'natural' markup under flexible prices ($\theta=0$). If we define $y^n_t$ as the equilibrium level of output under flexible prices, then:
+	\begin{align}
+		\mu = -\left(\sigma + \frac{\varphi + \alpha}{1 - \alpha}\right)y^n_t + \left( \frac{1 + \varphi}{1 - \alpha}\right)a_t + log\,(1 - \alpha) \label{1.3-6}
+	\end{align}
+which means:
+	\begin{align}
+		y^n_t = \psi_{ya} a_t + \psi_y \label{1.3-yn}
+	\end{align}
+where:
+	\begin{align*}
+		\psi_y &\equiv -\frac{(1 - \alpha)[\mu - log\,(1 - \alpha)]}{\sigma(1 - \alpha) + \varphi + \alpha} > 0\\
+		\psi_{ya} &\equiv \frac{1 + \varphi}{\sigma(1 - \alpha) + \varphi + \alpha}
+	\end{align*}
+We can see that the natural level of output is independent of monetary policy, and invariant to preference shocks $\{ z_t \}$.\\\\
+By the definition of $\hat{\mu}_t$:
+	\begin{align}
+		\hat{\mu}_t &= \mu_t - \mu \nonumber\\
+		&= -\left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right)(y_t - Y^n_t) \label{1.3-7}
+	\end{align}
+We take \eqref{1.3-7} into \eqref{1.3-4}:
+	\begin{align}
+		\pi_t = \beta E_t \left\{ \pi_{t+1} \right\} + k \tilde{y}_t \label{1.3-PC}
+	\end{align}
+where:
+	\begin{align*}
+		\tilde{y}_t &\equiv y_t - y^n_t\\
+		k &\equiv \lambda \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right)
+	\end{align*}
+\eqref{1.3-PC} is referred to as the \textbf{New Keynesian Phillips curve}.\\\\
+Then we consider the natural rate of interest:
+	\begin{align*}
+		y^n_t &= E_t \left\{ y^n_{t+1} \right\} - \frac{1}{\sigma}(r^n_t - E_t\{\pi_{t+1}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t\\
+		r^n_t &= \sigma\left( E_t \left\{ y^n_{t+1} \right\} - y^n_t \right) + \rho + (1 - \rho_z)z_t,\ (E_t\{\pi_{t+1}\} = 0)
+	\end{align*}
+From \eqref{1.3-yn} we know that:
+	\begin{align*}
+		y^n_{t+1} &= \psi_{ya} a_{t+1} + \psi_y\\
+		E_t\{y^n_{t+1}\} &= \psi_{ya} E_t\{a_{t+1}\} + \psi_y\\
+		&= \psi_{ya} \rho_a a_t + \psi_y\\
+		E_t\{y^n_{t+1}\} - y^n_t &= \psi_{ya} (\rho_a - 1)a_t
+	\end{align*}
+So:
+	\begin{align}
+		r^n_t &= \rho - \sigma(1 - \rho_a)\psi_{ya}a_t + (1 - \rho_z)z_t \label{1.3-rn}
+	\end{align}
+Then we can consider $\tilde{y}_t$:
+	\begin{align}
+		\tilde{y}_t = - \frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - r^n_t) + E_t\{\tilde{y}_{t+1}\} \label{1.3-IS}
+	\end{align}
+which is denoted as the \textbf{dynamic IS equation}.\\
+Under the assumption that the effects of nominal rigidities vanish asymptotically, $\lim_{T \to \infty}E_t\{\tilde{y}_{t+T}\} = 0$, we can solve \eqref{1.3-IS}:
+	\begin{align*}
+		\tilde{y}_t = - \frac{1}{\sigma} \sum\limits^\infty_{k=0} E_t\{r_{t+k} - r^n_{t+k}\}
+	\end{align*}
+
+
+\subsection{Equilibrium Dynamics under Alternative Monetary Policy Rules}
+\subsubsection{Equilibrium under a Simple Interest Rate Rule}
+Under a simple interest rate rule of the form:
+	\begin{align}
+		i_t = \rho + \phi_{\pi} \pi_t + \phi_y \hat{y}_t + v_t \label{1.4-Tr}
+	\end{align}
+where $\hat{y}_t \equiv y_t - y$, denotes the deviation of output from its steady state value.\\
+$v_t$ is an exogenous monetary policy shock that evolves according to the AR(1) process:
+	\begin{align*}
+		v_t = \rho_v v_{t-1} + \varepsilon^v_t,\ \rho_v \in [0, 1)
+	\end{align*}
+This is known as \textbf{'Taylor rule'}. Here coefficients $\phi_\pi$ and $\phi_y$ are chosen by monetary authority, and assumed to be non-negative. And from appendix \eqref{app 1.4.1} , we know that $\rho$ is chosen so that the rule is consistent with a zero inflation steady state.\\\\
+And we can rewrite \eqref{1.4-Tr} as:
+	\begin{align}
+		i_t = \rho + \phi_{\pi} \pi_t + \phi_y \hat{y}^n_t + \phi_y \tilde{y}_t + v_t \label{1.4-Trs}
+	\end{align}
+where $\hat{y}^n_t \equiv y^n_t - y$\\
+We combine \eqref{1.4-Trs}, \eqref{1.3-PC}, and \eqref{1.3-IS}:
+	\begin{align}
+		\begin{bmatrix}
+			\tilde{y}_t\\
+			\pi_t
+		\end{bmatrix} = \textbf{A}_T
+		\begin{bmatrix}
+			E_t \{ \tilde{y}_{t+1} \}\\
+			E_t \{ \pi_{t+1} \} + 
+		\end{bmatrix} + \textbf{B}_T u_t \label{1.4-eqs}
+	\end{align}
+where:
+	\begin{align*}
+		u_t &\equiv \hat{r}^n_t - \phi_y \hat{y}^n_y - v_t\\
+		&= -\psi_{ya} [\phi_y + \sigma(1 - \rho_a)]a_t + (1 - \rho_z)z_t - v_t\\
+		\textbf{A}_T &\equiv \Omega \begin{bmatrix}
+										\sigma & 1- \beta\phi_\pi\\
+										\sigma_k & k + \beta(\sigma + \phi_y)
+									\end{bmatrix}\\
+		\textbf{B}_T &\equiv \Omega \begin{bmatrix}
+										1\\
+										k
+									\end{bmatrix}\\
+		\Omega &\equiv \frac{1}{\sigma + \phi_y + k \phi_\pi}
+	\end{align*}
+The necessary and sufficient condition for unique solution is:
+	\begin{align*}
+		k(\phi_\pi - 1) + (1 - \beta)\phi_y > 0
+	\end{align*}
+Here we use undetermined coefficients method. Assume that $u_t$ follows an AR(1) process, with autoregressive coefficient $\rho_u \in [0, 1)$, the stationary solution to \eqref{1.4-eqs} is conjectured to be:
+	\begin{align*}
+		\tilde{y}_t = \psi_y u_t\\
+		\pi_t = \psi_\pi u_t
+	\end{align*}
+Then we impose the conjectured relations into \eqref{1.4-eqs} and get:
+	\begin{align*}
+		\psi_y &= (1 - \beta \rho_u) \Lambda_u\\
+		\psi_\pi &= k \Lambda_u
+	\end{align*} 
+where $\Lambda_u \equiv \frac{1}{(1 - \beta \rho_u)[\sigma(1 - \rho_u) + \phi_y] + k(\phi_\pi - \rho_u)}$\\\\
+\centerline{\textbf{1.4.1.1 The Effects of a Monetary Policy Shock}}\\\\
+We first focus on the economy's response to a shift in $v_t$, with $a_t = z_t = 0$. Then from the definition of $u_t$, we know that:
+	\begin{align*}
+		u_t = -v_t
+	\end{align*}
+Because $a_t = z_t = 0$, the natural rate of interest rate, $r^n_t$, and natural level of output, $y^n_t$ are independent of $v_t$, so we when we just consider the influence of $v_t$, we can ignore it. Then we have:
+	\begin{align*}
+		\tilde{y}_t &= y_t = \psi_y u_t = -(1 - \beta \rho_u) \Lambda_v v_t\\
+		\pi_t &= \psi_\pi u_t = -k\Lambda_v v_t
+	\end{align*}
+Then combine them with the \textbf{dynamic IS equation}, we have:
+	\begin{align*}
+		-(1 - \beta \rho_u) \Lambda_v v_t &= -\frac{1}{\sigma}(i_t - E_t\{-k\Lambda_v v_{t+1}\} - r^n_t) + E_t\{-(1 - \beta \rho_u) \Lambda_v v_{t+1}\}\\
+		&= -\frac{1}{\sigma}\hat{r}_t - (1 - \beta\rho_u)\Lambda_v\rho_v v_t
+	\end{align*} 
+which means we can rewrite the real interest rate as a function of the monetary policy shock:
+	\begin{align*}
+		\hat{r}_t = \sigma (1 - \rho_v)(1 - \beta\rho_u)\Lambda_v v_t
+	\end{align*}
+then, we can see that the real interest rate will increase in response to an exogenous increase in monetary policy.\\
+Also, as for the nominal interest rate:
+	\begin{align*}
+		\hat{i}_t &= \hat{r}_t + E\{\pi_{t+1}\}\\
+		&= \sigma (1 - \rho_v)(1 - \beta\rho_u)\Lambda_v v_t + E\{-k\Lambda_v v_t\}\\
+		&= \sigma (1 - \rho_v)(1 - \beta\rho_u)\Lambda_v v_t - k\Lambda_v \rho_v v_t\\
+		&= [\sigma (1 - \rho_v)(1 - \beta\rho_u) - k\rho_v]\Lambda_v v_t
+	\end{align*}
+Then, if the persistence of the monetary policy shock $\rho_v$ is sufficiently high, the nominal interest rate can decline because of the rise of $v_t$. But the real interest rate still increase, which means the output will still increase.\\\\
+Last consider the money supply. We have:
+	\begin{align*}
+		m_t &= p_t + y_t - \eta i_t\\
+		&= p_{t-1} + \pi_t + y_t - \eta i_t\\
+		&= p_{t-1} - k\Lambda_v v_t - (1 - \beta\rho_u)\Lambda_v v_t - \eta [\sigma (1 - \rho_v)(1 - \beta\rho_u) - k\rho_v]\Lambda_v v_t\\
+		&= p_{t-1} - [k + (1 - \beta\rho_u) - \eta \sigma (1 - \rho_v)(1 - \beta\rho_u) - \eta k \rho_v]\Lambda_v v_t\\
+		&= p_{t-1} - \{(1 - \beta\rho_v)[1 + \eta\sigma(1 - \rho_v)] + (1 - \eta\rho_v)k\}\Lambda_v v_t
+	\end{align*}
+Here, we can not decide the sign of the change of the money supply, in response to $v_t$.\\\\
+\centerline{\textbf{1.4.1.2 The Effects of a Discount Rate Shock}}\\\\
+Similar to \textbf{1.4.1.1}, we assume that $v_t = a_t = 0$, then:
+	\begin{align*}
+		u_t = (1 - \rho_z)z_t
+	\end{align*}
+Then:
+	\begin{align*}
+		\tilde{y}_t &= y_t = \psi_y u_t = (1 - \beta \rho_z)\Lambda_z (1 - \rho_z)z_t\\
+		\pi_t &= \psi_\pi u_t = k\Lambda_v (1 - \rho_z)z_t
+	\end{align*}
+From \eqref{1.3-yn}, we know that $y^n_t$ is independent of $z_t$, but from \eqref{1.3-rn} we know that $r^n_t$ is dependent on $z_t$. Combine the IS equation:
+	\begin{align*}
+		(1 - \beta \rho_z)\Lambda_z (1 - \rho_z)z_t &= -\frac{1}{\sigma}(i_t - E_t\{k\Lambda_v (1 - \rho_z)z_t\} - r^n_t) + E_t\{(1 - \beta \rho_z)\Lambda_z (1 - \rho_z)z_{t+1}\}\\
+		&= -\frac{1}{\sigma}[i_t - E_t\{k\Lambda_v (1 - \rho_z)z_t\} - (1 - \rho_z)z_t] + E_t\{(1 - \beta \rho_z)\Lambda_z (1 - \rho_z)z_{t+1}\}
+	\end{align*} 
+which means:
+	\begin{align*}
+		\hat{r}_t = [1 - (\rho_z - 1)(1 - \beta\rho_z)\Lambda_z](1 - \rho_z)z_t
+	\end{align*}
+Thus, the real interest rate will decrease in response to the increase of $z$\\
+As for the nominal interest rate:
+	\begin{align*}
+		\hat{i}_t &= \hat{r}_t + E_t\{\pi_{t+1}\}\\
+		&= \sigma (\rho_z - 1)(1 - \rho_z)(1 - \beta\rho_z)\Lambda_z z_t + \rho_zk\Lambda_v (1 - \rho_z)z_t\\
+		&= [\sigma(\rho_z - 1)(1 - \beta\rho_z) + \rho_zk]\Lambda_z (1 - \rho_z)z_t
+	\end{align*}
+\centerline{\textbf{1.4.1.3 The Effects of a Technology Shock}}\\\\
+
+\subsubsection{Equilibrium under an Exogenous Money Supply}
+We analyze the equilibrium under the assumption of an exogenous path for the growth rate of the money supply, $\Delta m_t$.\\
+First we define $l_t$:
+	\begin{align}
+		l_t = \tilde{y}_t - \eta i_t + y^n_t \label{1.4.2-1}
+	\end{align}
+where $l_t \equiv m_t - p_t$.\\
+Then we rewrite it in the form of deviation:
+	\begin{align}
+		\hat{l}_t &= l_t - l = l_t \nonumber\\
+		\hat{\tilde{y}}_t &= \tilde{y}_t - y = \tilde{y} \nonumber\\
+		&= -\frac{1}{\sigma}(\hat{i}_t - E_t\{\pi_{t+1}\} - \hat{r}^n_t) + E_t\{\tilde{y}_{t+1}\} \label{1.4.2-2}
+	\end{align}
+If we take \eqref{1.4.2-1} into \eqref{1.4.2-2}:
+	\begin{align}
+		(1 + \sigma\eta)\tilde{y}_t = \sigma\eta E_t\{\tilde{y}_{t+1}\} + \hat{l}_t + \eta E_t\{\pi_{t+1}\} + \eta \hat{r}^n_t - \hat{y}^n_t \label{1.4.2-3}
+	\end{align}
+Also we have:
+	\begin{align}
+		\hat{l}_{t-1} = \hat{l}_t + \pi_t - \Delta m_t \label{1.4.2-4}
+	\end{align}
+Combine \eqref{1.4.2-3}, \eqref{1.4.2-4}, and \eqref{1.3-PC}, we have:
+	\begin{align}
+		\textbf{A}_{M,0}\begin{bmatrix} 
+							\tilde{y}_t\\
+							\pi_t\\
+							\hat{l}_{t-1}
+						\end{bmatrix} = 
+		\textbf{A}_{M,1}\begin{bmatrix}
+							E_t\{\tilde{y}_{t+1}\}\\
+							E_t\{\pi_{t+1}\}\\
+							\hat{l}_t
+						\end{bmatrix} +
+		\textbf{B}_{M}  \begin{bmatrix}
+							\hat{r}^n_t\\
+							\hat{y}^n_t\\
+							\Delta m_t	
+						\end{bmatrix} \label{1.4.2-eqs}
+	\end{align}
+where:
+	\begin{align*}
+		\textbf{A}_{M,0} \equiv \begin{bmatrix}
+									1 + \sigma\eta & 0 & 0\\
+									-k & 1 & 0\\
+									0 & -1 & 1
+								\end{bmatrix};\
+		\textbf{A}_{M,1} \equiv \begin{bmatrix}
+									\sigma\eta & \eta & 1\\
+									0 & \beta & 0\\
+									0 & 0 & 1
+								\end{bmatrix};\
+		\textbf{B}_{M} \equiv   \begin{bmatrix}
+									\eta & -1 & 0\\
+									0 & 0 & 0\\
+									0 & 0 & -1
+								\end{bmatrix}
+	\end{align*}
+
+
+
+
+
+
+
+\newpage
+\subsection{Appendix}
+\subsubsection{Maximization of the Consumption Index}
+Given the expenditure on the consumption, which indexed by $\int^1_0 P_t(i)C_t(i)di$, the household must maximize the consumption index $C_t$ by allocating, which means change the $C_t(i)$. The optimal problem is:
+	\begin{align*}
+		&\mathop{max}\limits_{C_t(i)}\ C_t \equiv (\int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}}di)^{\frac{\epsilon}{\epsilon-1}}\\
+		s.t.&\\
+		&X_t \equiv \int^1_0 P_t(i)C_t(i)di
+	\end{align*}
+Use the Lagrangian method:
+Use the Lagrangian method:
+	\begin{align*}
+	    \mathscr{L} &= \left(\int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}} \, di\right)^{\frac{\epsilon}{\epsilon-1}} 
+	    + \lambda \bigg[X_t - \int^1_0 P_t(i)C_t(i) \, di\bigg] \\
+	    \frac{\partial \mathscr{L}}{\partial C_t(i)} &= \frac{\epsilon}{\epsilon - 1} 
+	    \left(\int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}} di\right)^{\frac{1}{\epsilon}} 
+	    \times \frac{\epsilon - 1}{\epsilon} C_t(i)^{\frac{-1}{\epsilon}} - \lambda P_t(i) = 0
+	\end{align*}
+So we have:
+	\begin{align}
+		C_t^{\frac{1}{\epsilon}} C_t(i)^{-\frac{1}{\epsilon}} = \lambda P_t(i),\ \forall\ i \in [0, 1] \label{app 1.1.1}
+	\end{align}
+which means:
+	\begin{align}
+		C_t(i) &= \lambda^{-\epsilon} P_t(i)^{-\epsilon} C_t,\ \forall\ i \in [0, 1] \label{app 1.1.2}\\
+		C_t(i) &= C_t(j) \left(\frac{P_t(i)}{P_t(j)}\right)^{-\epsilon},\ \forall\ i,j \in [0, 1] \label{app 1.1.3}
+	\end{align}
+If we manipulate \eqref{app 1.1.2}:
+	\begin{align}
+		P_t(i)C_t(i) &= \lambda^{-\epsilon}P_t(i)^{1-\epsilon}C_t \nonumber\\
+		\int^1_0 P_t(i)C_t(i) di &= \lambda^{-\epsilon} C_t \int^1_0 P_t(i)^{1-\epsilon} di \nonumber\\
+		X_t &= \lambda^{-\epsilon} C_t P_t^{1-\epsilon} \nonumber\\
+		C_t &= \lambda^{\epsilon} X_t P^{\epsilon-1}_t \label{app 1.1.4}
+	\end{align}
+Insert \eqref{app 1.1.4} into \eqref{app 1.1.2}, we have:
+	\begin{align}
+		C_t(i) = \left(\frac{P_t(i)}{P_t}\right)^{-\epsilon} \frac{X_t}{P_t} \label{app 1.1.5}
+	\end{align}
+Then we take \eqref{app 1.1.5} into the definition of $C_t$:
+	\begin{align*}
+		C_t &= \left\{\int^1_0 \bigg[\left(\frac{P_t(i)}{P_t}\right)^{-\epsilon} \frac{X_t}{P_t}\bigg]^{\frac{\epsilon-1}{\epsilon}}di\right\}^{\frac{\epsilon}{\epsilon-1}}\\
+		&= \left\{\int^1_0 \left(\frac{P_t(i)}{P_t}\right)^{1-\epsilon} \left(\frac{X_t}{P_t}\right)^{\frac{\epsilon-1}{\epsilon}} di\right\}^{\frac{\epsilon}{\epsilon-1}}\\
+		&= \bigg[\int^1_0 P_t(i)^{1-\epsilon}di\bigg]^{\frac{\epsilon}{\epsilon-1}} \frac{X_t}{P^{1-\epsilon}_t}\\
+		&= P^{-\epsilon}_t \frac{X_t}{P^{1-\epsilon}_t}\\
+		&= \frac{\int^1_0 P_t(i)C_t(i)di}{P_t}
+	\end{align*}
+So we have:
+	\begin{align}
+		C_t P_t = \int^1_0 P_t(i)C_t(i)di \label{app 1.1.6}
+	\end{align}
+Combining \eqref{app 1.1.6} and \eqref{app 1.1.5} we have:
+	\begin{align}
+		C_t(i) = \left(\frac{P_t(i)}{P_t}\right)^{-\epsilon} C_t \label{app 1.1.7}
+	\end{align}
+
+\subsubsection{Aggregate Price Level Dynamics}
+Suppose in each period, $S_t \subset [0, 1]$ firms do not reoptimize their posted price. Then the left firms will all choose an identical price $P^\star_t$, because all firms face the same optimal problem. Then by the definition of $P_t$:
+	\begin{align*}
+		P_t &= \bigg[\int^1_0 P_t(i)^{1-\epsilon}di\bigg]^{\frac{1}{1-\epsilon}}\\
+		&= \bigg[\int_{S_t} P_t(i)^{1-\epsilon}di + \int_{-S_t} P_t(i)^{1-\epsilon}di\bigg]^{\frac{1}{1-\epsilon}}\\
+		&= \bigg[\int_{S_t} P_{t-1}(i)^{1-\epsilon}di + (1 - \theta)(P^\star_t)^{1-\epsilon}\bigg]^{\frac{1}{1-\epsilon}}\\
+		&= \bigg[\theta (P_{t-1})^{1-\epsilon} + (1 - \theta)(P^\star_t)^{1-\epsilon}\bigg]^{\frac{1}{1-\epsilon}}
+	\end{align*}
+Then we divide both side by $P_{t-1}$:
+	\begin{align}
+		\Pi^{1-\epsilon}_t = \theta + (1 - \theta)\left(\frac{P^\star_t}{P_{t-1}}\right)^{1-\epsilon} \label{app 1.2.1}
+	\end{align}
+Why:
+	\begin{align*}
+		\int_{S_t} P_{t-1}(i)^{1-\epsilon}di = \theta (P_{t-1})^{1-\epsilon}
+	\end{align*}
+Because in each period only $(1 - \theta)$ firms can change the price, then we can take it as that each firm has $\theta$ probability to stay $P_{t-1}(i)$ and $(1 - \theta)$ probability to become $0$. Then the aggregate become $\theta (P_{t-1})^{1-\epsilon}.$
+
+\subsubsection{Firm's Objective Function}
+The value of a firm in period $t$ is:
+	\begin{align*}
+		V_t(i) = \sum\limits^\infty_{t=0} E_t\{\Lambda_{t,t+k}[D_{t+k}(i)/P_{t+k}]\}
+	\end{align*}
+where $D_{t+k}(i) \equiv P_t(i)Y_t(i) - C_t(Y_t(i))$.\\\\
+We give some explanations:\\
+a)$\Lambda_{t,t+k}$ is the stochastic discount factor, defined as:
+	\begin{align*}
+		\Lambda_{t,t+k} \equiv \beta^k \frac{U_{c,t+k}}{U_{c,t}}
+	\end{align*}
+the derivation is that from the optimal problem of household, we know that:
+	\begin{align*}
+		Q^r_{t,t+k} = E_t\{\beta^k \frac{U_{c,t+k}}{U_{c,t}}\} = E_t\{\frac{1}{R_{t,t+k}}\}
+	\end{align*} 
+Here $R_{t,t+k}$ denotes the real interest rate. Thus, the stochastic discount factor is defined as $\beta^k \frac{U_{c,t+k}}{U_{c,t}}$.\\
+b) The nominal value of the firm is defined as $D_t(i)$, which is the nominal value of the goods minus the value of the cost, $C_t(Y_t(i))$, which is a function of the number of goods produced, $Y_i(t)$.\\
+c) We divide the nominal value of the firm by the price level, $P_t$, to get the real value of the firm.\\\\
+Notice that the firm may change the price at each period with the probability of $1 - \theta$. Then we have that:
+	\begin{align*}
+		E_t\{\Lambda_{t,t+k}[D_{t+k}(i)/P_{t+k}]\} = &\theta^k E_t\{\Lambda_{t,t+k}[D_{t+k|t}(i)/P_{t+k}]\}\\ &+ \sum\limits^k_{h=1}(1 - \theta)\theta^{k-h}\{\Lambda_{t,t+k}[D_{t+k|t+h}(i)/P_{t+k}]\}
+	\end{align*}
+where $D_{t+k|t} = P^\star_t Y_{t+k|t} - \mathscr{C}_{t+k}(Y_{t+k|t})$.\\
+Here, the first term on the right means that the firm reset the price at $t$ and then can't reset the price from $t+1$ to $t+k$. The second term means that the firm reset the price at $t+h$ and cannot reset it from $t+h+1$ to $t+k$.\\
+We can see that the second term on the left is independent of $P^\star_t$, and for the optimal problem at $t$ the firm only cares about $P^\star_t$. Thus, the value of a firm resetting its price in period $t$ is given by:
+	\begin{align}
+		V_{t|t} = \sum\limits^\infty_{k=0} \theta^k E_t\{\Lambda_{t,t+k}[D_{t+k|t}/P_{t+k}]\} + \gamma_t \label{app 1.3.1}
+	\end{align}
+$\gamma_t$ is a term independent of $P^\star_t$, thus can be ignored.
+
+\subsubsection{Price Dispersion}
+Let $\hat{p}_t(i) \equiv p_t(i) - p_t$, we have:
+	\begin{align*}
+		\left( \frac{P_t(i)}{P_t} \right)^{1-\epsilon} &= exp[(1 - \epsilon)\hat{p}_t(i)]\\
+		&= 1 + (1 - \epsilon)\hat{p}_t(i) + \frac{(1 - \epsilon)^2}{2}\hat{p}_t(i)^2\ \ \ (\text{Taylor extension})
+	\end{align*}
+Also, from the definition of $P_t$:
+	\begin{align*}
+		1 &= \int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{1-\epsilon} di\\
+		1 &= \int^1_0 \left( exp[(1 - \epsilon)\hat{p}_t(i)] \right)^{1-\epsilon} di\\
+		&= \int^1_0 \left( 1 + (1 - \epsilon)\hat{p}_t(i) + \frac{(1 - \epsilon)^2}{2}\hat{p}_t(i)^2 \right) di\\
+		&= E_i \left\{ 1 + (1 - \epsilon)\hat{p}_t(i) + \frac{(1 - \epsilon)^2}{2}\hat{p}_t(i)^2 \right\}\\
+		&= 1 + E_i \left\{ (1 - \epsilon)\hat{p}_t(i) + \frac{(1 - \epsilon)^2}{2}\hat{p}_t(i)^2 \right\}
+	\end{align*}
+So we have:
+	\begin{align*}
+		E_i \left\{ \hat{p}_t(i) \right\} = \frac{\epsilon-1}{2} E_i \left\{ \hat{p}_t(i)^2 \right\}
+	\end{align*}
+Also, by Taylor extension:
+	\begin{align*}
+		\left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1-\alpha}} &= exp\bigg[\left( -\frac{\epsilon}{1-\alpha} \right)\hat{p}_t(i) \bigg]\\
+		&= 1  -\frac{\epsilon}{1-\alpha}\hat{p}_t(i) + \frac{1}{2}  \left( \frac{\epsilon}{1-\alpha} \right)^2\hat{p}_t(i)^2
+	\end{align*}
+Then we have:
+	\begin{align*}
+		\int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1-\alpha}} di &= E_i \left\{ 1  -\frac{\epsilon}{1-\alpha}\hat{p}_t(i) + \frac{1}{2}  \left( \frac{\epsilon}{1-\alpha} \right)^2\hat{p}_t(i)^2 \right\}\\
+		&= 1  -\frac{\epsilon}{1-\alpha} E_i \left\{ \hat{p}_t(i) \right\} + \frac{1}{2}  \left( \frac{\epsilon}{1-\alpha} \right)^2 E_i \left\{ \hat{p}_t(i)^2 \right\}\\
+		&= 1  -\frac{\epsilon}{1-\alpha} \frac{\epsilon-1}{2} E_i \left\{ \hat{p}_t(i)^2 \right\} + \frac{1}{2}  \left( \frac{\epsilon}{1-\alpha} \right)^2 E_i \left\{ \hat{p}_t(i)^2 \right\}\\
+		&= 1 + \frac{\epsilon - \epsilon\alpha + \epsilon^2\alpha}{2(1 - \alpha)^2} E_i \left\{ \hat{p}_t(i)^2 \right\}\\
+		&= 1 + \frac{1}{2} \left( \frac{\epsilon}{1 - \alpha} \right) \frac{1}{\Theta} var_i \left\{ p_i(i) \right\}
+	\end{align*}
+where:
+	\begin{align*}
+		\Theta &\equiv \frac{1 - \alpha}{1 - \alpha + \alpha\epsilon}\\
+		\int^1_0 (p_t(i) - p_t)^2 di &\simeq \int^1_0 (p_t(i) - E_i \left\{ p_t \right\})^2 di\\
+		&\equiv var_i \left\{ p_t(i) \right\}
+	\end{align*}
+Then we can see that:
+	\begin{align*}
+		d_t \equiv (1 - \alpha)log\,\int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1-\alpha}} di \simeq \frac{\epsilon}{2\Theta} var_i \left\{ p_t(i) \right\}
+	\end{align*}
+
+\subsubsection{Taylor's Rule}
+From \eqref{1.4-y} we know that:
+	\begin{align*}
+		y_t &= E_t\{y_{t+1}\} - \frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t
+	\end{align*}
+And in the zero inflation steady state:
+	\begin{align*}
+		y^n_t &= y^n_{t+1}\\
+		E_t\{ z_t \} &= 0
+	\end{align*}
+So we have:
+	\begin{align}
+		y^n_t &= E_t\{y^n_{t+1}\} - \frac{1}{\sigma}(r^n - E_t\{\pi_{t+1}\} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \nonumber\\
+		y^n_t &= y^n_{t} - \frac{1}{\sigma}(r^n - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \nonumber\\
+		0 &= - \frac{1}{\sigma}(r^n - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \nonumber\\
+		r^n &= \rho \label{app 1.4.1}
+	\end{align}
+
+
+
+\newpage
+\section{Monetary Policy Design in the Basic New Keynesian Model}
+\subsection{The Efficient Allocation}
+In last chapter, we have specified the optimal problem of household. For the effective allocation associated with the model economy, we can solve the problem :
+	\begin{align*}
+		&U(C_t, N_t; Z_t)\\
+		s.t&\\
+		&C_t(i) = A_t N_t(i)^{1-\alpha},\ \forall\ i \in [0, 1]\\
+		&C_t \equiv \left( \int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}} di \right)^{\frac{\epsilon}{\epsilon-1}}\\
+		&N_t \equiv \int^1_0 N_t(i) di
+	\end{align*}
+We use the Lagrange method:
+	\begin{align*}
+		\mathscr{L} &= U + \lambda_t(i)[A_t N_t(i)^{1-\alpha} - C_t(i)]\\
+		\frac{\mathscr{L}}{\partial C_t(i)} &= U_{C_t} \frac{\partial}{\partial C_t(i)} \left( \int^1_0 C_t(i)^{\frac{\epsilon-1}{\epsilon}} di \right)^{\frac{\epsilon}{\epsilon-1}} - \lambda_t(i)\\
+		&= U_{C_t} \left( \frac{C_t(i)}{C_t} \right)^{-\frac{1}{\epsilon}} - \lambda_t(i)\\
+		\frac{\partial \mathscr{L}}{\partial N_t(i)} &= U_{N_t} \frac{\partial}{\partial N_t(i)} \int^1_0 N_t(i) di + \lambda_t(i) (1 - \alpha) A_t N_t(i)^{-\alpha}\\
+		&= U_{N_t} + \lambda_t(i) (1 - \alpha) A_t N_t(i)^{-\alpha}
+	\end{align*}
+which means for any $i,j \in [0, 1]$, we have:
+	\begin{align*}
+		\frac{\lambda_t(i)}{\lambda_t(j)} = \frac{U_{C_t} \left( \frac{C_t(i)}{C_t} \right)^{-\frac{1}{\epsilon}}}{U_{C_t} \left( \frac{C_t(j)}{C_t} \right)^{-\frac{1}{\epsilon}}} = \frac{\frac{U_{N_t}}{(1 - \alpha)A_t N_t(i)^{-\alpha}}}{\frac{U_{N_t}}{(1 - \alpha)A_t N_t(j)^{-\alpha}}}
+	\end{align*}
+so we have:
+	\begin{align}
+		\left( \frac{C_t(j)}{C_t(i)} \right)^{\frac{1}{\epsilon}} = \left( \frac{N_t(i)}{N_t(j)} \right)^\alpha,\ \forall\ i,j \in [0, 1] \label{2.1-1}
+	\end{align}
+The condition can satisfy \eqref{2.1-1} is that:
+	\begin{align*}
+		\frac{C_t(i)}{C_t(j)} = \frac{N_t(j)}{N_t(i)} = 1
+	\end{align*}
+Then we have:
+	\begin{align}
+		C_t(i) = C_t \label{2.1-2}\\
+		N_t(i) = N_t \label{2.1-3}
+	\end{align}
+Then we combine them with the first order condition we have:
+	\begin{align}
+		-\frac{U_{N_t}}{U_{C_t}} = MPN_t = (1 - \alpha)A_t N^{\alpha}_t \label{2.1-4}
+	\end{align}
+So we can see \eqref{2.1-2}, \eqref{2.1-3}, and \eqref{2.1-4} as the optimality conditions.\\\\
+Thus, we can say that it is optimal to produce and consume the same quantity of all goods and to allocate the same amount of labor to all firms.
+
+
+\subsection{Sources of Suboptimality in the Basic New Keynesian Model}
+The basic new Keynesian model is characterized by two distortions: 1) the presence of the market power in goods markets. 2) The sticky price. 
+
+\subsubsection{Distortions Unrelated to Sticky Prices: Monopolistic Competition}
+From Chapter 2 \textbf{1.2.2} we know that, if the firm can change the price every period, we have:
+	\begin{align*}
+		&P^\star_t = \mathscr{M} \Psi_t\\
+		s.t&\\
+		&\mathscr{M} \equiv \frac{\epsilon}{\epsilon-1} > 1\\
+		&\Psi_t \equiv \mathscr{C}_t(Y_t) = \frac{W_t}{MPN_t}
+	\end{align*}
+Then according the household's intratemporal optimality condition, we have that:
+	\begin{align*}
+		-\frac{U_{N_t}}{U_{C_t}} = \frac{W_t}{P_t} = \frac{MPN_t}{\mathscr{M}} < MPN_t
+	\end{align*}
+which violates \eqref{2.1-4}. We now that $U_{N_t}$ is increasing on $N_t$, so we can see that the presence of $\mathscr{M}$ lead to an inefficiently low level of employment and output.\\\\
+Then, to eliminate the inefficiency, we can introduce a lump-sum tax imposed on family, and subsidize the company on employment, which is denoted by $\tau$. Then the optimal price for firm is:
+	\begin{align*}
+		\bar{P}^\star_t = \mathscr{M} \frac{(1 - \tau)W_t}{MPN_t}
+	\end{align*} 
+To eliminate the inefficiency:
+	\begin{align*}
+		-\frac{U_{N_t}}{U_{C_t}} = \frac{W_t}{\bar{P}^\star_t} = \frac{MPN_t}{\mathscr{M}(1 - \tau)} = MPN_t 
+	\end{align*}
+which means:
+	\begin{align*}
+		\tau = \frac{1}{\epsilon}
+	\end{align*}
+
+\subsubsection{Distortions Related to Sticky Prices}
+The constraints on price setting will make the economy's markup $\mathscr{M}_t$, generally differ from the constant frictionless markup $\mathscr{M}$. We introduce the employment subsidy. And we can see that:
+	\begin{align*}
+		\mathscr{M}_t = \frac{P_t}{(1 - \tau)(W_t/MPN_t)} = \frac{P_t \mathscr{M}}{W_t/MPN_t}
+	\end{align*}
+Then we can see:
+	\begin{align*}
+		-\frac{U_{N_t}}{U_{C_t}} = \frac{W_t}{P_t} = MPN_t \frac{\mathscr{M}}{\mathscr{M}_t}
+	\end{align*}
+As $\mathscr{M} \neq \mathscr{M}_t$, we can see that it violate the efficient condition \eqref{2.1-4} due to the constraints on price adjustment.\\\\
+Also due to the constraints on price adjustment, we cannot make sure that $P_t(i) = P_t(j)$ for any pair of $(i, j)$. Such price distortion will lead to $C_t(i) \neq C_t(j)$, and thus different labor supply $N_t(i) \neq N_t(j)$, which violates the efficient condition \eqref{2.1-2} and \eqref{2.1-3}.
+
+
+\subsection{Optimal Monetary Policy in the Basic New Keynesian Model: the Case of an Efficient Natural Allocation}
+To start with, we only consider the case where the equilibrium allocation under flexible prices is efficient. Together with the optimal subsidy that exactly offsets the market power distortion, we can make sure that the natural allocation of the basic Keynesian model efficient.\\
+In addition, we assume that there are no inherited relative price distortions, which means that $P_{-1}(i) = P_{-1}$.\\
+ Under these assumption, we can see that the firm can reach the natural allocation at the beginning and stay unchanged. As a result:
+	\begin{align*}
+		P^\star_t &= P_{t-1}\\
+		P_t &= P_{-1},\ \forall\ t = 1, 2, 3, \ldots\\
+		\mathscr{M}_t &= \mathscr{M},\ \forall\ t = 1, 2, 3, \ldots
+	\end{align*} 
+Under these policy, we can see that:
+	\begin{align}
+		y_t &= y^n_t \label{2.3-1}\\
+		\tilde{y}_t &= 0 \nonumber
+	\end{align}
+Then consider the \textbf{New Keynesian Phillips curve}:
+	\begin{align*}
+		\pi_t = \beta E_t\{\pi_{t+1}\} + k \tilde{y}_t = \beta E_t\{\pi_{t+1}\}
+	\end{align*}
+which means:
+	\begin{align}
+		E_t\{\pi_{t+1}\} &= \frac{1}{\beta} \pi_t,\ \forall\ t \nonumber\\
+		\pi_t &= 0,\ \forall\ t \label{2.3-2}
+	\end{align}
+As for the \textbf{dynamic IS equation}:
+	\begin{align}
+		\tilde{y}_t &= -\frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - r^n_t) + E_t \{\tilde{y}_{t+1}\} \nonumber\\
+		0 &= -\frac{1}{\sigma}(i_t - E_t\{0\} - r^n_t) + E_t \{0\} \nonumber\\
+		i_t &= r^n_t, \forall\ t \label{2.3-3}
+	\end{align}
+There are two features of the optimal policy that are worth emphasizing.\\
+1) First, stabilizing output is not desirable in and of itself. From \eqref{2.3-1}, we know that the output should vary one-for-one with the natural level of output. And there is no reason why the natural level of output should be constant or take the form of smooth trend. So if policy that stress output stability may cause the deviation of output from its natural level, which is suboptimal.\\
+2) Second, price stability emerges as a feature of the optimal policy even though the policymaker does not stress on it. But with the assumption made, price stability implies an efficient level of output, and vice versa. 'price stability implies an efficient level of output' is often referred to as the \textbf{divine coincidence}. Which means that the central bank only need so make sure the price stabilization and the efficient level of output is attained automatically.\\\\
+The intuition behind the relationship between price stabilization and efficient level of output is that: if price stability is attained, then it must be the case that no firm is adjusting its price even it is optimal to do so. Then it means that the price sticky does not work here, the constraints on price setting is not binding. Then the optimality problem degenerates to the flexible price case, which by definition, gives the efficient level of output.
+
+\subsubsection{Implementation: Optimal Interest Rate Rules}
+In this section, we consider some alternative interest rate rules. To analyze these candidates, each will be embedded into \textbf{dynamic IS equation} and \textbf{New Keynesian Phillips curve}:
+	\begin{align*}
+		\tilde{y}_t &= E_t\{\tilde{y}_{t+1}\} - \frac{1}{\sigma}(i_t - E_t\{\pi_{t+1}\} - r^n_t)\\
+		\pi_t &= \beta E_t\{\pi_{t+1}\} + k\tilde{y}_t
+	\end{align*}
+ where:
+ 	\begin{align*}
+ 		r^n_t = \rho - \sigma(1 - \rho_a)\psi_{ya}a_t + (1 - \rho_z)z_t
+ 	\end{align*}
+\\
+\centerline{\textbf{2.3.1.1 An Exogenous Interest Rate Rule}}\\\\
+Consider the candidate interest rate tule:
+	\begin{align}
+		i_t = r^n_t \label{2.3.1.1-1}
+	\end{align}
+We take this rule into the \textbf{dynamic IS equation}:
+	\begin{align}
+		\tilde{y}_t &= E_t\{\tilde{y}_{t+1}\} + \frac{1}{\sigma} E_t\{\pi_{t+1}\} \label{2.3.1.1-2}
+	\end{align}	
+We take \eqref{2.3.1.1-2} into the \textbf{New Keynesian Phillips curve}:
+	\begin{align}
+		\pi_t &= \beta E_t\{\pi_{t+1}\} + k \left(E_t\{\tilde{y}_t\} + \frac{1}{\sigma} E_t\{\pi_{t+1}\}\right) \nonumber\\
+		&= k E_t\{\tilde{y}_t\} + \left(\beta + \frac{k}{\sigma}\right) E_t\{\pi_{t+1}\} \label{2.3.1.1-3} 
+	\end{align}
+We write \eqref{2.3.1.1-2} and \eqref{2.3.1.1-3} into the matrix form:
+	\begin{align}
+		\begin{bmatrix}
+			\tilde{y}_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A_O}
+		\begin{bmatrix}
+			E_t\{\tilde{y}_{t+1}\}\\
+			E_t\{\pi_{t+1}\}
+		\end{bmatrix} \label{2.3.1.1-4}
+	\end{align}
+where:
+	\begin{align*}
+		\boldsymbol{A_O} \equiv
+		\begin{bmatrix}
+			1 & \frac{1}{\sigma}\\
+			k & \beta + \frac{k}{\sigma}
+		\end{bmatrix}
+	\end{align*}	
+Here we can see that $\tilde{y}_t = \pi_t = 0$ is \textbf{a} solution to \eqref{2.3.1.1-4}. However, we can see that there are 2 eigenvalues for $\boldsymbol{A_O}$. One is in the interval $(0, 1)$ and the other one is strictly greater than unity. Since $\tilde{y}_t$ and $\pi_t$ are non-predetermined, the existence of an eigenvalue outside unity means the existence of multiplicity of equilibria in addition to $\tilde{y}_t = \pi_t = 0$. Thus, we cannot guarantee the latter one cannot be the real equilibrium. This shortcoming leads to another rule.\\\\\\
+\centerline{\textbf{2.3.1.2 An Interest Rate Rule with an Endogenous Component}}\\\\
+Now let's consider another rule:
+	\begin{align}
+		i_t = r^n_t + \phi_\pi \pi_t + \phi_y \tilde{y}_t \label{2.3.1.2-1}
+	\end{align}
+where $\phi_\pi$ and $\phi_y$ are non-negative coefficient determined by central bank.\\
+Now we take \eqref{2.3.1.2-1} into the \textbf{dynamic IS curve}:
+	\begin{align}
+		\tilde{y}_t &= E_t\{\tilde{y}_{t+1}\} - \frac{1}{\sigma}(\phi_\pi \pi_t + \phi_y \tilde{y}_t - E_t\{\pi_{t+1}\}) \nonumber\\
+		\tilde{y}_t &= \frac{\sigma}{\sigma + \phi_y}E_t\{\tilde{y}_{t+1}\} - \frac{1}{\sigma + \phi_y}(\phi_\pi \pi_t - E_t\{\pi_{t+1}\}) \label{2.3.1.2-2}
+	\end{align}
+Then we take \eqref{2.3.1.2-2} into \textbf{New Keynesian Phillips curve}:
+	\begin{align}
+		\pi_t &= \beta E_t\{\pi_{t+1}\} + k\left[\frac{\sigma}{\sigma + \phi_y}E_t\{\tilde{y}_{t+1}\} - \frac{1}{\sigma + \phi_y}(\phi_\pi \pi_t - E_t\{\pi_{t+1}\})\right] \nonumber\\
+		\pi_t &= \frac{k\sigma}{\sigma + \phi_y + k\phi_\pi} E_t\{\tilde{y}_{t+1}\} + \frac{\beta(\sigma + \phi_y) + k}{\sigma + \phi_y + k\phi_\pi} E_t\{\pi_{t+1}\} \label{2.3.1.2-3} 
+	\end{align}
+Back to \eqref{2.3.1.2-2}:
+	\begin{align}
+		\tilde{y}_t =& \frac{\sigma}{\sigma + \phi_y}E_t\{\tilde{y}_{t+1}\} \nonumber\\
+		& - \frac{1}{\sigma + \phi_y} \left[ \phi_\pi \left( \frac{k\sigma}{\sigma + \phi_y + k\phi_\pi} E_t\{\tilde{y}_{t+1}\} + \frac{\beta(\sigma + \phi_y) + k}{\sigma + \phi_y + k\phi_\pi} E_t\{\pi_{t+1}\} \right) - E_t\{\pi_{t+1}\} \right] \nonumber\\
+		\tilde{y}_t =& \frac{\sigma}{\sigma + \phi_y + k\phi_\pi} E_t\{\tilde{y}_t\} + \frac{1 - \beta\phi_\pi}{\sigma + \phi_y + k\phi_\pi} E_t\{\pi_{t+1}\} \label{2.3.1.2-4}
+	\end{align}
+We can rewrite \eqref{2.3.1.2-3} and \eqref{2.3.1.2-4} into matrix form:
+	\begin{align}
+		\begin{bmatrix}
+			\tilde{y}_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A_T}
+		\begin{bmatrix}
+			E_t\{\tilde{y}_t\}\\
+			E_t\{\pi_{t+1}\}
+		\end{bmatrix} \label{2.3.1.2-5}
+	\end{align}
+where:
+	\begin{align*}
+		\boldsymbol{A_T} &\equiv \Omega
+		\begin{bmatrix}
+			\sigma & 1 - \beta\phi_\pi\\
+			k\sigma & \beta(\sigma + \phi_y) + k 
+		\end{bmatrix}\\
+		\Omega &\equiv \frac{1}{\sigma + \phi_y + k\phi_\pi}	
+	\end{align*}
+Same as \textbf{2.3.1.1}, $\tilde{y}_t = \pi_t = 0$ is always \textbf{a} solution to \eqref{2.3.1.2-5}. If we want to make sure it is the only solution, we need make both eigenvalue lie within the unit circle. And the size of the eigenvalues depends on the policy parameters $(\phi_\pi, \phi_y)$, and non-policy parameters.\\
+Under the assumption that $(\phi_\pi, \phi_y)$ is non-negative, the necessary and sufficient condition for $\boldsymbol{A_T}$ to have 2 eigenvalues within the unit circle is given by:
+	\begin{align}
+		k(\phi_\pi - 1) + (1 - \beta)\phi_y > 0 \label{2.3.1.2-6}
+	\end{align}
+As for the interpretation of \eqref{2.3.1.2-6}, we can think as follows:
+	\begin{align*}
+		\lim\limits_{k\to\infty} \frac{di_{t+k}}{d\pi_t} &= \phi_\pi + \phi_y \lim\limits_{k\to\infty} \frac{d\tilde{y}_{t+k}}{d\pi_t}\\
+		&= \phi_\pi + \frac{\phi_y(1 - \beta)}{k}
+	\end{align*}
+Here:
+	\begin{align*}
+		\frac{d\pi_{t+k}}{d\pi_t} &= 1\\
+		\frac{d\tilde{y}_{t+k}}{d\pi_t} &= \frac{1- \beta}{k}
+	\end{align*}
+So we can see that the condition \eqref{2.3.1.2-6} is actually to make sure that the right side of the second equation large than 1, which means in the absence of permanent change in the natural rate and in response to a permanent increase in inflation, the central bank will eventually increase more than one-for-one the nominal interest rate.\\
+So, we can see that the central bank has to choose the proper policy $(\phi_\pi, \phi_y)$ large enough so that they will guarantee that the real rate eventual rises in the face of a permanent increase in inflation. This property is often referred to as the \textbf{Taylor principle}.\\\\
+Interestingly, if \eqref{2.3.1.2-6} is satisfied, both the output gap and inflation will be zero, which leads to:
+	\begin{align*}
+		i_t = r^n_t
+	\end{align*}
+It is just the sam as what we set as the policy rule in \textbf{2.3.1.1}. However, the difference is that here, the central bank implement kind of 'threat' to the eventual deviation of output gap and inflation, so that it can rule out the deviation\\\\\\
+\centerline{\textbf{2.3.1.3 A Forward-Looking Interest Rate Rule}}\\\\
+Let's consider the following forward-looking rule:
+	\begin{align}
+		i_t = r^n_t + \phi_\pi E_t\{\pi_{t+1}\} + \phi_y E_t\{\tilde{y}_{t+1}\} \label{2.3.1.3-1}
+	\end{align}
+Similarly, we first take it into \textbf{dynamic IS curve}:
+	\begin{align}
+		\tilde{y}_t &= E_t\{\tilde{y}_{t+1}\} - \frac{1}{\sigma} [ \phi_y E_t\{\tilde{y}_{t+1}\} + (\phi_\pi - 1) E_t\{\pi_{t+1}\}] \nonumber\\
+		&= \frac{\sigma - \phi_y}{\sigma} E_t\{\tilde{y}_{t+1}\} + \frac{1 - \phi_\pi}{\sigma} E_t\{\pi_{t+1}\} \label{2.3.1.3-2}
+	\end{align}
+Then we consider the \textbf{New Keynesian Phillips curve}:
+	\begin{align}
+		\pi_t &= \beta E_t\{\pi_{t+1}\} + k \left( \frac{\sigma - \phi_y}{\sigma} E_t\{\tilde{y}_{t+1}\} + \frac{1 - \phi_\pi}{\sigma} E_t\{\pi_{t+1}\} \right) \nonumber\\
+		&= k\frac{\sigma - \phi_y}{\sigma}E_t\{\tilde{y}_{t+1}\} + \left( \beta + k\frac{1 - \phi_\pi}{\sigma} \right)E_t\{\pi_{t+1}\} \label{2.3.1.3-3}
+	\end{align}
+We write \eqref{2.3.1.3-2} and \eqref{2.3.1.3-3} in matrix form:
+	\begin{align}
+		\begin{bmatrix}
+			\tilde{y}_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A_F}
+		\begin{bmatrix}
+			E_t\{\tilde{y}_{t+1}\}\\
+			E_t\{\pi_{t+1}\} 
+		\end{bmatrix} \label{2.3.1.3-4}
+	\end{align}
+where:
+	\begin{align*}
+		\boldsymbol{A_F} \equiv
+		\begin{bmatrix}
+			\frac{\sigma - \phi_y}{\sigma} & \frac{1 - \phi_\pi}{\sigma}\\
+			k\frac{\sigma - \phi_y}{\sigma} & \beta + k\frac{1 - \phi_\pi}{\sigma}
+		\end{bmatrix}
+	\end{align*}
+Same as \textbf{2.3.1.2}, if we want to show that $\tilde{y}_t = \pi_t = 0$ is the unique solution, we have conditions:
+	\begin{align}
+		k(\phi_\pi - 1) + (1 - \beta)\phi_y &> 0 \label{2.3.1.3-5}\\
+		k(\phi_\pi - 1) + (1 + \beta)\phi_y &< 2\sigma(1 + \beta) \label{2.3.1.3-6}
+	\end{align}
+\eqref{2.3.1.3-5} is just the \textbf{Taylor principle}, while \eqref{2.3.1.3-6} requires  the central bank do not react too strong to the deviation.
+
+\subsubsection{Shortcomings of Optimal Policy Rules}
+Even though the optimal interest rate rule has a relatively simple form, they are not likely to provide useful practical guidance for the conduct monetary policy.\\
+The reason is that they all require that the policy rate is adjusted one-for-one with the natural interest rate, thus implicitly assuming obeservability of the natural interest rate. However, this assumption is unrealistic because determination of the natural interest rate require exact knowledge of i) the economy's true model, ii) the values taken by all its parameters, and iii) the realized value of all the shock that affect the natural rate. Also, these rules requires the central bank know the natural output so that it can calculate the output gap.\\
+So, we will discuss the 'simple' monetary policy rule, which only uses observable variables and does not require any precise knowledge of the exact model of the values taken by its parameters.
+
+
+\subsection{Two Simple Monetary Policy Rules}
+As shown in the \textbf{Appendix 2.5.3}, under the assumptions made in this chapter, the approximation yields the following welfare loss function:
+	\begin{align*}
+		\mathbb{W} = \frac{1}{2} E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right)\tilde{y}^2_t + \frac{\epsilon}{\lambda}\pi^2_t \right]
+	\end{align*}
+Because we consider the neighborhood around the steady state, which means:
+	\begin{align*}
+		E_0\{ \tilde{y}_t \} &= 0\\
+		E_0\{ \pi_t \} &= 0
+	\end{align*}
+So we can approximate:
+	\begin{align*}
+		E_0\{ \tilde{y}^2_t \} &= var \left( \tilde{y}_t \right)\\
+		E_0\{ \pi^2_t \} &= var \left( \pi_t \right)
+	\end{align*}
+So the average welfare loss per period is:
+	\begin{align}
+		\mathbb{L} = \frac{1}{2} \left[ \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) var \left( \tilde{y}_t \right) + \frac{\epsilon}{\lambda} var \left( \pi_t \right) \right] \label{2.4-1}
+	\end{align}
+From \eqref{2.4-1}, we have some implications:\\
+1) The relative weight of output gat fluctuations in the loss function is increasing in $\sigma$, $\varphi$, and $\alpha$. The reason is that larger values of these parameters amplify the effect of any given deviation of output from its natural level on the size of the gap between the marginal rate of substitution and the marginal product of labor, which is a measure of the economy's aggregate inefficiency.
+\footnote{Intuitively, large $\sigma$ economic agents are highly averse to consumption fluctuations, $\varphi$ means steep disutility from labor, and large $\alpha$ labor plays a crucial role in production.}\\
+2) The relative weight of inflation fluctuations in the loss function is increasing in the elasticity of substitution among goods $\epsilon$, for $\epsilon$ amplifies the dispersion in the quantities of goods  consumed of different varieties caused by any given price dispersion.\\
+3) The relative weight of inflation fluctuations in the loss function is increasing in the degree of price stickiness $\theta$, since a greater $\theta$ amplifies the degree of price dispersion associated with any given deviation from zero inflation.
+
+\subsubsection{A Taylor Rule}
+First we consider the following interest rule:
+	\begin{align}
+		i_t = \rho + \phi_\pi \pi_t + \phi_y \hat{y}_t \label{2.4.1-1}
+	\end{align}
+where $\hat{y}_t \equiv \log(Y_t/Y)$. Here we assume that $\phi_pi, \phi_y > 0$ and satisfy the condition \eqref{2.3.1.2-6}. Here the choice of intercept $\rho = -\log\beta$ is consistent with a zero inflation steady state.\\
+The 'Taylor rule' gives $\phi_\pi = 1.5$ and $\phi_y = 0.125$.\\\\
+Here \eqref{2.4.1-1} can be rewritten as:
+	\begin{align}
+		i_t = \rho + \phi_pi \pi_t + \phi_y \tilde{y}_t + v_t
+	\end{align}
+where $v_t \equiv \phi_y \hat{y}^n_t$\\\\
+Then, we can take it into the \textbf{New Keynesian curve} and \textbf{dynamic IS equation}:
+	\begin{align*}
+		\begin{bmatrix}
+			\tilde{y}_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A_T}
+		\begin{bmatrix}
+			E_t\{ \tilde{y}_{t+1} \}\\
+			E_t\{ \pi_{t+1} \}
+		\end{bmatrix} + \boldsymbol{B_T}(\hat{r}^n_t - v_t)
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{A_T} &\equiv \Omega \begin{bmatrix}
+									   		\sigma & 1 - \beta\phi_\pi\\
+									   		\sigma k & k + \beta(\sigma + \phi_y)
+									   \end{bmatrix}\\
+		\boldsymbol{B_T} &\equiv \Omega \begin{bmatrix}
+											1\\
+											k
+										\end{bmatrix}\\
+		\Omega &\equiv \frac{1}{\sigma + \phi_y + k\phi_\pi}\\
+		\hat{r}^n_t &\equiv r^n_t - \rho
+	\end{align*}
+Here we can rewrite $\hat{r}^n_t - v_t$:
+	\begin{align*}
+		\hat{r}^n_t - v_t &= - \sigma(1 - \rho_a)\psi_{ya}a_t + (1 - \rho_z)z_t - \phi_y\psi_{ya}a_t\\
+		&= -\psi_{ya}[\sigma(1 - \rho_a) + \phi_y]a_t + (1 - \rho_z)z_t
+	\end{align*}
+where:
+	\begin{align*}
+		\psi_{ya} \equiv \frac{1 + \varphi}{\sigma + \varphi + \alpha(1 - \sigma)} > 0
+	\end{align*}
+By solving the equation set, we have some findings:\\
+1) If the technology shock is the source of fluctuation.\\
+\indent i) A higher $\phi_y$ leads to a lower fluctuation in output and a higher fluctuation in output gap and inflation, and hence a welfare loss.\\
+\indent ii) The smallest welfare loss is attained when the monetary authority only responds to the inflation, which means $\phi_y = 0$ and increases $\phi_\pi$.\\
+2) If the demand shock is the source of fluctuation.\\
+\indent i) Increases in either $\phi_\pi$ and $\phi_y$ appear to be effective at stabilizing the welfare-relevant variables and reducing welfare losses.\\
+In conclusion, a simple Taylor-type rule that responds aggressively to the movements in inflation can be approximate arbitrarily well the optimal policy.
+
+\subsubsection{A Constant Money Growth Rule}
+Next, we consider a simple rule consisting of a constant growth rate for the money supply. A zero money supply growth rate is assumed, which is consistent with zero inflation in the steady state, formally:
+	\begin{align*}
+		\Delta m_t = 0,\ \forall\ t
+	\end{align*}
+If we want to take the money supply into the new Keynesian model, we need a money supply equation, which is:
+	\begin{align*}
+		l_t = y_t - \eta i_t - \zeta_t
+	\end{align*}
+where $l_t \equiv m_t - p_t$ denotes real balances and $\zeta_t$ is an exogenous money demand shock following the process:
+	\begin{align*}
+		\Delta \zeta_t = \rho_\zeta \Delta \zeta_{t-1} + \varepsilon^{\zeta}_t,\ \rho_\zeta \in [0, 1)
+	\end{align*}
+Then we write the money demand equation into the form of deviation from steady state:
+	\begin{align*}
+		\hat{l}_t = \tilde{y}_t + \hat{y}^n_t - \eta \hat{i}_t - \zeta_t
+	\end{align*}
+Let $l^+_t \equiv l_t + \zeta_t$ denotes real balances adjusted by the exogenous component of money demand,
+	\begin{align*}
+		\hat{i}_t = \frac{1}{\eta}(\tilde{y}_t + \hat{y}^n_t - \hat{l}^+_t)
+	\end{align*}
+And we know that:
+	\begin{align*}
+		\hat{l}^+_{t-1} &= m_{t-1} - p_{t-1} + \zeta_{t-1}\\
+		&= m_t - \Delta m_t - (p_t - \pi_t) + \zeta_t - \Delta \zeta_t\\
+		&= \hat{l}_t + \pi_t - \Delta \zeta_t
+	\end{align*} 
+Same as \textbf{1.4.2}, take them into \textbf{dynamic IS curve} and \textbf{New Keynesian Phillips curve}, we have:
+	\begin{align}
+		\textbf{A}_{M,0}\begin{bmatrix} 
+							\tilde{y}_t\\
+							\pi_t\\
+							\hat{l}^+_{t-1}
+						\end{bmatrix} = 
+		\textbf{A}_{M,1}\begin{bmatrix}
+							E_t\{\tilde{y}_{t+1}\}\\
+							E_t\{\pi_{t+1}\}\\
+							\hat{l}^+_t
+						\end{bmatrix} +
+		\textbf{B}_{M}  \begin{bmatrix}
+							\hat{r}^n_t\\
+							\hat{y}^n_t\\
+							\Delta \zeta_t	
+						\end{bmatrix} \label{1.4.2-eqs}
+	\end{align}
+where:
+	\begin{align*}
+		\textbf{A}_{M,0} \equiv \begin{bmatrix}
+									1 + \sigma\eta & 0 & 0\\
+									-k & 1 & 0\\
+									0 & -1 & 1
+								\end{bmatrix};\
+		\textbf{A}_{M,1} \equiv \begin{bmatrix}
+									\sigma\eta & \eta & 1\\
+									0 & \beta & 0\\
+									0 & 0 & 1
+								\end{bmatrix};\
+		\textbf{B}_{M} \equiv   \begin{bmatrix}
+									\eta & -1 & 0\\
+									0 & 0 & 0\\
+									0 & 0 & -1
+								\end{bmatrix}
+	\end{align*} 
+The constant \textbf{money growth rule} performs reasonably well in the face of technology or demand shocks, and may even outperform a \textbf{poorly specified Taylor rule} in some cases. However, it is inferior to an \textbf{optimized version of the Taylor rule}, especially because it fails to handle money demand shocks-something that only interest rate rules can effectively absorb. Therefore, the desirability of a policy that targets monetary aggregates largely depends on the stability of money demand.
+
+
+
+
+\newpage
+\subsection{Appendix}
+\subsubsection{An Interest Rate Rule with an Endogenous Component}
+
+\subsubsection{A Forward-Looking Interest Rate rule}
+
+\subsubsection{A Second-Order Approximation to a Household's Welfare: the Case of an Undistorted Steady State}
+Here, we only consider the second-order approximation to the utility of the representative consumer when the economy remains in a neighborhood of an efficient steady state. In order to tighten the notation, we define:
+	\begin{align*}
+		U_t &\equiv U(C_t, N_t; Z_t)\\
+		U^n_t &\equiv U(C^n_t, N^n_t; Z^n_t)\\
+		U &\equiv U(C, N; Z)\\
+		U(C_t, N_t; Z_t) &= \bar{U}(C_t, N_t)Z_t
+	\end{align*}
+Then we consider the second-order Taylor expansion of $U_t$ around a steady state $(C, N)$ is:
+	\begin{align}
+		U_t - U \simeq &U_C C \left( \frac{C_t - C}{C} \right) + U_N N \left( \frac{N_t - N}{N} \right) + \frac{1}{2} U_{CC} C^2 \left( \frac{C_t - C}{C} \right)^2 \nonumber\\
+		&+ \frac{1}{2} U_{NN} N^2 \left( \frac{N_t - N}{N} \right)^2 + U_C C \left( \frac{C_t - C}{C} \right) \left( \frac{Z_t - Z}{Z} \right) \nonumber\\
+		&+ U_N N \left( \frac{N_t - N}{N} \right) \left( \frac{Z_t - Z}{Z} \right) + t.i.p. \label{2.5.3-1}
+	\end{align} 
+where $t.i.p$ means terms independent of policy.\\\\
+For a term like $\frac{X_t - X}{X}$, the second-order approximation around the steady state can be written as:
+	\begin{align*}
+		\frac{X_t - X}{X} &\simeq \log\left( 1 + \frac{X_t - X}{X} \right)\\
+		& = \log\frac{X_t}{X}\\
+		&\simeq 0 + \hat{x}_t + \frac{1}{2}\hat{x}^2_t
+	\end{align*}
+where $\hat{x}_t \equiv x_t - x \equiv \log\frac{X_t}{X}$.\\\\
+Then \eqref{2.5.3-1} can be rewritten as
+\footnote{Here for some reason, $U_C C \left( \frac{C_t - C}{C} \right)$ do the second-order approximation and $\frac{1}{2} U_{CC} C^2 \left( \frac{C_t - C}{C} \right)^2$ only do the first-order approximation.}:
+	\begin{align}
+		U_t - U \simeq &U_C C \left( \hat{c}_t + \frac{1}{2}\hat{c}^2_t \right) + U_N N \left( \hat{n}_t + \frac{1}{2}\hat{n}^2_t \right) + \frac{1}{2} U_{CC} C^2 \left( \hat{c}_t \right)^2 \nonumber\\
+		&+ \frac{1}{2} U_{NN} N^2 \left( \hat{n}_t \right)^2 + U_C C \left( \hat{c}_t + \frac{1}{2}\hat{c}^2_t \right) z_t \nonumber\\
+		&+ U_N N \left( \hat{n}_t + \frac{1}{2}\hat{n}^2_t \right) z_t + t.i.p. \nonumber\\
+		= &U_C C \left[ \hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t \right] + U_N N \left[ \hat{n}_t (1 + z_t) + \frac{1 + \varphi}{2} \hat{n}^2_t \right] + t.i.p. \label{2.5.3-2}
+	\end{align}
+where:
+	\begin{align*}
+		\sigma &\equiv -\frac{U_{CC}}{U_C}C\\
+		\varphi &\equiv \frac{U_{NN}}{U_N}N\\
+		\hat{c}_t &\equiv \hat{y}_t
+	\end{align*}
+Then, for $N_t$, we have:
+	\begin{align*}
+		N_t &= \int^1_0 \left( \frac{Y_t(i)}{A_t} \right)^{\frac{1}{1 - \alpha}} di
+	\end{align*}
+from \textbf{Appendix 1.5.4}, we can rewrite it into log-linear form:
+	\begin{align*}
+		(1 - \alpha)\hat{n}_t = \hat{y}_t - a_t + d_t
+	\end{align*}
+where:
+	\begin{align*}
+		d_t \equiv (1 - \alpha) \log\int^1_0 \left( \frac{P_t(i)}{P_t} \right)^{-\frac{\epsilon}{1 - \alpha}}
+	\end{align*}
+From \textbf{Appendix 1.5.4}, we know that in a neighborhood of symmetric steady state, and up to a second-order approximation:
+	\begin{align*}
+		d_t \equiv \frac{\epsilon}{2\Theta} var_i\{ p_t(i) \}
+	\end{align*}
+where:
+	\begin{align*}
+		\Theta \equiv \frac{1 - \alpha}{1 - \alpha + \alpha\epsilon}
+	\end{align*}
+Then we can rewrite \eqref{2.5.3-2} (ignoring terms of third or higher order
+\footnote{Here, it seems only keep the important terms that have some practical meaning. Still can be discussed.}):
+	\begin{align*}
+		U_t - U \simeq &U_C C \left[ \hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t \right] + U_N N \left[ \hat{n}_t (1 + z_t) + \frac{1 + \varphi}{2} \hat{n}^2_t \right] + t.i.p.\\
+		= & U_C C \left[ \hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t \right]\\
+		&+ \frac{U_N N}{1 - \alpha} \left[ \hat{y}_t (1 + z_t) + \frac{\epsilon}{2\Theta} var_i\{ p_t(i) \} + \frac{1 + \varphi}{2(1 - \alpha)} \left( \hat{y}_t - a_t \right)^2 \right] + t.i.p.
+	\end{align*}
+And under the assumption of the efficiency of the steady state, $-\frac{U_N}{U_C} = MPN$. And $MPN = (1 - \alpha)(Y/N) = (1 - \alpha)(C/N)$, so we can rewrite:
+	\begin{align}
+		\frac{U_t - U}{U_C C} &\simeq \left[ \hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t \right] - \left[ \hat{y}_t (1 + z_t) + \frac{\epsilon}{2\Theta} var_i\{ p_t(i) \} + \frac{1 + \varphi}{2(1 - \alpha)} \left( \hat{y}_t - a_t \right)^2 \right] + t.i.p. \nonumber\\
+		&= -\frac{1}{2} \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \frac{1 + \varphi}{1 - \alpha} \left( \hat{y}_t - a_t \right)^2 - (1 - \sigma)\hat{y}^2_t \right] \nonumber\\
+		&= -\frac{1}{2} \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) \hat{y}^2_t - 2 \left( \frac{1 + \varphi}{1 - \alpha} \right) \hat{y}_ta_t \right] + t.i.p. \label{2.5.3-3}
+	\end{align}
+And from \eqref{1.3-yn}, we know that:
+	\begin{align*}
+		\hat{y}^n_t = \frac{1 + \varphi}{\sigma(1 - \alpha) + \varphi + \alpha}a_t
+	\end{align*}
+So we have:
+	\begin{align*}
+		2 \left( \frac{1 + \varphi}{1 - \alpha} \right) \hat{y}_ta_t &= 2 \frac{\sigma(1 - \alpha) + \varphi + \alpha}{1 + \varphi} \left( \frac{1 + \varphi}{1 - \alpha} \right) \hat{y}_t\hat{y}^n_t\\
+		&= 2 \left(\sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) \hat{y}_t\hat{y}^n_t
+	\end{align*}
+So we can rewrite \eqref{2.5.3-3}:
+	\begin{align}
+		\frac{U_t - U}{U_C C} &\simeq -\frac{1}{2} \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) (\hat{y}^2_t - 2\hat{y}_t\hat{y}^n_t) \right] + t.i.p. \nonumber\\
+		&= -\frac{1}{2} \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) (\hat{y}_t - \hat{y}^n_t)^2 \right] + t.i.p. \nonumber\\
+		&= -\frac{1}{2} \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) \tilde{y}^2_t \right] + t.i.p. \label{2.5.3-4}
+	\end{align}
+Here, $\hat{y}_t - \hat{y}^n_t = \tilde{y}_t$, $\left( \hat{y}^n_t \right)^2$ is in $t.i.p.$.\\\\
+So, the second-order approximation to the consumer's welfare losses can be written as a fraction of steady state consumption as:
+	\begin{align}
+		\mathbb{W} &= -E_0 \sum\limits^\infty_{t=0} \beta^t \left( \frac{U_t - U}{U_CC} \right) \nonumber\\
+		&= \frac{1}{2} E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \frac{\epsilon}{\Theta} var_i\{ p_t(i) \} + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) \tilde{y}^2_t \right] \nonumber\\
+		&= \frac{1}{2} E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \left( \frac{\epsilon}{\lambda} \right) \pi^2_t + \left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right) \tilde{y}^2_t \right] \label{2.5.3-5}
+	\end{align}
+where:
+	\begin{align*}
+		\lambda \equiv \frac{(1 - \theta)(1 - \beta\theta)}{\theta} \Theta
+	\end{align*}
+
+
+
+\newpage %%Section 3%%
+\section{Monetary Policy Tradeoffs: Discretion versus Commitment}
+In last chapter, we find that a policy that seeks to replicate the flexible price equilibrium allocation is both feasible and optimal in that context. That policy requires central bank to keep the price level fully stabilized.\\
+However, in real world, then central bank do not claim to be seeking to stabilize inflation completely. Instead, the presence of short-run tradeoffs have led inflation targeting central banks to pursue a policy that allows for a partial accommodation of inflationary pressures in the short run. This is in order to avoid an excessive instability of output and employment, while remaining committed to a medium-term inflation target. A policy of that kind is often referred to in the literature as \textbf{flexible inflation targeting}.\\\\
+The central banks may face several nontrivial tradeoff.\\
+1) The gap between the natural and the efficient levels of output varies over time, but both variables coincide in the steady state, the steady state is efficient.\\
+2) The steady state itself is inefficient.\\
+3) The optimal monetary authority resulting from the presence of a zero bound on the nominal interest rate.\\
+And for each tradeoff, the central bank can choose from:\\
+1) Discretionary policy, where central bank makes whatever decision is optimal at that time, without feeling bound by earlier promises.\\
+2) Policy with commitment, where the central bank can commit to a state-contingent policy plan.
+
+
+\subsection{Monetary Policy Tradeoffs under an Efficient Steady State}
+In our new Keynesian model, even the price is flexible, because of some real imperfections, the equilibrium is still inefficient. Here we consider a special case, where the possible inefficiencies associated with the flexible equilibrium do not affect the steady state, which is still efficient.\\
+Thus, we make some clarification that the natural level of output, $y^n_t$, and its efficient counterpart, $y^e_t$, are different. And we assume that the gaps between them follow a stationary process with a zero mean.\\
+From \textbf{Appendix 3.2.1}, under our assumption that we know that: the gaps between them follow a stationary process with a zero mean, we have the welfare losses is proportional to:
+	\begin{align}
+		E_0 \sum\limits^\infty_{t=0} \beta^t (\pi^2_t + \vartheta x^2_t) \label{3.1-1}
+	\end{align}
+where $x_t \equiv y_t - y^e_t$ can be interpreted as the welfare-relevant output gap.\\
+Coefficient $\vartheta$ denotes the wight of output gap fluctuations in the loss function, and is defined as:
+	\begin{align*}
+		\vartheta =& \frac{\left[ \varphi + \alpha + \sigma(1 - \alpha) \right]\lambda}{(1 - \alpha)\epsilon} = \frac{k}{\epsilon} 
+	\end{align*}
+More generally, one can interpret $\vartheta$ as the weight attached by the central bank to deviations of output from its efficient level in its own loss function, which does not necessarily have to coincide with the household's.\\
+Then we can substitute $\tilde{y}_t$ in the \textbf{New Keynesian Phillips curve} by $x_t$:
+	\begin{align}
+		\pi_t = \beta E_t\{ \pi_{t+1} \} + kx_t + u_t \label{3.1-2}
+	\end{align}
+where $u_t \equiv k(y^e_t - y^n_t)$.\\\\
+Thus, we can say that the job of the central banks is to minimize \eqref{3.1-1} subject to \eqref{3.1-2}. And there are 2 features worth emphasizing:\\
+1) Under the previous assumption, $u_t$ is exogenous with respect to monetary policy. As a result, the central bank will always take the current and anticipated values of $u_t$ as given when doing the optimal problem.\\
+2) Time variations in the gap between the efficient output, $y^e_t$, and natural output, $y^n_t$, generate a tradeoff for the monetary authority, since they make it impossible to attain simultaneously zero inflation and an efficient level of activity.\\
+\indent i.e., if the central bank want to keep $\pi_t = 0$, then $x_t = -\frac{u_t}{k} \neq 0$, which means the output is not efficient. If the central bank want to keep the output efficient, which means $x_t = 0$, then $\pi_t \neq 0$ unless we anticipate a recession.\\\\
+Following much of the literature, the disturbance $u_t$ is referred to as a \textbf{cost-push shock}. And we assume that $u_t$ follows the exogenous AR(1) process:
+	\begin{align}
+		u_t = \rho_u u_{t-1} + \varepsilon^u_t \label{3.1-3}
+	\end{align}
+where $\rho_u \in [0, 1)$, and $\{ \varepsilon^u_t \}$ is a white-noise process with constant variance $\sigma^2_u$.\\\\
+Also, similar to \eqref{3.1-2}, we can rewrite the \textbf{dynamic IS equation} into the output gap form:
+	\begin{align}
+		x_t = &y_t - y^e_t\\
+		= &\tilde{y}_t 
+	\end{align}
+
+
+
+
+
+
+\subsubsection{Optimal Discretionary Policy}
+First, we consider the case where the central bank does not commit itself to any future action. All the central bank does is to make the optimal choice in each period. Then the optimality problem becomes a sequential problem. The central bank just needs to be optimal in each period. The optimality problem is:
+	\begin{align*}
+		&\min \pi^2_t + \vartheta x^2_t\\
+		s.t.&\\
+		&\pi_t = k x_t + v_t\\
+		&v_t \equiv \beta E_t\{ \pi_{t+1} \} + u_t 
+	\end{align*}
+$v_t$ is the term that is taken as given by the monetary authority.
+\footnote{Why $\beta E_t\{ \pi_{t+1} \}$ is taken as given? As we said before, the authority only cares current period. Which means the past inflation will not influence the future one, thus at the state of current period, the expectation of future inflation can be seen as given.}\\
+And we can solve the optimality condition:
+	\begin{align}
+		x_t = -\frac{k}{\vartheta}\pi_t \label{3.1.1-1}
+	\end{align}
+The interpretation is simple:\\
+In the face of inflationary pressures resulting from a cost-push shock, then central bank must drive output below the efficient level, thus creating negative gap, to dampen the rise in inflation.\\\\
+And we take \eqref{3.1.1-1} into \eqref{3.1-2}:
+	\begin{align*}
+		\pi_t = \frac{\vartheta\beta}{\vartheta + k^2} E_t\{ \pi_{t+1} \} + \frac{\vartheta}{\vartheta + k^2}u_t 
+	\end{align*} 
+We iterate it forward and get:
+	\begin{align}
+		\pi_t = \frac{\vartheta}{k^2 + \vartheta(1 - \beta\rho_u)}u_t \label{3.1.1-2}
+	\end{align}
+And combining \eqref{3.1.1-1} and \eqref{3.1.1-2}:
+	\begin{align}
+		x_t = -\frac{k}{k^2 + \vartheta(1 - \beta\rho_u)}u_t \label{3.1.1-3} 
+	\end{align}
+Thus, under the optimal discretionary policy, the central bank lets output gap and inflation fluctuate in proportion to the current value of the cost-push shock, $u_t$.\\\\
+If the the central bank does not allow output gap, which means $x_t = 0$, then we have:
+	\begin{align*}
+		\pi_t = \beta E_t\{ \pi_{t+1} \} + u_t
+	\end{align*}
+Still we iterate it forward and get:
+	\begin{align}
+		\pi_t = \frac{1}{1 - \beta\rho_u}u_t \label{3.1.1-4}
+	\end{align}
+If we compare \eqref{3.1.1-2} and \eqref{3.1.1-4}, we can see that the increase of inflation is much smaller under the discretionary policy, because of the negative response in $x_t$.\\\\
+Another important thing is that the price level will be changed permanently.\\\\\\
+\centerline{\textbf{3.1.1.1 The Interest Rate Rule}}\\\\
+Now, let's consider the interest rate rule the central bank can take under the discretionary policy. It requires the output gap equals \eqref{3.1.1-3}. First we consider the Euler equation \eqref{1.1-2}:
+	\begin{align*}
+		c_t = E_t\{ c_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t
+	\end{align*}
+In equilibrium market clear condition $y_t = c_t$:
+	\begin{align*}
+		y_t = E_t\{ y_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t
+	\end{align*}
+And we know that $x_t = y_t - y^e_t$, which means $E_t\{ x_t \} = E_t\{ y_t \} - E_t\{ y^e_t \}$, thus:
+	\begin{align}
+		x_t = &y_t - y^e_t \nonumber\\
+		= &E_t\{ y_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t - y^e_t \nonumber\\
+		= &E_t\{ x_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t + E_t\{ y^e_t \} - y^e_t \nonumber\\
+		= &E_t\{ x_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t + E_t\{ \Delta y^e_t \} \nonumber\\
+		= &E_t\{ x_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - r^e_t)\label{3.1.1.1-1}
+	\end{align}
+where the natural interest rate:
+	\begin{align*}
+		r^e_t \equiv &\rho + \sigma E_t\{ \Delta y^e_t \} + (1 - \rho_z)z_t\\
+		= &\rho + \sigma E_t\{ \psi_{ya}a_{t+1} + \psi_y - \psi_{ya} a_t - \psi_y \} + (1 - \rho_z)z_t\\
+		= &\rho - \sigma(1 - \rho_a)\psi_{ya} a_t + (1 - \rho_z)z_t
+	\end{align*} 
+is the real interest rate consistent with the efficient level of output.\\
+Then, we combine \eqref{3.1.1.1-1} with \eqref{3.1.1-2} and \eqref{3.1.1-3}, we get:
+	\begin{align}
+		i_t = r^e_t + \Psi_i u_t \label{3.1.1.1-2}
+	\end{align}
+where:
+	\begin{align*}
+		\Psi_i \equiv \frac{\vartheta\rho_u + \sigma k(1 - \rho_u)}{k^2 + \vartheta(1 - \beta\rho_u)} > 0
+	\end{align*}
+Then, we take \eqref{3.1.1.1-2} into \eqref{3.1.1.1-1}:
+	\begin{align}
+		x_t = E_t\{ x_{t+1} \} - \frac{1}{\sigma}(\Psi_i u_t - E_t\{ \pi_{t+1} \}) \label{3.1.1.1-3}
+	\end{align}
+And we take \eqref{3.1.1.1-3} into \eqref{3.1-2}:
+	\begin{align}
+		\pi_t = &\beta E_t\{ \pi_{t+1} \} + kx_t + u_t \nonumber\\
+		= &\beta E_t\{ \pi_{t+1} \} + k \left[ E_t\{ x_{t+1} \} - \frac{1}{\sigma}(\Psi_i u_t - E_t\{ \pi_{t+1} \}) \right] + u_t \nonumber\\
+		= &\left( \beta + \frac{k}{\sigma} \right)E_t\{ \pi_{t+1} \} + kE_t\{ x_{t+1} \} + \left( 1 - \frac{k\Psi_i}{\sigma} \right)u_t \label{3.1.1.1-4}
+	\end{align}
+Then we can rewrite \eqref{3.1.1.1-3} and \eqref{3.1.1.1-4} into matrix form:
+	\begin{align}
+		\begin{bmatrix}
+			x_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A_O}
+		\begin{bmatrix}
+			E_t\{ x_{t+1} \}\\
+			E_t\{ \pi_{t+1} \} + \boldsymbol{B_O}u_t \label{3.1.1.1-5}
+		\end{bmatrix}
+	\end{align}
+where:
+	\begin{align*}
+		\boldsymbol{A_O} \equiv \begin{bmatrix}
+									1 & \frac{1}{\sigma}\\
+									k & \beta+ \frac{k}{\sigma}
+								\end{bmatrix}; \indent
+		\boldsymbol{B_O} \equiv \begin{bmatrix}
+									-\frac{\Psi_i}{\sigma}\\
+									1 - \frac{k\Psi_i}{\sigma}
+								\end{bmatrix}
+	\end{align*}
+We know that $\boldsymbol{A_O}$ has always one eigenvalue outside the unit circle, implying \eqref{3.1.1.1-5} has a multiplicity of solutions, only one of them corresponds to the one corresponds to \eqref{3.1.1-2} and \eqref{3.1.1-3}.\\\\
+If we want to guarantee the uniqueness of the equilibrium, we can append to the expression for the equilibrium nominal rate, \eqref{3.1.1.1-2}, a term proportional to the deviation between inflation and the equilibrium value of the inflation under that policy, with a coefficient of proportionality greater than one:
+	\begin{align}
+		i_t = &r^e_t + \Psi_i u_t + \phi_\pi \left( \pi_t - \frac{\vartheta}{k^2 + \vartheta(1 - \beta\rho_u)}u_t \right) \nonumber\\
+		= &r^e_t + \Theta_i u_t + \phi_\pi \pi_t
+	\end{align}
+where:
+	\begin{align*}
+		\Theta_i \equiv &\frac{\sigma(1 - \rho_u) - \vartheta(\phi_\pi - \rho_u)}{k^2 + \vartheta(1 - \beta\rho_u)}\\
+		\phi_\pi > &1
+	\end{align*}
+
+\subsubsection{Optimal Policy under Commitment}
+Now, let's analyze the optimal policy under commitment. Such a plan consists of a specification of the desired levels of inflation and output at all possible dates and states of natural, current and future. The authority is assumed to choose a state-contingent sequence $\{ x_t, \pi_t \}^\infty_{t=0}$ that minimizes:
+	\begin{align*}
+		&E_0 \sum\limits^\infty_{t=0} \beta^t(\pi^2_t + \vartheta x^2_t)\\
+		s.t.&\\
+		&\pi_t = \beta E_t\{ \pi_{t+1} \} + kx_t + u_t
+	\end{align*}
+We use the Lagrangian method:
+	\begin{align*}
+		\mathscr{L} = &E_0 \sum\limits^\infty_{t=0} \beta^t \frac{1}{2} (\pi^2_t + \vartheta x^2_t) +  E_0 \sum\limits^\infty_{t=0} \beta^t \xi_t (\pi_t - \beta E_t\{ \pi_{t+1} \} - kx_t - u_t)\\
+		= &E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \frac{1}{2} (\pi^2_t + \vartheta x^2_t) + \xi_t (\pi_t - \pi_{t+1} - kx_t) \right] + t.i.p.
+	\end{align*}
+The optimality conditions are:
+	\begin{align*}
+		\vartheta x_t - k\xi_t = &0,\ t = 0, 1, 2, 3, \ldots\\
+		\pi_t + \xi_t - \xi_{t-1} = &0,\ t = 0, 1, 2, 3, \ldots
+	\end{align*}
+We also have that $	\xi_{-1} = 0$, because the inflation equation corresponding to period -1 is not effective contraint for the central bank choosing its plan in period 0.\\
+Thus, we can have:
+	\begin{align}
+		x_0 = &-\frac{k}{\vartheta}\pi_0 \label{3.1.2-1}\\
+		\Delta x_t = &-\frac{k}{\vartheta}\pi_t,\ t = 1, 2, 3, \ldots \label{3.1.2-2}
+	\end{align}
+Then we can have:
+	\begin{align}
+		x_t = -\frac{k}{\vartheta}\hat{p}_t,\ t = 0, 1, 2, 3, \ldots \label{3.1.2-3}
+	\end{align}
+where $\hat{p}_t \equiv p_t - p_{-1}$. Here we can see it as the deviation between the price level and an 'implicit target' given by the price level prevailing one period before the central bank chooses its plan. And \eqref{3.1.2-3} can be seen as a target rule for the central bank must follow each period under the policy with commitment.\\\\
+If we combine \eqref{3.1.2-3} with \eqref{3.1-2}:
+	\begin{align}
+		\hat{p}_t = &p_t - p_{-1} \nonumber\\
+		= &p_t - p_{t-1} + p_{t-1} - p_{-1} \nonumber\\
+		= &\pi_t + \hat{p}_{t-1} \nonumber\\
+		= &\beta E_t\{ \pi_{t+1} \} + kx_t + u_t + \hat{p}_{t-1} \nonumber\\
+		= &\beta E_t\{ \hat{p}_{t+1} - \hat{p}_t \} + k \left( -\frac{k}{\vartheta}\hat{p}_t \right) + u_t + \hat{p}_{t-1} \nonumber\\
+		= &\beta E_t\{ \hat{p}_{t+1} \} - \beta \hat{p}_t - \frac{k^2}{\vartheta}\hat{p}_t + u_t + \hat{p}_{t-1}\nonumber\\
+		= &\gamma \hat{p}_{t-1} + \gamma \beta E_t\{ \hat{p}_{t+1} \} + \gamma u_t,\ t = 0, 1, 2, 3, \ldots \label{3.1.2-4}
+	\end{align}
+where $\gamma \equiv \frac{\vartheta}{\vartheta(1 + \beta) + k^2}$.\\
+The stationary solution to \eqref{3.1.2-4} is:
+	\begin{align}
+		\hat{p}_t = \delta \hat{p}_{t-1} + \frac{\delta}{1 - \delta\beta\rho_u}u_t,\ t = 1, 2, 3, \ldots \label{3.1.2-5}
+	\end{align}
+where:
+	\begin{align*}
+		\delta \equiv \frac{1 - \sqrt{1 - 4\beta\gamma^2}}{2\gamma \beta} \in (0, 1)
+	\end{align*}
+Then, take \eqref{3.1.2-5} into \eqref{3.1.2-3}:
+	\begin{align}
+		x_t = \delta x_{t-1} - \frac{k\delta}{\vartheta(1 - \delta\beta\rho_u)}u_t \label{3.1.2-6}
+	\end{align}\\\\
+\centerline{\textbf{3.1.2.1 The Interest Rate Rule}}\\\\
+If we want to derive the interest rate rule, similar to \textbf{3.1.1.1}, we first take 
+	\begin{align}
+		x_t = &-\frac{k}{\vartheta}\hat{p}_t \nonumber\\
+		= &E_t\{ -\frac{k}{\vartheta}\hat{p}_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - r^e_t) \nonumber\\
+		= &-\frac{k}{\vartheta}E_t\{ \delta \hat{p}_{t} + \frac{\delta}{1 - \delta\beta\rho_u}u_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - r^e_t) \nonumber\\
+		= &-\frac{k}{\vartheta}E_t\{ \delta \hat{p}_{t} + \frac{\delta}{1 - \delta\beta\rho_u}u_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \hat{p}_{t+1} - \hat{p}_t \} - r^e_t) \label{3.1.2.1-1}
+	\end{align}
+If we make an assumption that $\rho_u = 0$, which means:
+	\begin{align*}
+		E_t\{ u_{t+1} \} = 0
+	\end{align*}	
+We can solve \eqref{3.1.2.1-1}:
+	\begin{align*}
+		i_t = &r^e_t - (1 - \delta)\left( 1 - \frac{\sigma k}{\vartheta} \right) \hat{p}_t\\
+		= &r^e_t - (1 - \delta)\left( 1 - \frac{\sigma k}{\vartheta} \right)\sum\limits^t_{k=0} \delta^{k+1}u_{t-k}
+	\end{align*}
+
+
+\subsection{The Monetary Policy Problem: the Case of a Distorted Steady State}
+In this chapter, we consider the presence of uncorrected real distortions generates a permanent gap between the natural and the efficient level of outputs. We use the parameter $\Phi$ to represent the size of the steady state distortion:
+	\begin{align*}
+		-\frac{U_N}{U_C} = (1 - \Phi)MPN
+	\end{align*}
+we assume that $\Phi > 0$, which implies that the steady state levels of output and employment are below their respective efficient levels. As shown in the \textbf{Appendix 3.3.1}, the welfare losses in a neighborhood of the zero inflation steady state is:
+	\begin{align}
+		E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \frac{1}{2}(\pi^2_t + \vartheta \hat{x}^2_t) - \Lambda \hat{x}_t \right] \label{3.2-1}
+	\end{align} 
+where:
+	\begin{align*}
+		\Lambda \equiv &\frac{\Phi\lambda}{\epsilon} > 0\\
+		\vartheta \equiv &\left( \sigma + \frac{\varphi + \alpha}{1 - \alpha} \right)\frac{\lambda}{\epsilon} = \frac{k}{\epsilon}\\
+		\hat{x}_t \equiv &x_t - x\\
+		x \equiv & y^n - y^e < 0
+	\end{align*}
+Then as for the \textbf{New Keynesian Phillips curve}:
+	\begin{align}
+		\pi_t = &\beta E\{ \pi_{t+1} \} + k\tilde{y} \nonumber\\
+		= &\beta E\{ \pi_{t+1} \} + k(y_t - y^e_t + y^e_t - y^n_t) \nonumber\\
+		= &\beta E\{ \pi_{t+1} \} + k[y_t - y^e_t - (y^n - y^e) + (y^n - y^e) + y^e_t - y^n_t] \nonumber\\
+		= &\beta E\{ \pi_{t+1} \} + k(x_t - x + \hat{y}^e_t - \hat{y}^n_t) \nonumber\\
+		= &\beta E\{ \pi_{t+1} \} + k\hat{x}_t + u_t \label{3.2-2}
+	\end{align}
+where $u_t \equiv k(\hat{y}^e_t - \hat{y}^n_t)$.\\
+Thus, the monetary authority will seek to minimize \eqref{3.2-1} subject to \eqref{3.2-2}.
+
+\subsubsection{Optimal Discretionary Policy}
+Under the discretionary policy, the central bank will seek the optimality in each period:
+	\begin{align*}
+		&\min \frac{1}{2}(\pi^2_t + \vartheta\hat{x}^2_t) - \Lambda\hat{x}_t\\
+		s.t.&\\
+		&\pi_t = k\hat{x}_t + v_t
+	\end{align*}
+where $v_t \equiv \beta E_t\{ \pi_{t+1} \} + u_t$ represents term independent of policy.\\\\
+The optimality condition is:
+	\begin{align}
+		\hat{x}_t = \frac{\Lambda}{\vartheta} - \frac{k}{\vartheta}\pi_t \label{3.2.1-1}
+	\end{align}
+Compared with \eqref{3.1.1-1}, we can see that given inflation, the authority will choose a more expansionary policy.\\
+Plug \eqref{3.2.1-1} into \eqref{3.2-2}:
+	\begin{align}
+		\pi_t = \frac{\Lambda k}{k^2 + \vartheta(1 - \beta)} + \frac{\vartheta}{k^2 + \vartheta(1 - \beta\rho_u)}u_t \label{3.2.1-2}
+	\end{align}
+And plug \eqref{3.2.1-2} into \eqref{3.2.1-1}:
+	\begin{align}
+		\hat{x}_t = \frac{\Lambda(1 - \beta)}{k^2 + \vartheta(1 - \beta)} - \frac{k}{k^2 + \vartheta(1 - \beta\rho_u)}u_t \label{3.2.1-3}
+	\end{align}
+From \eqref{3.2.1-2} and \eqref{3.2.1-3} we can see that, $\Lambda$ doesn't interact with $u_t$, which means that the presence of the distorted steady state does not affect the response of the output gap and inflation to cost-push shocks. It affects the average levels of inflation and the output gap around which the economy fluctuates.\\
+In particular, if the natural level of output and employment are inefficient low ($\Lambda > 0$), the optimal discretionary policy leads to a positive average inflation, because the central bank wants to push output above its natural steady state level. Thus the steady state:
+	\begin{align*}
+		\pi = &\frac{\Lambda k}{k^2 + \vartheta(1 - \beta)}\\
+		\hat{x} = &\frac{\Lambda(1 - \beta)}{k^2 + \vartheta(1 - \beta)}
+	\end{align*} 
+
+\subsubsection{Optimal Policy under Commitment}
+Now we consider the monetary policy under commitment, similarly, the optimality problem becomes:
+	\begin{align*}
+		&E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \frac{1}{2}(\pi^2_t + \vartheta \hat{x}^2_t) - \Lambda \hat{x}_t \right]\\
+		s.t.&\\
+		&\pi_t = \beta E_t\{ \pi_{t+1} \} =k\hat{x}_t + u_t
+	\end{align*}
+We use the Lagrangian method:
+	\begin{align*}
+		\mathscr{L} = E_0 \sum\limits^\infty_{t=0} \beta^t \left[ \frac{1}{2}(\pi^2_t + \vartheta \hat{x}^2_t) - \Lambda \hat{x}_t + \xi_t(\pi_t - k\hat{x}_t - \beta\pi_{t+1}) \right] + t.i.p.
+	\end{align*}
+The corresponding optimality conditions are:
+	\begin{align*}
+		\vartheta\hat{x}_t - k\xi_t - \Lambda = &0,\ t = 0, 1, 2, 3, \ldots\\
+		\pi_t + \xi_t - \xi_{t-1} = &0,\ t = 0, 1, 2, 3, \ldots
+	\end{align*}
+Still, we set $\xi_{-1} = 0$. Thus, we can combine into a single condition:
+	\begin{align}
+		\vartheta\hat{x}_t = -k\hat{p}_t + \Lambda,\ t = 0, 1, 2, 3, \ldots \label{3.2.2-1}
+	\end{align}
+And we take \eqref{3.2.2-1} into \textbf{NKPC}, \eqref{3.2-2}, we have:
+	\begin{align}
+		\hat{p}_t = &p_t - p_{t-1} + p_{t-1} - p_{-1} \nonumber\\
+		= &\pi_t + \hat{p}_{t-1} \nonumber\\
+		= &\beta E\{ \pi_{t+1} \} + k\hat{x}_t + u_t + \hat{p}_{t-1} \nonumber\\
+		= &\beta E\{ \hat{p}_{t+1} - \hat{p}_t \} + \frac{k}{\vartheta}(-k\hat{p}_t + \Lambda) + u_t + \hat{p}_{t-1} \nonumber\\
+		= &\gamma\hat{p}_{t-1} + \gamma\beta E_t\{ \hat{p}_{t+1} \} + \frac{\gamma k \Lambda}{\vartheta} + \gamma u_t,\ t = 0, 1, 2, 3, \ldots \label{3.2.2-2}
+	\end{align}
+where $\gamma \equiv \frac{\vartheta}{\vartheta(1 + \beta) + k^2} \in (0, 1)$.\\
+The stationary solution to \eqref{3.2.2-2} is:
+	\begin{align}
+		\hat{p}_t = \delta\hat{p}_{t-1} + \frac{\delta}{1 - \delta\beta\rho_u}u_t + \frac{\delta}{1 - \delta\beta}\left( \frac{k\Lambda}{\vartheta} \right),\ t = 0, 1, 2, 3, \ldots \label{3.2.2-3}
+	\end{align}
+Solve it backwards:
+	\begin{align}
+		\hat{p}_t = \left( \frac{1 - \delta^{t+1}}{1 - \delta} \right) \left( \frac{\delta}{1 - \delta\beta} \right) \left( \frac{k\Lambda}{\vartheta} \right) + \frac{\delta}{1 - \delta\beta\rho_u} \sum\limits^t_{k=0} \delta^k u_{t-k} \label{3.2.2-4}
+	\end{align}
+Also, we combine \eqref{3.2.2-1} and \eqref{3.2.2-3}:
+	\begin{align}
+		\hat{x}_t = \delta\hat{x}_{t-1} - \frac{k\delta}{\vartheta(1 - \delta\beta\rho_u)}u_t,\ t = 1, 2, 3, \ldots \label{3.2.2-5}
+	\end{align}
+with $\hat{x}_0$ is given by:
+	\begin{align}
+		\hat{x}_0 = -\frac{k\delta}{\vartheta(1 - \delta\beta\rho_u)}u_0 + \frac{\Lambda(1 - \delta)}{\vartheta} \label{3.2.2-6}
+	\end{align}
+We can compute:
+	\begin{align}
+		\hat{x}_t = \frac{\Lambda(1 - \delta)\delta^k}{\vartheta} - \frac{k\delta}{\vartheta(1 - \delta\beta\rho_u)} \sum\limits^t_{k=0} \delta^k u_{t-k} \label{3.2.2-7}
+	\end{align}
+
+
+\subsection{Optimal Monetary Policy under a Zero Lower Bound on the Nominal Interest Rate}
+Because of the presence of the currency, nominal rate cannot be negative, otherwise people will only hold currency, not the risk properties. It can be represented by a simple inequality constraint:
+	\begin{align}
+		i_t \geq 0 \label{3.3-1}
+	\end{align}
+In the following chapter, we will assume that there is no distortion between the steady state, which means: $y^e_t = y^n_t$. Thus the 2 important equations can be written as:
+	\begin{align}
+		\pi_t = &\beta E_t\{ \pi_{t+1} \} + kx_t \label{3.3-2}\\
+		x_t = &E_t\{ x_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi_{t+1} \} - r^n_t) \label{3.3-3}
+	\end{align}
+Here, different from the basic New Keynesian model that
+	\begin{align*}
+		r^n_t = \sigma(E_t{y^n_{t+1}} - y^n_t) + \rho + (1 - \rho_z)z_t
+	\end{align*}
+for simplicity, we assume that the natural interest rate follows an exogenous deterministic path. We assume that:
+	\begin{align*}
+		r^n_t = &\rho > 0,\ t \leq -1\\
+		r^n_t = &-\epsilon < 0,\ t \in [0, t_Z]\\
+		r^n_t = &\rho > 0,\ t > t_Z 
+	\end{align*} 
+As discussed before, if we want make sure that $x_t = \pi_t = 0$ is an equilibrium, we need make sure that $i_t = r^n_t$. However, with ZLB, this condition cannot be met. Thus, necessarily involve second best.
+
+\subsubsection{Optimal Discretionary Policy in the Presence of a ZLB Constraint}
+Similar to previous chapter, the optimality problem for the central bank is:
+	\begin{align*}
+		&\min \pi^2_t + \vartheta x^2_t\\
+		s.t.&\\
+		&\pi_t = kx_t + v_{0,t}\\
+		&x_t \leq v_{1,t}
+	\end{align*}
+for $t = 0, 1, 2, \ldots$ where $v_{0,t} \equiv \beta\pi_{t+1}$ and $v_{1,t} \equiv x_{t+1} + \frac{1}{\sigma}(\pi_{t+1} + r^n_t)$ are taken as given by the central bank, so we do not use the expectation form.\\
+We use the Lagrangian method:
+	\begin{align*}
+		\mathscr{L} = \frac{1}{2}(\pi^2_t - \vartheta x^2_t) + \xi_{1,t}(\pi_t - kx_t - v_{0,t}) + \xi_{2,t}(x_t - v_{1,t})
+	\end{align*}
+the corresponding conditions:
+	\begin{align}
+		\pi_t + \xi_{1,t} = &0 \label{3.3.1-1}\\
+		\vartheta x_t -k\xi_{1,t} + \xi_{2,t} = &0 \label{3.3.1-2}
+	\end{align}
+and the slackness conditions:
+	\begin{align*}
+		\xi_{2,t} \geq 0;\ i_t \geq 0;\ \xi_{2,t}i_t = 0
+	\end{align*}
+Why is it?\\
+\indent If $i_t > 0$, then $x_t < v_{1,t}$, $\xi_{2,t} = 0$\\
+\indent If $i_t = 0$, then $x_t = v_{1,t}$, $\xi_{2,t} > 0$\\\\
+If we combine \eqref{3.3.1-1} and \eqref{3.3.1-2}:
+	\begin{align}
+		\vartheta x_t = -k\pi_t - \xi_{2,t} \label{3.3.1-3}
+	\end{align}
+Together with \eqref{3.3-2} and \eqref{3.3-3}, we can solve the problem:\\
+1) For $t > t_Z$, the optimal nominal interest rate is:
+	\begin{align*}
+		i_t = \rho > 0
+	\end{align*} 
+And $\xi_{2,t} = 0$, $x_t = -\frac{k}{\vartheta}\pi_t$.\\
+We have $\pi_t = x_t = 0$\\\\
+2) For $t \in [0, t_Z]$, the optimal interest rate is:
+	\begin{align*}
+		i_t = 0;\ \xi_{2,t} > 0
+	\end{align*}
+The equilibrium path for inflation and the output gap is:
+	\begin{align}
+		\begin{bmatrix}
+			x_t\\
+			\pi_t
+		\end{bmatrix} = \boldsymbol{A}
+		\begin{bmatrix}
+			x_{t+1}\\
+			\pi_{t+1}
+		\end{bmatrix} - \boldsymbol{B}\epsilon \label{3.3.1-4}
+	\end{align}	
+where:
+	\begin{align*}
+		\boldsymbol{A} \equiv \begin{bmatrix}
+							  	 1 & \frac{1}{\sigma}\\
+				 				 k & \beta + \frac{k}{\sigma}
+				 			  \end{bmatrix}; \indent
+		\boldsymbol{B} \equiv \begin{bmatrix}
+							  	 \frac{1}{\sigma}\\
+							  	 \frac{k}{\sigma}
+							  \end{bmatrix}
+	\end{align*}
+And the terminal condition is that $x_{t_{Z+1}} = \pi_{t_{Z+1}} = 0$.\\
+We can find that $x_t < 0$ and $\pi_t < 0$ during the negative natural interest rate shock.
+
+\subsubsection{Optimal Policy under Commitment in the Presence of a ZLB Constraint}
+Now we consider the policy under commitment. The optimality problem is:
+	\begin{align*}
+		&\min \sum\limits^\infty_{t=0} \beta^t(\pi^2_t + \vartheta x^2_t)\\
+		s.t.&\\
+		&\pi_t = \beta\pi_{t+1} + kx_t\\
+		&x_t \leq x_{t+1} + \frac{1}{\sigma}(\pi_{t+1} + r^n_t)
+	\end{align*}
+where $r^n_t$ satisfied the requirement above.\\
+Then the Lagrangian method is:
+	\begin{align*}
+		\mathscr{L} = \sum\limits^\infty_{t=0} \beta^t \left\{ \frac{1}{2}(\pi^2_t + \vartheta x^2_t) + \xi_{1,t}(\pi_t - kx_t - \beta\pi_{t+1}) + \xi_{2,t} \left[ x_t - x_{t+1} - \frac{1}{\sigma}(\pi_{t+1} + r^n_t ) \right] \right\}
+	\end{align*}  
+The optimality condition are:
+	\begin{align}
+		\pi_t + \xi_{1,t} - \xi_{1,t-1} - \frac{1}{\beta\sigma}\xi_{2,t-1} = &0 \label{3.3.2-1}\\
+		\vartheta x_t - k\xi_{1,t} + \xi_{2,t} - \frac{1}{\beta}\xi_{2,t-1} = &0 \label{3.3.2-2}
+	\end{align}
+The slackness conditions are:
+	\begin{align*}
+		\xi_{2,t} \geq 0;\ i_t \geq 0;\ \xi_{2,t}i_t =0
+	\end{align*}
+and the initial conditions is given $\xi_{1,-1} = \xi_{2,-1} = 0$.\\\\
+And the solution is conjectured to be the following form. From $t = 0$ to $t_Z \geq t_Z$, the nominal rate remains at zero. And it become positive since $t_{C+1}$.\\
+For period $t = t_{C+2}, t_{C+3}, \ldots$, the equilibrium dynamics are:
+	\begin{align}
+		\pi_t + \xi_{1,t} - \xi_{1,t-1} = 0 \label{3.3.2-3}\\
+		\vartheta x_t - k\xi_{1,t} = 0 \label{3.3.2-4}\\
+		\pi_t = \beta\pi_{t+1} + kx_t \label{3.3.2-5}
+	\end{align}
+	
+	
+	
+	
+	
+	
+
+\newpage
+\subsection{Appendix}
+\subsubsection{A Second-Order Approximation to Welfare Losses: the Case of a Small Steady State Distortion}
+As shown in \textbf{2.5.3}, a second-order Taylor expansion to period $t$ utility around the zero inflation steady state, combined with a goods market clearing condition is:
+	\begin{align*}
+		U_t - U \simeq & U_C C \left[ \hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t \right]\\
+		&+ \frac{U_N N}{1 - \alpha} \left[ \hat{y}_t (1 + z_t) + \frac{\epsilon}{2\Theta} var_i\{ p_t(i) \} + \frac{1 + \varphi}{2(1 - \alpha)} \left( \hat{y}_t - a_t \right)^2 \right]\\
+		&+ t.i.p.
+	\end{align*}	
+where $t.i.p$ means terms independent of policy.\\\\
+Now we assume that $\Phi$ denotes the size of the steady state distortion, implicitly defined by $-\frac{U_N}{U_C} = MPN(1 - \Phi)$. And using the fact that $MPN = (1 - \alpha)(Y/N)$, we have:
+	\begin{align*}
+		\frac{U_t - U}{U_C C} \simeq &\hat{y}_t (1 + z_t) + \frac{1 - \sigma}{2} \hat{y}^2_t\\
+		&-(1 - \Phi) \left[ \hat{y}_t (1 + z_t) + \frac{\epsilon}{2\Theta} var_i\{ p_t(i) \} + \frac{1 + \varphi}{2(1 - \alpha)} \left( \hat{y}_t - a_t \right)^2 \right]\\
+		&+ t.i.p.
+	\end{align*}
+Under the assumption of 'small distortion', we neglect the product of $\Phi$ with a second-order term:
+	\begin{align*}
+		\frac{U_t - U}{U_C C} \simeq &\Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\Theta}var_i\{ p_t(i) \} - (1 - \sigma)\hat{y}^2_t + \frac{1 + \varphi}{1 - \alpha}(\hat{y}_t - a_t)^2 \right] + t.i.p\\
+		= &\Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\Theta}var_i\{ p_t(i) \} + (\sigma + \frac{\varphi + \alpha}{1 - \alpha})\hat{y}^2_t - 2\left( \frac{1 + \varphi}{1 - \alpha} \right) \hat{y}_ta_t \right] + t.i.p\\
+		= &\Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\Theta}var_i\{ p_t(i) \} + (\sigma + \frac{\varphi + \alpha}{1 - \alpha}) (\hat{y}^2_t- 2\hat{y}_t\hat{y}^e_t) \right] + t.i.p\\
+		= &\Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\Theta}var_i\{ p_t(i) \} + (\sigma + \frac{\varphi + \alpha}{1 - \alpha}) (\hat{y}_t- \hat{y}^e_t)^2 \right] + t.i.p
+	\end{align*}
+where:
+	\begin{align*}
+		\hat{y}^e_t \equiv &y^e_t - y^e\\
+		\hat{y}^e_t = &\frac{1 + \varphi}{\sigma(1 - \alpha) + \varphi + \alpha}a_t
+	\end{align*}
+Accordingly, a second-order approximation can be written to the consumer's welfare losses:
+	\begin{align*}
+		\mathbb{W} = &-E_0 \sum\limits^\infty_{t=0} \beta^t \left( \frac{U_t - U}{U_C C} \right)\\
+		= &-E_0 \sum\limits^\infty_{t=0} \beta^t \left\{ \Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\Theta}var_i\{ p_t(i) \} + (\sigma + \frac{\varphi + \alpha}{1 - \alpha}) (\hat{y}_t- \hat{y}^e_t)^2 \right] \right\}\\
+		= &-E_0 \sum\limits^\infty_{t=0} \beta^t \left\{ \Phi\hat{y}_t - \frac{1}{2} \left[ \frac{\epsilon}{\lambda}\pi^2_t + (\sigma + \frac{\varphi + \alpha}{1 - \alpha}) (\hat{y}_t- \hat{y}^e_t)^2 \right] \right\}\\
+		= &-E_0 \sum\limits^\infty_{t=0} \beta^t \left\{ \Phi\hat{x}_t - \frac{1}{2} \left[ \frac{\epsilon}{\lambda}\pi^2_t + (\sigma + \frac{\varphi + \alpha}{1 - \alpha}) \hat{x}^2_t \right] \right\}
+	\end{align*}
+where $\hat{x}_t \equiv \hat{y}_t - \hat{y}^e_t$.\\\\
+In the case of \textbf{3.1}, where the mean of $\Phi$ is zero, when $\Phi = 0$, that means the steady state is the efficient state, that means:
+	\begin{align*}
+		\hat{x}_t \equiv \hat{y}_t - \hat{y}^e_t = y_t - y^e_t = x_t 
+	\end{align*} 
+And if for all $t$, $\Phi = 0$, we have:
+	\begin{align*}
+		y^n_t = &y^e_t\\
+		\hat{x}_t \equiv &\hat{y}_t - \hat{y}^e_t = \tilde{y}_t
+	\end{align*}
+
+
+
+\newpage
+\section{A Model with Sticky Wages and Prices}
+In this chapter, we introduce some imperfections in the labor market and analyzing their consequences for monetary policy. In particular, we assume that the households/workers have some monopoly power, which allows them to set the wage for the differentiated labor services. Furthermore, we assume that the works face Calvo-type constraints on the frequency with which they can adjust nominal wages.\\
+The key result is that: fully stabilizing price inflation is no longer optimal. Instead, the central bank should be concerned about both price and wage stability, because fluctuations in both price and wage inflation, as well as in the output gap, are a source of inefficiencies in the allocation of resources that result in welfare losses for household. Thus, the optimal policy seeks to strike a balance between three different objectives.
+
+
+\subsection{A Molde with Staggered Wage and Price Setting}
+In this model, the wage is similar to the price. A continuum of differentiated labor services is assumed. Each period, only workers specialized in a subset of labor types can adjust their nominal wage. As a result, the aggregate nominal wage responds sluggishly to shock.
+
+\subsubsection{Firms}
+A continuum of firms is assumed, indexed by $i \in [0, 1]$. Each firm produces a differentiated good with a technology represented by the production function:
+	\begin{align}
+		Y_t(i) = A_t N_t(i)^{1 - \alpha} \label{4.1.1-1}
+	\end{align}   
+where $Y_t(i)$ denotes the output of good $i$, $A_t$ is an exogenous technology parameter common to all firms, and $N_t(i)$ is an index of labor input used by firm $i$ and defined by:
+	\begin{align}
+		N_t(i) \equiv \left( \int^1_0 N_t(i, j)^{\frac{\epsilon_w-1}{\epsilon_w}} dj \right)^{\frac{\epsilon_w}{\epsilon_w-1}} \label{4.1.1-2}
+	\end{align}
+where $N_t(i, j)$ denotes the quantity of type $j$ labor employed by firm $i$. Parameter $\epsilon_w$ represents the elasticity of substitution among labor varieties.\\
+We use $W_t(j)$ denote the nominal wage for type $j$ labor. This nominal wage is set by workers of each type and taken as given by firms. Given the firm's total employment is $N_t(i)$, and the wages effective at any point in time for the different types of labor services, the cost minimization yields:
+	\begin{align}
+		N_t(i, j) = \left( \frac{W_t(j)}{W_t} \right)^{-\epsilon_w} N_t(i),\ \forall\ i, j \in[0, 1] \label{4.1.1-3}
+	\end{align}
+where:
+	\begin{align*}
+		W_t \equiv \left( \int^1_0 W_t(j)^{1-\epsilon_w} dj \right)^\frac{1}{1-\epsilon_w}
+	\end{align*}
+Then we take \eqref{4.1.1-3} into \eqref{4.1.1-2} and get:
+	\begin{align*}
+		\int^1_0 W_t(j)N_t(i, j) dj = W_t N_t(i)
+	\end{align*}
+that is to say, the wage bill of any given firm can be expressed as the product of the wage index $W_t$ and that firm's employment index $N_t(i)$.\\\\
+Similar to \textbf{1.2.2}, the firms' optimality problem is to change the price so that to:
+	\begin{align*}
+		&\max\limits_{P^\star_t} \sum\limits^\infty_{k=0} \theta^k_p E_t\{ \Lambda_{t,t+k} (1/P_{t+k}) (P^\star_t Y_{t+k|t} - \mathscr{C}_{t+k}(Y_{t+k|t}))\\
+		s.t.&\\
+		&Y_{t+k|t} = \left( \frac{P^\star_t}{P_{t+k}} \right)^{-\epsilon} C_{t+k}
+	\end{align*}
+where $\Lambda_{t,t+k} \equiv \beta^k U_{c,t+k}/U_{c,t}$ is the stochastic discount factor, $\mathscr{C}(\cdot)$ is the nominal cost function, $Y_{t+k|t}$ denotes output in period $t+k$ for a firm that last reset its price in period $t$.\\\\
+From \textbf{1.3} we know that the price inflation:
+	\begin{align}
+		\pi^p_t = \beta E_t\{ \pi^p_{t+1} \} - \lambda_p \hat{\mu}^p_t \label{4.1.1-4}
+	\end{align}
+where $\hat{\mu}^p_t \equiv \mu^p_t - \mu^p$ is the deviations of the average price markup from its flexible price counterpart, and $\lambda_p \equiv \frac{(1 - \theta_p)(1 - \beta\theta_p))}{\theta_p} \frac{1 - \alpha}{1 - \alpha + \alpha\epsilon_p}$.
+
+\subsubsection{Household}
+The optimality problem for the household is:
+	\begin{align*}
+		&E_0 \sum\limits^\infty_{t=0} \beta^t U(C_t, \{ \mathscr{N}_t(j) \}; Z_t)\\
+		s.t.&\\
+		&\int^1_0 P_t(i)C_t(i) di + Q_tB_t \leq B_{t-1} + \int^1_0 W_t(j)\mathscr{N}(j) dj + D_t
+	\end{align*}
+Where $\mathscr{N}_t(j)$ is employment of type $j$ labor, $C_t \equiv \left( \int^1_0 C_t(i)^{\frac{\epsilon_p - 1}{\epsilon_p}} \right)^{\frac{\epsilon_p}{\epsilon_p-1}}$ is the consumption index.\\
+One thing that is very important is that household take the wage as given. Even in the model, it is the labor set the wage level, we separate labor and household. The wage level will be determined in the later text.\\\\
+As in \textbf{1.1}, the optimality conditions of the intratemporal allocation of different consumption and the intertenporal allocation of consumption are:
+	\begin{align}
+		C_t(i) = &\left( \frac{P_t(i)}{P_t} \right)^{-\epsilon_p} C_t \label{4.1.2-1}\\
+		Q_t = &\beta E_t \left\{ \frac{U_{c,t+1}}{U_{c,t}} \frac{P_t}{P_{t+1}} \right\} \label{4.1.2-2}
+	\end{align}
+The utility function is the same form as in \textbf{1.1}, then we have:
+	\begin{align*}
+		Q_t = &\beta E_t \left\{ \left( \frac{C_{t+1}}{C_t} \right)^{-\sigma} \left( \frac{Z_{t+1}}{Z_t} \right) \left( \frac{P_t}{P_{t+1}} \right) \right\} \label{4.1.2-2}
+	\end{align*}
+and the log-linear form is:
+	\begin{align}
+		c_t = E_t\{ c_{t+1} \} - \frac{1}{\sigma}(i_t - E_t\{ \pi^p_{t+1} \} - \rho) + \frac{1}{\sigma}(1 - \rho_z)z_t \label{4.1.2-3}
+	\end{align}
+
+\centerline{\textbf{4.1.2.1 Wage Setting}}
+
+
+
+\newpage
+\subsection{Appendix}
+\subsubsection{The Optimality Problem for Firms}
+
+
+\end{document}
