@@ -1,0 +1,2852 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, color, mathrsfs, amsthm, setspace}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxtext,newtxmath}
+
+\title{Lecture Notes for Econometrics I}
+\author{Liu Mingyang}
+
+
+
+\begin{document}
+\onehalfspacing
+\maketitle
+\tableofcontents
+
+\newpage
+\section{Econometrics}
+\section{The Linear Regression Model}
+\subsection{The Linear Regression Model}
+The \textbf{multiple linear regression model} is used to study the relationship between a \textbf{dependent variable} and one or mode \textbf{independent variables}. The generic form is:
+	\begin{align*}
+		y = &f(x_1, x_2, \ldots, x_K) + \varepsilon\\
+		= &x_1\beta_1 + x_2\beta_2 + \ldots + x_K\beta_K + \varepsilon
+	\end{align*}
+where:\\
+\indent $y$: Dependent variable\\
+\indent $x_1, \ldots, x_K$: Explanatory variables.\\
+\indent $\beta_1, \ldots, \beta_K$: Unknown paremeters.\\
+\indent $\varepsilon$: Disturbance.\\\\
+The function $f(x_1, x_2, \ldots, x_K)$ is called the \textbf{population regression equation}.
+\subsubsection{Some Notations}
+\textbf{2.1.1.1 Some Clarification between $n$ and $K$}\\
+Usually, we assume $K$ is the number of the explanatory variables. $n$ is the number of the sample. So we ca say that the \textbf{data} form:
+	\begin{align*}
+		\left( y_i, x_{i1}, x_{i2}, \ldots, x_{iK} \right),\ \text{for}\ i = 1, 2, \ldots, n
+	\end{align*}
+\textbf{2.1.1.2 Matrix Form for Linear Regression Model}\\
+We require that all vectors are column vectors.
+For observation $i$, we define:
+	\begin{align*}
+		\boldsymbol{x}_i = \begin{pmatrix}
+								x_{i1}\\
+								x_{i2}\\
+								\vdots\\
+								x_{iK}
+						   \end{pmatrix};\indent
+		\boldsymbol{\beta} = \begin{pmatrix}
+								\beta_1\\
+								\beta_2\\
+								\vdots\\
+								\beta_K
+							 \end{pmatrix}
+	\end{align*}
+The model of this observation:
+	\begin{align*}
+		y_i = \boldsymbol{x}^\prime_i\boldsymbol{\beta} + \varepsilon_i
+	\end{align*}
+As for sample, we define:
+	\begin{align*}
+		\boldsymbol{Y} = \begin{pmatrix}
+							y_1\\
+							y_2\\
+							\vdots\\
+							y_n
+						 \end{pmatrix},\indent
+		\boldsymbol{X} = \begin{pmatrix}
+							\boldsymbol{x}^\prime_1\\
+							\boldsymbol{x}^\prime_2\\
+							\vdots\\
+							\boldsymbol{x}^\prime_K
+						 \end{pmatrix},\indent
+		\boldsymbol{\varepsilon} = \begin{pmatrix}
+										\varepsilon_1\\
+										\varepsilon_2\\
+										\vdots\\
+										\varepsilon_K
+								   \end{pmatrix}
+	\end{align*}
+The model of this sample set is:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+
+
+\subsection{Assumptions of the Linear Regression Model}
+\subsubsection{Assumption 1: Linearity}
+\textbf{A.1}\\ 
+The data satisfy:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+which means that $y_i$ is a linear function of $\beta_j$. The linearity refers to the manner in which the parameters and the disturbance enter the equation, not necessarily to the relationship among the variables. For example:
+	\begin{align*}
+		y = &\beta_1 + \beta_2 x + \varepsilon\\
+		\ln y = &\beta_1 + \beta_2 \ln x + \varepsilon
+	\end{align*}
+are all linear model.
+
+\subsubsection{Assumption 2: Full Rank}
+\textbf{A.2}\\ 
+There are no exact linear relationships among the variables:\\
+\indent $\boldsymbol{X}$ is an $n \times K$ matrix with rank $K$.\\
+which means there are at least $K$ observations.
+
+\subsubsection{Assumption 3: Exogeneity of the explanatory variables}
+\textbf{A.3}\\ 
+The disturbance is assumed to have conditional expected value zero at every observation:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}] = \begin{bmatrix}
+																	\mathbb{E}[\varepsilon_1|\boldsymbol{X}]\\
+																	\mathbb{E}[\varepsilon_2|\boldsymbol{X}]\\
+																	\vdots\\
+																	\mathbb{E}[\varepsilon_n|\boldsymbol{X}]
+																\end{bmatrix} = \boldsymbol{0}
+	\end{align*}
+which means that there is no information $\mathbb{E}[\varepsilon_i | \cdot]$ contained in any observation on $\boldsymbol{x}_j$.\\\\
+And also, we assume that the disturbances convey no information about each other:
+	\begin{align*}
+		\mathbb{E}[\varepsilon_i | \varepsilon_1, \varepsilon_2, \ldots, \varepsilon_{i-1}, \varepsilon_{i+2}, \ldots, \varepsilon_n] = 0
+	\end{align*}
+\textbf{Proposition 2.2.1}\\
+The unconditional expectation of disturbance is also 0:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon}] = \boldsymbol{0}
+	\end{align*}
+which means that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{Y} | \boldsymbol{X}] = \boldsymbol{X}\boldsymbol{\beta}
+	\end{align*}
+	\begin{proof}
+		Here, we use the \textbf{law of iterated expectation}:
+			\begin{align*}
+				\mathbb{E}[\boldsymbol{\varepsilon}] = \mathbb{E}_{\boldsymbol{X}}\{ \mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}] \} = \mathbb{E}_{\boldsymbol{X}}[0] = \boldsymbol{0}
+			\end{align*}
+		Then, we have:
+			\begin{align*}
+				\mathbb{E}[\boldsymbol{Y} | \boldsymbol{X}] = &\mathbb{E}[\boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon} | \boldsymbol{X}]\\
+				= &\mathbb{E}[\boldsymbol{X}\boldsymbol{\beta} | \boldsymbol{X}] + \mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}]\\
+				= &\mathbb{E}[\boldsymbol{X}\boldsymbol{\beta} | \boldsymbol{X}]\\
+				= &\boldsymbol{X}\boldsymbol{\beta}
+			\end{align*}
+	\end{proof}
+
+\subsubsection{Assumption 4: Homoscedastic and Nonautocorrelated Disturbance}
+\textbf{A.4}\\ 
+The variances and covariances of the disturbances satisfy:
+	\begin{align*}
+		Var[\varepsilon_i | \boldsymbol{X}] = &\sigma^2,\ \forall\ i\\
+		Cov[\varepsilon_i, \varepsilon_j | \boldsymbol{X}] = &0,\ \forall\ i \neq j
+	\end{align*}
+The \textbf{Assumption 4} can be rewritten as:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}^\prime | \boldsymbol{X}] = \sigma^2\boldsymbol{I}
+	\end{align*} 
+which means:
+	\begin{align*}
+		Var[\varepsilon | \boldsymbol{X}] = &\mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}^\prime | \boldsymbol{X}] - \mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}] \mathbb{E}[\boldsymbol{\varepsilon}^\prime | \boldsymbol{X}]\\
+		= &\mathbb{E}[\boldsymbol{\varepsilon}\boldsymbol{\varepsilon}^\prime | \boldsymbol{X}]
+	\end{align*}
+Then we can have:
+	\begin{align*}
+		Var[\boldsymbol{\varepsilon}] = \mathbb{E}\{ Var[\boldsymbol{\varepsilon} | \boldsymbol{X}] \} + Var\{ \mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}] \} = 0
+	\end{align*}
+
+\subsubsection{Assumption 5: Data Generating Process}
+\textbf{A.5}\\ 
+We allow $\boldsymbol{X}$ can be fixed or random.
+
+\subsubsection{Assumption 6: Normality}
+\textbf{A.6}\\
+We assume that the disturbances are normally distributed, with zero mean and constant variance:
+	\begin{align*}
+		\boldsymbol{\varepsilon} | \boldsymbol{X} \sim N[\boldsymbol{0}, \sigma^2\boldsymbol{I}]
+	\end{align*}
+
+
+
+\newpage
+\section{Least Square Regression}
+\subsection{Least Square Regression}
+A normal model:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X}^\prime \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+The difference of some notions:\\
+\indent $\boldsymbol{\beta}$, $\boldsymbol{\varepsilon}$: population regression:
+	\begin{align*}
+		E[\boldsymbol{Y} | \boldsymbol{X}] &= \boldsymbol{X} \boldsymbol{\beta}\\
+		\boldsymbol{\varepsilon} &= \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{\beta}
+	\end{align*}
+\indent $\boldsymbol{b}$, $\boldsymbol{e}$: sample estimates:
+	\begin{align*}
+		\hat{\boldsymbol{Y}} &= \boldsymbol{X} \boldsymbol{b}\\
+		\boldsymbol{e} &= \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}
+	\end{align*}
+How to measure the closeness of the sample estimates, a usual tools is \textbf{least square}.
+
+
+\subsection{The Least Square Coefficient Vector}
+The criterion is the sum of squared residuals:
+	\begin{align*}
+		\sum\limits^n_{i=1} e^2_{i0} = \sum\limits^n_{i=1} (y_i - \boldsymbol{x_i}^\prime \boldsymbol{b_0})
+	\end{align*}
+The least square coefficient vector $\boldsymbol{b_0}$ minimizes the sum of squared residuals in the form of matrix:
+	\begin{align*}
+		\min_{\boldsymbol{b_0}} S(\boldsymbol{b_0}) = \boldsymbol{e_0}^\prime \boldsymbol{e_0} = (\boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b_0})^\prime (\boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b_0})
+	\end{align*}
+
+\subsubsection{Matrix Derivatives}
+\textbf{Definition 3.2.1}\\
+Let $\boldsymbol{z}$ be a $k \times 1$ column vector and $f(\boldsymbol{z})$ be a scalar. Then:
+	\begin{align*}
+		\frac{\partial f(\boldsymbol{z})}{\partial \boldsymbol{z}} =
+		\begin{pmatrix}
+			\frac{\partial f(\boldsymbol{z})}{\partial \boldsymbol{z}_1}\\
+			\frac{\partial f(\boldsymbol{z})}{\partial \boldsymbol{z}_2}\\
+			\vdots\\
+			\frac{\partial f(\boldsymbol{z})}{\partial \boldsymbol{z}_k}
+		\end{pmatrix}
+	\end{align*}
+\textbf{Proposition 3.2.2}\\
+Let $\boldsymbol{a}$ be a $k \times 1$ column vector and $\boldsymbol{A}$ be a $k \times k$ matrix. Then:
+	\begin{align*}
+		\frac{\partial \boldsymbol{a}^\prime \boldsymbol{z}}{\partial \boldsymbol{z}} = \boldsymbol{a};\indent
+		\frac{\partial \boldsymbol{z}^\prime \boldsymbol{A} \boldsymbol{z}}{\partial \boldsymbol{z}} = (\boldsymbol{A} + \boldsymbol{A}^\prime)\boldsymbol{z}
+	\end{align*} 
+	\begin{proof}
+		\mbox{}\\
+		i) We first consider the column vector:
+			\begin{align*}
+				\boldsymbol{a}^\prime \boldsymbol{z} = \sum\limits^k_{i=1}a_i z_i
+			\end{align*}
+		Then:
+			\begin{align*}
+				\frac{\partial \boldsymbol{a}^\prime \boldsymbol{z}}{\partial \boldsymbol{z}} =
+				\begin{pmatrix}
+					\frac{\partial \sum\limits^k_{i=1}a_i z_i}{\partial z_1}\\
+					\frac{\partial \sum\limits^k_{i=1}a_i z_i}{\partial z_2}\\
+					\vdots\\
+					\frac{\partial \sum\limits^k_{i=1}a_i z_i}{\partial z_k}\\
+				\end{pmatrix} = 
+				\begin{pmatrix}
+					a_1\\
+					a_2\\
+					\vdots\\
+					a_k
+				\end{pmatrix} = \boldsymbol{a}
+			\end{align*}
+		i) Now we consider the matrix:
+			\begin{align*}
+				\boldsymbol{z}^\prime \boldsymbol{A} \boldsymbol{z} = \sum\limits^k_{n=1} z_n \sum\limits^k_{i=1} a_{ni}z_i = \sum\limits^k_{n=1} \sum\limits^k_{i=1} z_n a_{ni} z_i
+			\end{align*}
+		Then we have:
+			\begin{align*}
+				\frac{\partial \boldsymbol{z}^\prime \boldsymbol{A} \boldsymbol{z}}{\partial \boldsymbol{z}} = &
+				\begin{pmatrix}
+					\frac{\partial \sum\limits^k_{n=1} \sum\limits^k_{i=1} z_n a_{ni} z_i}{\partial z_1}\\
+					\frac{\partial \sum\limits^k_{n=1} \sum\limits^k_{i=1} z_n a_{ni} z_i}{\partial z_2}\\
+					\vdots\\
+					\frac{\partial \sum\limits^k_{n=1} \sum\limits^k_{i=1} z_n a_{ni} z_i}{\partial z_k}
+				\end{pmatrix}\\ = &
+				\begin{pmatrix}
+					\sum\limits^k_{n=1} z_n a_{n1} + \sum\limits^k_{i=1} z_i a_{1i}\\
+					\sum\limits^k_{n=1} z_n a_{n2} + \sum\limits^k_{i=1} z_i a_{2i}\\
+					\vdots\\
+					\sum\limits^k_{n=1} z_n a_{nk} + \sum\limits^k_{i=1} z_i a_{ki} 
+				\end{pmatrix}\\ = &
+				\begin{pmatrix}
+					\sum\limits^k_{n=1} z_n a_{n1}\\
+					\sum\limits^k_{n=1} z_n a_{n2}\\
+					\vdots\\
+					\sum\limits^k_{n=1} z_n a_{nk}
+				\end{pmatrix} + 
+				\begin{pmatrix}
+					\sum\limits^k_{i=1} z_i a_{1i}\\
+					\sum\limits^k_{i=1} z_i a_{2i}\\
+					\vdots\\
+					\sum\limits^k_{i=1} z_i a_{ki}
+				\end{pmatrix}\\ = &
+				 \boldsymbol{A}^\prime \boldsymbol{z} + \boldsymbol{A} \boldsymbol{z}\\ = &
+				 (\boldsymbol{A}^\prime + \boldsymbol{A}) \boldsymbol{z}
+			\end{align*}
+	\end{proof}
+
+\subsubsection{Solution of this optimal problem}
+	\begin{align*}
+		\boldsymbol{e_0}^\prime \boldsymbol{e_0} &= \boldsymbol{Y}^\prime \boldsymbol{Y} - \boldsymbol{b_0}^\prime \boldsymbol{X}^\prime \boldsymbol{Y} - \boldsymbol{Y}^\prime \boldsymbol{X} \boldsymbol{b_0} + \boldsymbol{b_0}^\prime \boldsymbol{X}^\prime \boldsymbol{X} \boldsymbol{b_0}\\
+		&= \boldsymbol{Y}^\prime \boldsymbol{Y} - 2 \boldsymbol{Y}^\prime \boldsymbol{X} \boldsymbol{b_0} + \boldsymbol{b_0}^\prime \boldsymbol{X}^\prime \boldsymbol{X} \boldsymbol{b_0}\ \  (\boldsymbol{Y}^\prime \boldsymbol{X} \boldsymbol{b_0}\ \text{is a number.})
+	\end{align*}
+The necessary condition:
+	\begin{align*}
+		\frac{\partial S(\boldsymbol{b_0})}{\partial \boldsymbol{b_0}} = -2 \boldsymbol{X}^\prime \boldsymbol{Y} + 2 \boldsymbol{X}^\prime \boldsymbol{X} \boldsymbol{b_0} = 0
+	\end{align*}
+If the inverse of $\boldsymbol{X}^\prime \boldsymbol{X}$ exists, then:
+	\begin{align*}
+		\boldsymbol{b} = (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}
+	\end{align*}
+The second derivatives matrix:
+	\begin{align*}
+		\frac{\partial^2 S(\boldsymbol{b_0})}{\partial \boldsymbol{b_0} \partial \boldsymbol{b_0}^\prime} = 2 \boldsymbol{X^\prime} \boldsymbol{X}
+	\end{align*}
+If $\boldsymbol{X}$ is full rank, the second derivatives is positive. Then $\boldsymbol{b}$ is unique.
+
+\subsubsection{Algebraic aspects of the least squares solution}
+Considering the optimal condition:
+	\begin{align*}
+		\boldsymbol{X}^\prime \boldsymbol{X} \boldsymbol{b} &= \boldsymbol{X}^\prime \boldsymbol{Y}\\
+		\boldsymbol{X}^\prime (\boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}) &= 0\\
+		\boldsymbol{X}^\prime \boldsymbol{e} &= 0
+	\end{align*}
+For the first column of $\boldsymbol{X}$ which is $\boldsymbol{1}$s, we have that:
+	\begin{align*}
+		\boldsymbol{x_1}^\prime \boldsymbol{e} = \sum_i e_i = 0
+	\end{align*}
+There are 3 implications:\\
+\indent i) The least squares residuals sum to zero.\\
+\indent ii) The regression hyperplane passes through the point of means of the data:
+	\begin{align*}
+		y_i &= \boldsymbol{x_i}^\prime \boldsymbol{b} + e_i\\
+		\sum_i y_i &= \sum_i \boldsymbol{x_i}^\prime \boldsymbol{b} + \sum_i e_i\\
+		\bar{y} &= \bar{\boldsymbol{x}}^\prime \boldsymbol{b}
+	\end{align*}
+\indent iii) The mean of the fitted values from the regression equals the mean of the actual values.
+
+\subsubsection{Projection}
+From the least squares residuals:
+	\begin{align*}
+		\boldsymbol{e} = \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}
+	\end{align*}
+From the optimal condition:
+	\begin{align*}
+		\boldsymbol{e} &= \boldsymbol{Y} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\
+		&= [\boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime] \boldsymbol{Y}
+	\end{align*}
+Here we can give a definition.\\
+\textbf{Definition 3.2.3} ($Residual\ Maker$)\\
+Let the $n \times K$ full column rank matrix, $\boldsymbol{X}$ be composed of columns $(\boldsymbol{x_1}, \boldsymbol{x_2}, \ldots, \boldsymbol{x_K})$, and let $\boldsymbol{Y}$ be an $n \times 1$ column vector. The matrix:
+	\begin{align*}
+		\boldsymbol{M} = \boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime
+	\end{align*}
+is a 'residual maker' in that when $\boldsymbol{M}$ premultiplies a vector, $\boldsymbol{Y}$, the result, $\boldsymbol{MY}$, is the column vector of residuals in the least squares regression of $\boldsymbol{Y}$ on $\boldsymbol{X}$.\\\\
+\textbf{Proposition 3.2.4}\\
+The residual maker is symmetric and idempotent.
+	\begin{align*}
+		\boldsymbol{M}^\prime &= [\boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]^\prime = \boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\
+		&= \boldsymbol{M}\\
+		\boldsymbol{M}^2 &= [\boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]^\prime [\boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]\\
+		&= \boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime + \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\
+		&= \boldsymbol{M}
+	\end{align*}\\\\
+\textbf{Corollary 3.2.5}\\
+From the definition of residual maker, we know that:
+	\begin{align*}
+		\boldsymbol{M} \boldsymbol{X} = \boldsymbol{0}
+	\end{align*}
+The intuition is that if we regress $\boldsymbol{X}$ on $\boldsymbol{X}$, the residual will be zero.\\\\
+Now we can divide $\boldsymbol{Y}$ into 2 parts, the fitted value and residuals:
+	\begin{align*}
+		\boldsymbol{Y} &= \hat{\boldsymbol{Y}} + \boldsymbol{e}\\
+		&= \boldsymbol{X} \boldsymbol{b} + \boldsymbol{M} \boldsymbol{Y}
+	\end{align*}
+\textbf{Proposition 3.2.6}\\
+The fitted value and residuals are orthogonal. Proof as follows:
+	\begin{align*}
+		(\boldsymbol{M} \boldsymbol{Y})^\prime \times \boldsymbol{X} \boldsymbol{b} = \boldsymbol{Y}^\prime \boldsymbol{M}^\prime \boldsymbol{X} \boldsymbol{b} = \boldsymbol{Y}^\prime \boldsymbol{M} \boldsymbol{X} \boldsymbol{b} = 0
+	\end{align*}
+\textbf{Definition 3.2.7} ($Projection\ Matrix$)\\
+From the definition we have that:
+	\begin{align*}
+		\hat{\boldsymbol{Y}} = \boldsymbol{Y} - \boldsymbol{e} = \boldsymbol{I} \boldsymbol{Y} - \boldsymbol{M} \boldsymbol{Y} = (\boldsymbol{I} - \boldsymbol{M}) \boldsymbol{Y} = \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y} 
+	\end{align*}
+so, we can define the projection matrix as follows:
+	\begin{align*}
+		\boldsymbol{P} = \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime
+	\end{align*}
+\textbf{Proposition 3.2.8}\\
+$\boldsymbol{P}$ is symmetric and idempotent.
+	\begin{align*}
+		\boldsymbol{P}^\prime &= [\boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]^\prime = \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\
+		&= \boldsymbol{P}\\
+		\boldsymbol{P}^2 &= [\boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]^\prime [\boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime]\\
+		&= \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\
+		&= \boldsymbol{P}
+	\end{align*}
+\textbf{Corollary 3.2.9}\\
+Similar as the residual maker, we have that:
+	\begin{align*}
+		\boldsymbol{P} \boldsymbol{X} = \boldsymbol{X}
+	\end{align*}
+\textbf{Corollary 3.2.10}\\
+If we combine $\boldsymbol{P}$ and $\boldsymbol{M}$ together:
+	\begin{align*}
+		\boldsymbol{P} \boldsymbol{M} = \boldsymbol{M} \boldsymbol{P} = \boldsymbol{0}
+	\end{align*}
+\textbf{Corollary 3.2.11}\\
+Because $\hat{\boldsymbol{Y}} = \boldsymbol{P} \boldsymbol{Y}$ and $\boldsymbol{e} = \boldsymbol{M} \boldsymbol{Y}$, form \textbf{Corollary 3.2.10}, we have:
+	\begin{align*}
+		\hat{\boldsymbol{Y}}^\prime \boldsymbol{e} = &(\boldsymbol{P} \boldsymbol{Y})^\prime \boldsymbol{M} \boldsymbol{Y}\\
+		= &\boldsymbol{Y}^\prime \boldsymbol{P} \boldsymbol{M} \boldsymbol{Y}\\
+		= &0 
+	\end{align*}
+which means that the fitted values and the residuals are orthogonal. That is to say, $\boldsymbol{P}$ maps $\boldsymbol{Y}$ to a vector in the column space of $\boldsymbol{X}$, $\mathscr{C}(\boldsymbol{X})$, that is closest to $\boldsymbol{Y}$. And this is along with the \textbf{Pythagorean theorem}:
+	\begin{align*}
+		||\boldsymbol{Y}||^2 = &\boldsymbol{Y}^\prime\boldsymbol{Y}\\
+		= &(\boldsymbol{P}\boldsymbol{Y} + \boldsymbol{M}\boldsymbol{Y})^\prime(\boldsymbol{P}\boldsymbol{Y} + \boldsymbol{M}\boldsymbol{Y})\\
+		= &\boldsymbol{Y}^\prime\boldsymbol{P}^\prime\boldsymbol{P}\boldsymbol{Y} + \boldsymbol{Y}^\prime\boldsymbol{P}^\prime\boldsymbol{M}\boldsymbol{Y} + \boldsymbol{Y}^\prime\boldsymbol{M}^\prime\boldsymbol{P}\boldsymbol{Y} + \boldsymbol{Y}^\prime\boldsymbol{M}^\prime\boldsymbol{M}\boldsymbol{Y}\\
+		= &\boldsymbol{Y}^\prime\boldsymbol{P}^\prime\boldsymbol{P}\boldsymbol{Y} + \boldsymbol{Y}^\prime\boldsymbol{M}^\prime\boldsymbol{M}\boldsymbol{Y}\\
+		= &||\hat{\boldsymbol{Y}}||^2 + ||\boldsymbol{e}||^2
+	\end{align*}
+
+
+\subsection{Partitioned Regression and Partial Regression}
+Suppose we divide the variables $\boldsymbol{X}$ into two sets $\boldsymbol{X}_1$ and $\boldsymbol{X}_2$:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X}_1 \boldsymbol{\beta}_1 + \boldsymbol{X}_2 \boldsymbol{\beta}_2 + \boldsymbol{\varepsilon}
+	\end{align*}
+To solve the least squares problem:
+	\begin{align}
+		\boldsymbol{X}^\prime_1 \boldsymbol{X}_1 \boldsymbol{b}_1 + \boldsymbol{X}^\prime_1 \boldsymbol{X}_2 \boldsymbol{b}_2 = \boldsymbol{X}^\prime_1 \boldsymbol{Y} \label{3.3-1}\\
+		\boldsymbol{X}^\prime_2 \boldsymbol{X}_1 \boldsymbol{b}_1 + \boldsymbol{X}^\prime_2 \boldsymbol{X}_2 \boldsymbol{b}_2 = \boldsymbol{X}^\prime_2 \boldsymbol{Y} \label{3.3-2}
+	\end{align}
+From \eqref{3.3-1} we have that:
+	\begin{align*}
+		\boldsymbol{b}_1 &= (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1 \boldsymbol{Y} - (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1 \boldsymbol{X}_2 \boldsymbol{b}_2\\
+		&= (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1 (\boldsymbol{Y}- \boldsymbol{X}_2 \boldsymbol{b}_2)
+	\end{align*}
+If $\boldsymbol{X}^\prime_1  \boldsymbol{X}_2 = 0$, then 
+	\begin{align}
+		\boldsymbol{b}_1 &= (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1 \boldsymbol{Y} \label{3.3-3}
+	\end{align}
+which is the same as the regression which only regress on $\boldsymbol{X}_1$, so we can give the theorem.\\\\
+\textbf{Theorem 3.3.1}\\
+If $\boldsymbol{X}^\prime_1  \boldsymbol{X}_2 \neq 0$, then we consider \eqref{3.3-2}, insert it into \eqref{3.3-3}:
+	\begin{align*}
+		\boldsymbol{X}^\prime_2 \boldsymbol{X}_1 (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1 (\boldsymbol{Y}- \boldsymbol{X}_2 \boldsymbol{b}_2) + \boldsymbol{X}^\prime_2 \boldsymbol{X}_2 \boldsymbol{b}_2 = \boldsymbol{X}^\prime_2 \boldsymbol{Y}
+	\end{align*}
+So we can have:
+	\begin{align*}
+				\boldsymbol{b}_2 &= \{\boldsymbol{X}^\prime_2 [\boldsymbol{I} - \boldsymbol{X}_1 (\boldsymbol{X}_1 \boldsymbol{X}_1)^{-1}\boldsymbol{X}^\prime_1] \boldsymbol{X_2}\}^{-1} \{\boldsymbol{X}^\prime_2 [\boldsymbol{I} - \boldsymbol{X}_1 (\boldsymbol{X}^\prime_1 \boldsymbol{X}_1)^{-1} \boldsymbol{X}^\prime_1]\boldsymbol{Y}\}\\
+				&= (\boldsymbol{X}^\prime_2 \boldsymbol{M}_1 \boldsymbol{X}_2)^{-1} (\boldsymbol{X}^\prime_2 \boldsymbol{M}_1 \boldsymbol{Y})
+	\end{align*}
+If we define $\boldsymbol{X}^\star_2 = \boldsymbol{M}_1 \boldsymbol{X}_2$ and $\boldsymbol{Y}^\star = \boldsymbol{M}_1 \boldsymbol{Y}$, then we can rewrite it:
+	\begin{align*}
+		\boldsymbol{b}_2 = (\boldsymbol{X}^{\star\prime}_2 \boldsymbol{X}^\star_2)^{-1} \boldsymbol{X}^{\star\prime}_2 \boldsymbol{Y}^\star
+	\end{align*}
+From this process, we can give the theorem.\\\\
+\textbf{Theorem 3.3.2} ($Frisch-Waugh-Lovell\ Theorem$)
+In the linear least squares regression of vector $\boldsymbol{Y}$ on two sets of variables, $\boldsymbol{X_1}$ and $\boldsymbol{X_2}$, the subvector $\boldsymbol{b_2}$ is the set of coefficients obtained when the residuals from a regression of $\boldsymbol{Y}$ on $\boldsymbol{X_1}$ alone are regressed on the set of residuals obtained when each column of $\boldsymbol{X_2}$ is regressed on $\boldsymbol{X_1}$.\\\\
+Here we give a proof.
+	\begin{proof}
+		\mbox{}\\
+		We set:
+			\begin{align*}
+				\boldsymbol{P} = &\boldsymbol{X}(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\
+				\boldsymbol{P_1} = &\boldsymbol{X_1}(\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime\\
+				\boldsymbol{M} = &\boldsymbol{I} - \boldsymbol{M}\\
+				\boldsymbol{M_1} = &\boldsymbol{I} - \boldsymbol{M_1}
+			\end{align*}
+		And we have that:
+			\begin{align*}
+				\boldsymbol{P_1}\boldsymbol{P} = &\boldsymbol{P}\boldsymbol{P_1} = \boldsymbol{P_1}\\
+				\boldsymbol{M}\boldsymbol{M_1} = &\boldsymbol{M_1}\boldsymbol{M} = \boldsymbol{M} 
+			\end{align*}	
+		Thus, we know that:
+			\begin{align*}
+				\boldsymbol{Y} = \boldsymbol{X}\boldsymbol{b} + \boldsymbol{e} = \boldsymbol{X_1}\boldsymbol{b_1} + \boldsymbol{X_2}\boldsymbol{b_2} + \boldsymbol{M}\boldsymbol{Y}
+			\end{align*}
+		Multiply both side by $\boldsymbol{X^\prime_2}\boldsymbol{M_1}$:
+			\begin{align*}
+				\boldsymbol{X^\prime_2}\boldsymbol{M_1}\boldsymbol{Y} = &\boldsymbol{X^\prime_2}\boldsymbol{M_1}\boldsymbol{X_1}\boldsymbol{b_1} + \boldsymbol{X^\prime_2}\boldsymbol{M_1}\boldsymbol{X_2}\boldsymbol{b_2} + \boldsymbol{X^\prime_2}\boldsymbol{M_1}\boldsymbol{M}\boldsymbol{Y}\\
+				= &\boldsymbol{X_2}^\prime\boldsymbol{M_1}\boldsymbol{X_2}\boldsymbol{b_2}
+			\end{align*}
+		Thus:
+			\begin{align*}
+				\boldsymbol{b_2} = &(\boldsymbol{X_2}^\prime\boldsymbol{M_1}\boldsymbol{X_2})^{-1} \boldsymbol{X^\prime_2}\boldsymbol{M_1}\boldsymbol{Y}\\
+				= &(\boldsymbol{X_2}^\prime\boldsymbol{M_1}^\prime\boldsymbol{M_1}\boldsymbol{X_2})^{-1} \boldsymbol{X^\prime_2}\boldsymbol{M_1}^\prime\boldsymbol{M_1}\boldsymbol{Y}\\
+				= &(\boldsymbol{X_2}^{\star\prime}\boldsymbol{X_2}^\star)^{-1} \boldsymbol{X_2}^{\star\prime}\boldsymbol{Y}^\star 
+			\end{align*}
+	\end{proof}
+\noindent
+With \textbf{Theorem 3.3.2}, we can give corollary.\\
+\textbf{Corollary 3.3.3} ($Individual\ Regression\ Coefficient$)\\
+The coefficient on $\boldsymbol{z}$ in a multiple regression of $\boldsymbol{Y}$ on $\boldsymbol{W} = [\boldsymbol{X}, \boldsymbol{z}]$ is computed as:
+	\begin{align*}
+		c = (\boldsymbol{z}^\prime \boldsymbol{M}_{\boldsymbol{X}} \boldsymbol{z})^{-1} (\boldsymbol{z}^\prime \boldsymbol{M}_{\boldsymbol{X}} \boldsymbol{Y}) = (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1} \boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star
+	\end{align*}
+here $\boldsymbol{z}^\star$ and $\boldsymbol{Y}^\star$ are the residual vectors from least squares regressions of $\boldsymbol{z}$ and $\boldsymbol{y}$ on $\boldsymbol{X}$; $\boldsymbol{z}^\star = \boldsymbol{M}_{\boldsymbol{X}} \boldsymbol{z}$, $\boldsymbol{y}^\star = \boldsymbol{M}_{\boldsymbol{X}} \boldsymbol{Y}$.\\\\
+\textbf{Corollary 3.3.4}\\
+\textbf{Theorem 3.3.5}
+
+
+\subsection{Partial Regression and Partial Correlation Coefficients}
+\textbf{Theorem 3.4.1} ($Diagonal\ Elements\ of\ the\ Inverse\ of\ a\ Moment\ Matrix$)\\
+Let $\boldsymbol{W}$ denote the partitioned matrix $[\boldsymbol{X}, \boldsymbol{z}]$, that is the $K$ columns of $\boldsymbol{X}$ plus an additional column labeled $\boldsymbol{z}$. The last diagonal element of $(\boldsymbol{W}^\prime \boldsymbol{W})^{-1}$ is:
+	\begin{align*}
+		(\boldsymbol{W}^\prime \boldsymbol{W})^{-1}_{K+1, K+1} = (\boldsymbol{z}^\prime \boldsymbol{M_X} \boldsymbol{z})^{-1} = (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1}
+	\end{align*} 
+where:
+	\begin{align*}
+		\boldsymbol{z}^\star &= \boldsymbol{M_X} \boldsymbol{z}\\
+		\boldsymbol{M_X} &= \boldsymbol{I} - \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime
+	\end{align*}
+The proof of \textbf{Theorem 3.4.1} is that:\\\\
+\textbf{Theorem 3.4.2}\\
+If $\boldsymbol{e}^\prime \boldsymbol{e}$ is the sum of squared residual when $\boldsymbol{Y}$ is regressed on $\boldsymbol{X}$ and $\boldsymbol{u}^\prime \boldsymbol{u}$ is the sum of squared residuals when $\boldsymbol{Y}$ is regressed on $\boldsymbol{X}$ and $\boldsymbol{z}$, then
+	\begin{align*}
+		\boldsymbol{u}^\prime \boldsymbol{u} = \boldsymbol{e}^\prime \boldsymbol{e} - c^2 (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) \leq \boldsymbol{e}^\prime \boldsymbol{e}
+	\end{align*}
+where $c$ is the coefficient on $\boldsymbol{z}$ in the long regression of $\boldsymbol{Y}$ on $[\boldsymbol{X}, \boldsymbol{z}]$ and $\boldsymbol{z}^\star = \boldsymbol{M} \boldsymbol{z}$ is the vector of residuals when $\boldsymbol{z}$ is regressed on $\boldsymbol{X}$
+\begin{proof}
+	In the long regression, we have that:
+		\begin{align}
+			\boldsymbol{u} = \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{d} - \boldsymbol{z} c \label{3.4-1}
+		\end{align}
+	And we have that:
+		\begin{align}
+			\boldsymbol{d} &= (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime (\boldsymbol{Y} - \boldsymbol{z} c) \nonumber \\
+			&= \boldsymbol{b} - (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{z} c \label{3.4-2}
+		\end{align}
+	If we insert \eqref{3.4-2} into \eqref{3.4-1}:
+		\begin{align*}
+			\boldsymbol{u} &= \boldsymbol{Y} - \boldsymbol{X} [\boldsymbol{b} - (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{z} c] - \boldsymbol{z} c\\
+			&= \boldsymbol{e} - \boldsymbol{M_X} \boldsymbol{z} c\\
+			&= \boldsymbol{e} - \boldsymbol{z}^\star c
+		\end{align*}
+	So we have that:
+		\begin{align*}
+			\boldsymbol{u}^\prime \boldsymbol{u} = \boldsymbol{e}^\prime \boldsymbol{e} + c^2 (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) - 2c (\boldsymbol{z}^{\star\prime} \boldsymbol{e})
+		\end{align*}
+	From \textbf{Corollary 3.3.3}, we know that:
+		\begin{align*}
+			\boldsymbol{z}^{\star\prime} \boldsymbol{e} &= \boldsymbol{z}^{\star\prime} \boldsymbol{M_X} \boldsymbol{Y}\\
+			&= c (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)
+		\end{align*}
+	So we have:
+		\begin{align*}
+			\boldsymbol{u}^\prime \boldsymbol{u} = \boldsymbol{e}^\prime \boldsymbol{e} - c^2 (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) \leq \boldsymbol{e}^\prime \boldsymbol{e}
+		\end{align*} 
+\end{proof}
+\noindent Let $c$ and $\boldsymbol{u}$ denote the coefficient on $\boldsymbol{z}$ and the vector of the residuals in the multiple regression of $\boldsymbol{Y}$ on $\boldsymbol{W} = [\boldsymbol{X}, \boldsymbol{z}]$.\\
+From the definition of t ratio we know that:
+	\begin{align*}
+		t_z = \frac{c}{SD(c)}
+	\end{align*}
+Here because we don't know $Var(b)$, so we use the sum residuals:
+	\begin{align*}
+		Var(\boldsymbol{u}) = \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1}
+	\end{align*}
+And we know that:
+	\begin{align*}
+		Var(\boldsymbol{b}) &= Var[(\boldsymbol{W}^\prime \boldsymbol{W})^{-1} \boldsymbol{W}^\prime \boldsymbol{Y}]\\
+		&= Var[(\boldsymbol{W}^\prime \boldsymbol{W})^{-1} \boldsymbol{W}^\prime (W \boldsymbol{b} + \boldsymbol{u})]\\
+		&= Var[(\boldsymbol{W}^\prime \boldsymbol{W})^{-1} \boldsymbol{W}^\prime \boldsymbol{u}]\\
+		&= \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1} [(\boldsymbol{W}^\prime \boldsymbol{W})^{-1} \boldsymbol{W}^\prime] [(\boldsymbol{W}^\prime \boldsymbol{W})^{-1} \boldsymbol{W}^\prime]^\prime\\
+		&= \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1} (\boldsymbol{W}^\prime \boldsymbol{W})^{-1}
+	\end{align*}
+So we have:
+	\begin{align*}
+		Var(c) = \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1} (\boldsymbol{W}^\prime \boldsymbol{W})^{-1}_{K+1, K+1}
+	\end{align*}
+And because of \textbf{Theorem 3.4.1}, we know that:
+	\begin{align*}
+		Var(c) = \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1} (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1}
+	\end{align*}
+From \textbf{Corollary 3.3.3} we know that:
+	\begin{align*}
+		c = (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1} \boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star
+	\end{align*}
+So we can have:
+	\begin{align*}
+		t^2_z &= \frac{[(\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1} \boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star]^2}{\frac{\boldsymbol{u}^\prime \boldsymbol{u}}{n - K + 1} (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)^{-1}}\\
+		&= \frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2 DF}{(\boldsymbol{u}^\prime \boldsymbol{u}) (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)}
+	\end{align*}
+So we have that:
+	\begin{align*}
+		\frac{t^2_z}{t^2_z + DF} &= \frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2}{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2+ (\boldsymbol{u}^\prime \boldsymbol{u}) (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)}\\
+		&= \frac{\frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2}{(\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) (\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star)}}{\frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2}{(\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) (\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star)} + \frac{(\boldsymbol{u}^\prime \boldsymbol{u}) (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)}{(\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star) (\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star)}}\\
+		&= \frac{r^{\star2}_{yz}}{r^{\star2}_{yz} + \frac{\boldsymbol{u}^\prime \boldsymbol{u}}{\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^{\star}}}
+	\end{align*}
+And from \textbf{Theorem 3.4.2} we know that:
+	\begin{align*}
+		\frac{\boldsymbol{u}^\prime \boldsymbol{u}}{\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star} &= \frac{\boldsymbol{e}^\prime \boldsymbol{e} - c^2 (\boldsymbol{z}^{\star\prime} \boldsymbol{z}^\star)}{\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star}\\
+		&= \frac{\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star - \frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2}{\boldsymbol{z}^{\star\prime}\boldsymbol{z}^\star}}{\boldsymbol{Y}^{\star\prime} \boldsymbol{Y}^\star}\\
+		&= 1 - r^{\star2}_{yz}
+	\end{align*}
+So we have:
+	\begin{align*}
+		r^{\star2}_{yz} = \frac{t^2_z}{t^2_z + DF}
+	\end{align*}
+
+
+\subsection{Goodness of Fit and the Analysis of Variance}
+One problem about the sum of squared residuals is that it can be influenced by the scale of the data, so we need another method to measure the goodness of fit.\\
+The variation of the depend variable is defined in terms of deviations from its mean. We can compute the total variation:
+	\begin{align*}
+		SST = \sum\limits^n_{i=1} (y_i - \bar{y})^2
+	\end{align*}
+If the regression contains a constant term, from \textbf{3.2.2} we know that the regression go through the mean of the data:
+	\begin{align*}
+		\bar{y} = \bar{\boldsymbol{x}}^\prime \boldsymbol{b}
+	\end{align*}
+\textbf{Definition 3.5.1}\\
+Here we give the definition of the matrix, which can compute deviation from the mean of a vector:
+	\begin{align*}
+		\boldsymbol{M_0} = \boldsymbol{I} - \boldsymbol{\iota}(\boldsymbol{\iota}^\prime \boldsymbol{\iota})^{-1} \boldsymbol{\iota}^\prime,\indent \boldsymbol{\iota} = (1, 1, \ldots, 1)^\prime
+	\end{align*}
+So we have:
+	\begin{align*}
+		\boldsymbol{M_0} \boldsymbol{Y} = \boldsymbol{M_0} \boldsymbol{X} \boldsymbol{b} + \boldsymbol{M_0} \boldsymbol{e}
+	\end{align*}
+We know that $\boldsymbol{M_0} \boldsymbol{e} = \boldsymbol{e}$. Then:
+	\begin{align*}
+		\boldsymbol{e}^\prime \boldsymbol{M_0} \boldsymbol{X} = \boldsymbol{e}^\prime \boldsymbol{X} = 0
+	\end{align*}
+So we have:
+	\begin{align*}
+		(\boldsymbol{M_0} \boldsymbol{Y})^\prime \boldsymbol{M_0} \boldsymbol{Y} = \boldsymbol{b}^\prime \boldsymbol{X}^\prime \boldsymbol{M_0} \boldsymbol{X} \boldsymbol{b} + \boldsymbol{e}^\prime \boldsymbol{e}
+	\end{align*}
+This equation can be written as:
+	\begin{align*}
+		SST = SSR + SSE
+	\end{align*}
+\textbf{Definition 3.5.2} ($Coefficient\ of\ Determination$)\\
+The coefficient of determination $R^2$ is defined as:
+	\begin{align*}
+		\frac{SSR}{SST} = \frac{\boldsymbol{b}^\prime \boldsymbol{X}^\prime \boldsymbol{M_0} \boldsymbol{X} \boldsymbol{b}}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}} = 1 - \frac{\boldsymbol{e}^\prime \boldsymbol{e}}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}} = 1 - \frac{\sum^n_{i=1} e^2_i}{\sum^n_{i=1} (y_i - \bar{y})^2}
+	\end{align*}
+Also, we know that:
+	\begin{align*}
+		\frac{SSR}{SST} &= \frac{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} (\boldsymbol{Y} - \boldsymbol{e})}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}}\\
+		&= \frac{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} \boldsymbol{Y} - \boldsymbol{b}^\prime \boldsymbol{X}^\prime \boldsymbol{M_0} \boldsymbol{e}}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}}\\
+		&= \frac{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} \boldsymbol{Y} - \boldsymbol{b}^\prime \boldsymbol{X}^\prime \boldsymbol{e}}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}}\\
+		&= \frac{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} \boldsymbol{Y}}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}} \times \frac{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} \boldsymbol{Y}}{\hat{\boldsymbol{Y}}^\prime \boldsymbol{M_0} \hat{\boldsymbol{Y}}}\\
+		&= \frac{[\sum^n_{i=1} (y_i - \bar{y})(\hat{y}_i - \bar{\hat{y}}_i)]^2}{[\sum^n_{i=1} (y_i - \bar{y})^2] [\sum^n_{i=1} (\hat{y}_i - \bar{\hat{y}}_i)]^2}
+	\end{align*}
+
+\subsubsection{The Adjusted R-squared and A Measure of Fit}
+\textbf{Theorem 3.5.3}\\
+Let $R^2_{\boldsymbol{X}z}$ be the coefficient of determination in the regression of $\boldsymbol{Y}$ on $\boldsymbol{X}$ and an additional variable $\boldsymbol{z}$, let $R^2_{\boldsymbol{X}}$ be the same regression of $\boldsymbol{Y}$ on $\boldsymbol{X}$ alone, and $r^{\star2}_{yz}$ be the partial correlation between $\boldsymbol{Y}$ and $\boldsymbol{z}$, controlling for $\boldsymbol{X}$. Then:
+	\begin{align*}
+		R^2_{\boldsymbol{X}z} = R^2_{\boldsymbol{X}} + (1 - R^2_{\boldsymbol{X}}) r^{\star2}_{yz}
+	\end{align*}
+	\begin{proof}
+		We know that:
+			\begin{align*}
+				\boldsymbol{u}^\prime \boldsymbol{u} &= \boldsymbol{e}^\prime \boldsymbol{e} - \frac{(\boldsymbol{z}^{\star\prime} \boldsymbol{Y}^\star)^2}{\boldsymbol{z}^{\star\prime}\boldsymbol{z}^\star}\\
+				&= \boldsymbol{e}^\prime \boldsymbol{e} (1 - r^{\star2}_{yz})
+			\end{align*}
+		Then we divide both side by $\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y}$:
+			\begin{align*}
+				(1 - R^2_{\boldsymbol{X z}}) = (1 - R^2_{\boldsymbol{X}}) (1 - r^{\star2}_{yz})
+			\end{align*}
+		Then we have:
+			\begin{align*}
+				R^2_{\boldsymbol{X}z} = R^2_{\boldsymbol{X}} + (1 - R^2_{\boldsymbol{X}}) r^{\star2}_{yz}
+			\end{align*}
+	\end{proof}
+\noindent So we can see that $R^2$ cannot be smaller in a longer regression. It is tempting to exploit $R^2$ by adding variables until $R^2 = 1$. One way to avoid this problem is \textbf{adjusted $R^2$}, which is\footnote{Here $K$ includes the constant term.}:
+	\begin{align*}
+		\bar{R}^2 &= 1 - \frac{\boldsymbol{e}^\prime \boldsymbol{e} / (n - K)}{\boldsymbol{Y}^\prime \boldsymbol{M_0} \boldsymbol{Y} / (n - 1)}\\
+		&= 1 - \frac{n - 1}{n - K} (1 - R^2) 
+	\end{align*}
+\textbf{Theorem 3.5.4}\\
+In a multiple regression, $\bar{R}^2$ will fall (rise) when the variable $x$ is deleted from the regression if the square of the $t$ ratio associated with this variable is greater (less) than 1.   
+
+\subsubsection{R-squared and the Constant term in the model}
+
+\subsubsection{Comparing Models}
+
+
+\subsection{Linearly Transformed Regression}
+\textbf{Theorem 3.6.1}\\
+In the linear regression of $\boldsymbol{Y}$ on $\boldsymbol{Z} = \boldsymbol{X} \boldsymbol{A}$ where $\boldsymbol{A}$ is a nonsingular matrix that transforms the columns of $\boldsymbol{X}$, the coefficient will equal $\boldsymbol{A}^{-1} \boldsymbol{b}$ where $\boldsymbol{b}$ is the vector of coefficients in the linear regression of $\boldsymbol{Y}$ on $\boldsymbol{X}$, and the $R^2$ will be identical.
+	\begin{proof}
+		Here we can give the new coefficients:
+			\begin{align*}
+				\boldsymbol{d} &= (\boldsymbol{Z}^\prime \boldsymbol{Z})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}\\
+				&= [(\boldsymbol{X} \boldsymbol{A})^\prime (\boldsymbol{X} \boldsymbol{A})]^{-1} (\boldsymbol{X} \boldsymbol{A})^\prime \boldsymbol{Y}\\
+				&= \boldsymbol{A}^{-1} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{A}^{\prime -1} \boldsymbol{A}^\prime \boldsymbol{X}^\prime \boldsymbol{Y}\\
+				&= \boldsymbol{A}^{-1} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\
+				&= \boldsymbol{A}^{-1} \boldsymbol{b}
+			\end{align*}
+		So we can find that:
+			\begin{align*}
+				\boldsymbol{u} &= \boldsymbol{Y} - \boldsymbol{Z}(\boldsymbol{A}^{-1} \boldsymbol{b})\\
+				&= \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{A} \boldsymbol{A}^{-1} \boldsymbol{b}\\
+				&= \boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}\\
+				&= \boldsymbol{e}
+			\end{align*}
+		Since the residuals are the same we can say that $R^2$ is identical.
+	\end{proof}
+
+\newpage
+\section{The Asymptotic Property}
+\subsection{Motivation}
+With the assumption \textbf{A.1, A.2, A.3, A.4}, from the previous lecture, we know that the least squares estimator, $\boldsymbol{b}$, is \textbf{B.L.U.E}.\\
+In particular, the unbiasedness gives us that $\boldsymbol{b}$ is 'on average' correctly estimates $\boldsymbol{\beta}$. And we also know that the variance of $\boldsymbol{b}$ is $\sigma^2 (\boldsymbol{X}^\prime \boldsymbol{X})^{-1}$, which gives us the accuracy of $\boldsymbol{b}$.\\
+However, if we want to conduct statistical inference on $\boldsymbol{\beta}$, we need to know the distribution of $\boldsymbol{b}$. If we have assumption \textbf{A.6}, we can see that:
+	\begin{align*}
+		\boldsymbol{b} = \boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon} \sim N(\beta, \sigma^2 (\boldsymbol{X}^\prime \boldsymbol{X})^{-1})
+	\end{align*}
+In this lecture, we can see that \textbf{under the large number assumption}, we don't need \textbf{A.6} to get the distribution of $\boldsymbol{b}$.
+
+
+\subsection{Mathematic Basis}
+\textbf{Definition 1.2.1} \textbf{(Convergence in Probability)}\\
+A sequence of random variables $x_1, x_2, \ldots$ is said to converge to $c$ in probability if, for every $\varepsilon > 0$:
+	\begin{align*}
+		\mathbb{P}(|x_n - c| < \varepsilon) \to 1,\ \text{as}\ n \to \infty 
+	\end{align*}
+which is written as $x_n \xrightarrow{p} c$, or plim$_{n \to \infty} x_n = c$.\\\\
+\textbf{Theorem 1.2.2} \textbf{(Chevychev's inequality)}\\
+If $x$ is a random variable and $c$ and $\varepsilon$ are constant, then:
+	\begin{align*}
+		\mathbb{P}(|x - c| \geq \varepsilon) \leq \mathbb{E}[(x - c)^2] / \varepsilon^2
+	\end{align*}
+\textbf{Lemma 1.2.3}\\
+If $E(x_n) \to c$ and $Var(x_n) \to 0$ as $n \to \infty$, then $x_n \xrightarrow{p} c$.\\\\
+\textbf{Definition 1.2.4} \textbf{(Consistency)}\\
+An estimator $\hat{\theta}_n$ of $\theta$ is called consistent if:
+	\begin{align*}
+		\hat{\theta}_n \xrightarrow{p} \theta,\ \text{as}\ n \to \infty
+	\end{align*}
+\textbf{Lemma 1.2.5}\\
+Let $x_i \sim i.i.d. (\mu, \sigma^2)$, for $i = 1, \ldots, n$, and assume $\mu$ is the parameter of interest. Then, $\hat{\mu} = (1/n)\sum^n_{i=1}x_i$ is a consistent estimator of $\mu$.
+	\begin{proof}
+		\mbox{}\\
+		We use \textbf{Lemma 1.2.3}. First for the expectation:
+			\begin{align*}
+				\mathbb{E}[\hat{\mu}] = &\mathbb{E} \left[ (1/n)\sum^n_{i=1}x_i \right]\\
+				= &(1/n) \sum^n_{i=1} \mathbb{E}[ x_i ]\\
+				= &\mu
+			\end{align*}
+		Then we consider the variance:
+			\begin{align*}
+				Var[\hat{\mu}] = &Var \left[ (1/n) \sum^n_{i=1} x_i \right]\\
+				= &\frac{1}{n^2} \sum^n_{i=1} Var[x_i]\\
+				= &\frac{1}{n} \sigma^2
+			\end{align*}
+		As $n \to \infty$, $Var[\hat{\mu}] \to 0.$\\
+		Then $\hat{\mu} = (1/n)\sum^n_{i=1}x_i$ is a consistent estimator of $\mu$.
+	\end{proof}\noindent
+\textbf{Theorem 1.2.6} \textbf{(i.i.d. Law of Large Number)}\\
+If $x_i$, for $i = 1, 2, \ldots, n$ is i.i.d. with $\mathbb{E}(x_i) = \mu$, then $(1/n) \sum^n_{i=1} x_i \xrightarrow{p} \mu$ as $n \to \infty$.\\\\
+\textbf{Theorem 1.2.7} \textbf{(Slutsky's Theorem)}\\
+If $x_n \xrightarrow{p} c$ and $f(x)$ is continuous at $c$, then $f(x_n) \xrightarrow{p} f(c)$.\\\\
+\textbf{Theorem 1.2.8} \textbf{(Rules for Probability Limits)}\\
+Suppose $\boldsymbol{X_n}$, $\boldsymbol{Y_n}$, $\boldsymbol{W_n}$ are random matrices such that $\boldsymbol{X_n} \xrightarrow{p} \boldsymbol{A}$, $\boldsymbol{Y_n} \xrightarrow{p} \boldsymbol{B}$, $\boldsymbol{W_n} \xrightarrow{p} \boldsymbol{C}$, and provided $\boldsymbol{C^{-1}}$ exists:
+	\begin{align*}
+		\boldsymbol{X_n} + \boldsymbol{Y_n} \xrightarrow{p} &\boldsymbol{A} + \boldsymbol{B}\\
+		\boldsymbol{X_n} \boldsymbol{Y_n} \xrightarrow{p} &\boldsymbol{AB}\\
+		\boldsymbol{W^{-1}} \xrightarrow{p} &\boldsymbol{C^{-1}} 
+	\end{align*}
+\textbf{Definition 1.2.9} \textbf{(Convergence in Distribution)}\\
+Let $x_1, x_2, \ldots$ be a sequence of random variables with distribution function $F_n(z) = Pr(x_n \leq z)$. Let $x$ be a random variable with distribution function $F(z)$. Then $x_n$ is said to converge to $x$ in distribution if:
+	\begin{align*}
+		\lim\limits_{n\to\infty} |F_n(z) - F(z)| = 0
+	\end{align*}
+for every $z$ at which $F(z)$ is continuous.\\\\
+\textbf{Theorem 1.2.10 (Rules for Limiting Distributions)}\\
+If $x_n \xrightarrow{d} x$ and $y_n \xrightarrow{p} c$ (non-random), then:
+	\begin{align*}
+		x_n y_n \xrightarrow{d} &cx\\
+		x_n + y_n \xrightarrow{d} & x+ c\\
+		x_n / y_n \xrightarrow{d} &x / c,\ \text{if $c \neq 0$}
+	\end{align*}
+If $x_n \xrightarrow{d} x$ and $g(x_n)$ is a continuous function, then:
+	\begin{align*}
+		g(x_n) \xrightarrow{d} g(x)
+	\end{align*}
+\textbf{Theorem 1.2.11 (Central Limit Theorem for i.i.d. observations)}\\
+Suppose $\boldsymbol{x_1}, \boldsymbol{x_2}, \ldots$ are i.i.d. ($k \times 1$) vectors with mean $\boldsymbol{\mu}$ and variance $\boldsymbol{\Sigma}$. Let $\bar{\boldsymbol{x}}_n = (1/n)\sum^n_{i=1} \boldsymbol{x_i}$. Then:
+	\begin{align*}
+		\sqrt{n}(\bar{\boldsymbol{x}}_n - \boldsymbol{\mu}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{\Sigma})
+	\end{align*}
+
+
+\subsection{Consistency of the Least Squares Estimator}
+Now we come to the analysis about the consistency of the least squares estimator. We only use \textbf{A.1}, \textbf{A.3}, and \textbf{A.4}, together with the following assumption:\\\\
+\textbf{Assumption A.7} \textbf{(Random Sampling)}\\
+$(y_i, \boldsymbol{X_i}, \varepsilon_i)$, $i = 1, 2, \ldots, n$ is a sequence of independent and identically distributed observations with $\mathbb{E}[\boldsymbol{x_i} \boldsymbol{x_i}^\prime] = \boldsymbol{Q}$, and $\boldsymbol{Q}^{-1}$ exists. Further, $\mathbb{E}|x_{i\iota}|^4 < \infty$, for $1 \leq \iota \leq k$, and $\mathbb{E}|\varepsilon_i|^4 < \infty$.\\\\
+\textbf{Theorem 1.3.1}\\
+Under the assumption of \textbf{A.1}, \textbf{A.3}, \textbf{A.4}, and \textbf{A.7}, $\boldsymbol{b}$ is consistent for $\boldsymbol{\beta}$.
+	\begin{proof}
+		\mbox{}\\
+		First, we know that:
+			\begin{align*}
+				\boldsymbol{b} = &(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\
+				= &(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime (\boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon})\\
+				= &\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X} \boldsymbol{\varepsilon}^\prime
+			\end{align*}
+		And we have that:
+			\begin{align*}
+				\boldsymbol{X}^\prime \boldsymbol{X} = 
+				&\begin{pmatrix}
+					\boldsymbol{x_1} & \boldsymbol{x_2} & \ldots & \boldsymbol{x_n}
+				\end{pmatrix}
+				\begin{pmatrix}
+					\boldsymbol{x_1}^\prime\\
+					\boldsymbol{x_2}^\prime\\
+					\vdots\\
+					\boldsymbol{x_n}^\prime
+				\end{pmatrix} = \sum\limits^n_{i=1} \boldsymbol{x_i} \boldsymbol{x_i}^\prime\\
+				\boldsymbol{X}^\prime \boldsymbol{\varepsilon} = &\sum\limits^n_{i=1} \boldsymbol{x_i} \varepsilon_i
+			\end{align*}
+			Then, we can rewrite it:
+				\begin{align*}
+					\boldsymbol{b} = &\boldsymbol{\beta} + \left( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \right)^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n}\\
+					= &\boldsymbol{\beta} + \left( \frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \boldsymbol{x_i}^\prime \right)^{-1} \left( \frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \varepsilon_i \right)
+				\end{align*}
+			First, with \textbf{A.7}, we can see that $\boldsymbol{x_i}$ is i.i.d., with $\mathbb{E}[\boldsymbol{x_i}\boldsymbol{x_i}^\prime] = \boldsymbol{Q}$. Then by the \textbf{Theorem 1.2.6 (i.i.d. Law of Large Number)}, we can see that:
+				\begin{align*}
+					\left( \frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \boldsymbol{x_i}^\prime \right)^{-1} \xrightarrow{p} \boldsymbol{Q}^{-1}
+				\end{align*}
+			Second, with \textbf{A.7}, we can see that $\boldsymbol{x_i} \varepsilon_i$ is i.i.d., and from the \textbf{A.3}, we can see that:
+				\begin{align*}
+					\mathbb{E}[\varepsilon^2_i | \boldsymbol{x}_i] = &\sigma^2\\
+					\mathbb{E}[\varepsilon^2_i] = &\sigma^2
+				\end{align*}
+			For $l = 1, 2, \ldots, k$, we have that:
+				\begin{align*}
+					\mathbb{E}|x_{il}\varepsilon_i| \leq (\mathbb{E}|x_{il}|^2)^{1/2} (\mathbb{E}|\varepsilon^2_i|^2)^{1/2} < \infty
+				\end{align*}
+			Then we can say that $\mathbb{E}[\boldsymbol{x_i}\varepsilon_i]$ exists, as $\mathbb{E}|\boldsymbol{x_i}\varepsilon_i| < \infty$.\\
+			Then, from \textbf{A.3} we have that:
+				\begin{align*}
+					\mathbb{E}[\varepsilon_i | \boldsymbol{x}_i] = &0\\
+					\mathbb{E}[\boldsymbol{x}_i \varepsilon_i] = &\mathbb{E}_x[\boldsymbol{x}_i \mathbb{E}[\varepsilon_i | \boldsymbol{x}_i]]\\
+					= &\mathbb{E}_x[\boldsymbol{x}_i 0]\\
+					= &0
+				\end{align*} 
+				Thus, by the \textbf{Theorem 1.2.6 (i.i.d. Law of Large Number)}, we can see that:
+					\begin{align*}
+						\frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \varepsilon_i \xrightarrow{p} 0
+					\end{align*}
+				Then, by \textbf{Theorem 1.2.6 (Rules for Probability Limits)}, we can say that:
+					\begin{align*}
+						\boldsymbol{b} \xrightarrow{p} \boldsymbol{\beta}
+					\end{align*}
+	\end{proof}
+
+
+\subsection{Asymptotic Property of the Least Squares Estimator}
+\textbf{Theorem 1.4.1}\\
+Suppose assumptions \textbf{A.1}, \textbf{A.3}, \textbf{A.4}, and \textbf{A.7} hold. Then, as $n \to \infty$,
+	\begin{align*}
+		\sqrt{n} (\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q}^{-1})
+	\end{align*}
+where $\boldsymbol{Q} = \mathbb{E}[\boldsymbol{x}_i \boldsymbol{x}^\prime_i]$.
+	\begin{proof}
+		\mbox{}\\
+		Recall that:
+			\begin{align*}
+				\boldsymbol{b} = \boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon}
+			\end{align*}
+		Then we have that:
+			\begin{align*}
+				\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) = &\left( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \right)^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{\sqrt{n}}\\
+				= &\left( \frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \boldsymbol{x_i}^\prime \right)^{-1} \frac{1}{\sqrt{n}} \sum\limits^n_{i=1} \boldsymbol{x_i} \varepsilon_i
+			\end{align*}
+		From  the proof of \textbf{Theorem1.3.1}, we know that $\boldsymbol{x_i} \varepsilon_i$ is i.i.d., and:
+			\begin{align*}
+				\left( \frac{1}{n} \sum\limits^n_{i=1} \boldsymbol{x_i} \boldsymbol{x_i}^\prime \right)^{-1} \xrightarrow{p} &(\mathbb{E}[\boldsymbol{x_i} \boldsymbol{x_i}^\prime])^{-1} =\boldsymbol{Q}^{-1}\\
+				\mathbb{E}[\boldsymbol{x_i}\varepsilon_i] = &0
+			\end{align*}
+		Then, from assumption \textbf{A.7}, we have that:
+			\begin{align*}
+				\mathbb{E}[x_{il}]^4 < &\infty,\ \forall\ 1 \leq l \leq k\\
+				\mathbb{E}|\varepsilon_i|^4 < &\infty
+			\end{align*}
+		Then, by Cauchy-Schwartz inequality, we have:
+			\begin{align*}
+				\mathbb{E}|\varepsilon^2_i \boldsymbol{x_i} \boldsymbol{x_i}^\prime | \leq \sqrt{\mathbb{E}[x_{il}]^4} \sqrt{\mathbb{E}|\varepsilon_i|^4} < \infty
+			\end{align*}
+		Then, we can say that $\mathbb{E}[\varepsilon^2_i \boldsymbol{x_i} \boldsymbol{x_i}^\prime]$ exists. With assumption \textbf{A.3}, we have:
+			\begin{align*}
+				Var[\boldsymbol{x_i} \varepsilon_i] = &\mathbb{E}[\varepsilon^2_i \boldsymbol{x_i} \boldsymbol{x_i}^\prime]\\
+				= &\mathbb{E}[\boldsymbol{x_i} \boldsymbol{x_i}^\prime \mathbb{E}[\varepsilon^2_i | \boldsymbol{x_i}]]\\
+				= &\sigma^2 \mathbb{E}[\boldsymbol{x_i} \boldsymbol{x_i}^\prime]\\
+				= & \sigma^2 \boldsymbol{Q}
+			\end{align*}
+		Thus, by \textbf{Theorem 1.2.11 (Central Limit Theorem for i.i.d. observations)}, we can say that:
+			\begin{align*}
+				\frac{1}{\sqrt{n}} \sum\limits^n_{i=1} \boldsymbol{x_i} \varepsilon_i \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q})
+			\end{align*}
+		Then, by \textbf{Theorem 1.2.10 (Rules for Limiting Distributions)}, we can see that:
+			\begin{align*}
+				\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q}^{-1})
+			\end{align*}
+	\end{proof}
+
+\subsubsection{The Estimator of the Asymptotic Variance of b}
+We want to use $s^2 (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}$ can be a consistent estimator of $\sigma^2 \boldsymbol{Q}^{-1}$. Here, we give the proof:
+	\begin{proof}
+		\mbox{}\\
+			\begin{align*}
+				s^2 (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1} = &\frac{1}{n - k}\boldsymbol{\varepsilon}^\prime \boldsymbol{M} \boldsymbol{\varepsilon} (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}\\
+				= &\frac{1}{n - k} [\boldsymbol{\varepsilon}^\prime \boldsymbol{\varepsilon} - \boldsymbol{\varepsilon}^\prime \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon}] (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}\\
+				= &\frac{n}{n-k} \left[ \frac{\boldsymbol{\varepsilon}^\prime \boldsymbol{\varepsilon}}{n} - \frac{\boldsymbol{\varepsilon}^\prime \boldsymbol{X}}{n} \left( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \right)^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n} \right] (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}
+			\end{align*}
+		Then, we can see that:
+			\begin{align*}
+				\frac{n}{n - k} \to &1\\
+				\frac{\boldsymbol{\varepsilon}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{p} &\sigma^2\\
+				\frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \xrightarrow{p} &\boldsymbol{Q}\\
+				\frac{\boldsymbol{\varepsilon}^\prime \boldsymbol{X}}{n} \xrightarrow{p} & \boldsymbol{0}\\
+				\boldsymbol{X}^\prime \boldsymbol{X} / n \xrightarrow{p} &\boldsymbol{Q}
+			\end{align*}
+		Then, by \textbf{Theorem 1.2.8} \textbf{(Rules for Probability Limits)}, we have:
+			\begin{align*}
+				s^2 (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}  \xrightarrow{p} \sigma^2 \boldsymbol{Q}^{-1} 
+			\end{align*}
+	\end{proof}
+
+\subsubsection{Asymptotic Distribution of a Function of b}
+\textbf{Theorem 1.4.2 (Delta-method)} (Need Proof)\\
+Suppose $\boldsymbol{z}$ is a sequence of $k$-vector random variables such that $\sqrt{n}(\boldsymbol{z} - \boldsymbol{\mu}) \xrightarrow{d} N(0, \Sigma)$, as $n \to \infty$. Let $c(\boldsymbol{z})$ be a $J$-vector valued continuously differentiable function, and let $C(\boldsymbol{z})$ be the $J \times k$ matrix $\partial c(\boldsymbol{z}) / \partial \boldsymbol{z}^\prime$. Then
+	\begin{align*}
+		\sqrt{n}[c(\boldsymbol{z}) - c(\boldsymbol{\mu})] \xrightarrow{d} N(0, C(\boldsymbol{\mu}) \Sigma C(\boldsymbol{\mu})^\prime)
+	\end{align*}
+Then, if we combine \textbf{Theorem 1.4.2} and \textbf{Theorem 1.4.1}, we can have that:\\\\
+\textbf{Theorem 1.4.3 (Asymptotic Distribution of a Function of b)}\\
+For a $k \times 1$ vector $\boldsymbol{b}$, let $f(\boldsymbol{b})$ be a $J$-vetor valued continuously differentiable function, and let $C(\boldsymbol{b}) = \partial f(\boldsymbol{b}) / \partial \boldsymbol{b}^\prime$. Then;
+	\begin{align*}
+		\sqrt{n} [f(\boldsymbol{b}) - f(\boldsymbol{\beta})] \xrightarrow{d} N(0, C(\boldsymbol{\beta}) \sigma^2 \boldsymbol{Q}^{-1} C(\boldsymbol{\beta})^{-1})
+	\end{align*}
+and we can estimate this variance consistently by:
+	\begin{align*}
+		C(\boldsymbol{b}) s^2 (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1} C(\boldsymbol{b})^\prime
+	\end{align*}
+
+
+\subsection{Interval Estimation}
+From \textbf{Theorem 1.4.1}, we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(0, \sigma^2 \boldsymbol{Q}^{-1})
+	\end{align*}
+which means that for the $j$th parameter $\boldsymbol{b}_j$, we have that:
+	\begin{align*}
+		\sqrt{n}(b_j - \beta_j) \xrightarrow{d} N(0, \sigma^2 \boldsymbol{Q}^{-1}_j)
+	\end{align*}
+From \textbf{1.4.1}, we know that:
+	\begin{align*}
+		s^2 (\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}  \xrightarrow{p} \sigma^2 \boldsymbol{Q}^{-1}
+	\end{align*}
+which means that:
+	\begin{align*}
+		n s^2 (\boldsymbol{X}^\prime \boldsymbol{X})^{-1}_j \xrightarrow{p} \sigma^2 \boldsymbol{Q}^{-1}_j
+	\end{align*}
+Thus, because of the \textbf{Rules for Limiting Distributions}, we can have that:
+	\begin{align*}
+		\frac{\sqrt{n}(b_j - \beta_j)}{\sqrt{n s^2 (\boldsymbol{X}^\prime \boldsymbol{X})^{-1}_j}} \xrightarrow{d} N(0, 1)
+	\end{align*}
+
+
+\subsection{Prediction and Forecasting}
+
+
+\subsection{Data Problem}
+
+
+
+\newpage
+\section{Hypothesis Test}
+\subsection{Test}
+\subsubsection{The F Statistic}
+For the model:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+Our hypothesis is that:
+	\begin{align*}
+		H_0:\ \boldsymbol{R} \boldsymbol{\beta} - \boldsymbol{q} = 0\\
+		H_1:\ \boldsymbol{R} \boldsymbol{\beta} - \boldsymbol{q} \neq 0
+	\end{align*}
+where $\boldsymbol{R}$ is a $J \times K$ matrix, $\boldsymbol{q}$ is a $J \times 1$ matrix.\\
+Now, we can regress $\boldsymbol{Y}$ on $\boldsymbol{X}$ with and without the hypothesis:\\
+	\begin{align*}
+		&\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}\\
+		s.t.&\\
+		& \boldsymbol{R} \boldsymbol{\beta} = \boldsymbol{q}
+	\end{align*}
+And we can partition $\boldsymbol{R}$ into $J \times (K - J)$ and $J \times J$ block, and $\boldsymbol{\beta}$ into $(K - J) \times 1$ and $J \times 1$ block:
+	\begin{align*}
+		\boldsymbol{R} = &
+		\begin{pmatrix}
+			\boldsymbol{R_1} & \boldsymbol{R_2}
+		\end{pmatrix}\\
+		\boldsymbol{\beta} = &
+		\begin{pmatrix}
+			\boldsymbol{\beta_1}\\
+			\boldsymbol{\beta_2}
+		\end{pmatrix}
+	\end{align*}
+Then we can define:
+	\begin{align*}
+		\boldsymbol{\gamma} = \boldsymbol{R_1} \boldsymbol{\beta_1} + \boldsymbol{R_2} \boldsymbol{\beta_2} - \boldsymbol{q}
+	\end{align*}
+Then, we can solve backwards to get the $\boldsymbol{\beta_2}$:
+	\begin{align*}
+		\boldsymbol{\beta_2} = \boldsymbol{R_2}^{-1}(\boldsymbol{\gamma} + \boldsymbol{q} - \boldsymbol{R_1}\boldsymbol{\beta_1})
+	\end{align*}
+Then, we take $\boldsymbol{\beta_2}$ into the model:
+	\begin{align*}
+		\boldsymbol{Y} = &\boldsymbol{X_1} \boldsymbol{\beta_1} + \boldsymbol{X_2} \boldsymbol{R_2}^{-1}(\boldsymbol{\gamma} + \boldsymbol{q} - \boldsymbol{R_1}\boldsymbol{\beta_1}) + \boldsymbol{\varepsilon}\\ = &
+		\boldsymbol{X_1} \boldsymbol{\beta_1} + \boldsymbol{X_2} \boldsymbol{R_2}^{-1} \boldsymbol{\gamma} + \boldsymbol{X_2} \boldsymbol{R_2}^{-1} \boldsymbol{q} - \boldsymbol{X_2} \boldsymbol{R_2}^{-1} \boldsymbol{R_1} \boldsymbol{\beta_1} + \boldsymbol{\varepsilon}
+	\end{align*}
+Then, we define:
+	\begin{align*}
+		\tilde{\boldsymbol{Y}} = &\boldsymbol{Y} - \boldsymbol{X_2} \boldsymbol{R_2}^{-1} \boldsymbol{q}\\
+		\boldsymbol{Z_1} = &\boldsymbol{X_1} - \boldsymbol{X_2} \boldsymbol{R_2}^{-1} \boldsymbol{R_1}\\
+		\boldsymbol{Z_2} = &\boldsymbol{X_2} \boldsymbol{R_2}^{-1}
+	\end{align*}
+The model can be rewrite as:
+	\begin{align*}
+		\tilde{\boldsymbol{Y}} = \boldsymbol{Z_1} \boldsymbol{\beta_1} + \boldsymbol{Z_2} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}
+	\end{align*}
+For the unrestricted residuals, $\boldsymbol{\gamma} \neq 0$, the unrestricted residuals is:
+ 	\begin{align*}
+ 		\boldsymbol{e} = \boldsymbol{M} \tilde{\boldsymbol{Y}}
+ 	\end{align*}
+ where:
+ 	\begin{align*}
+ 		\boldsymbol{M} = \boldsymbol{I} - \boldsymbol{P} = \boldsymbol{I} - \boldsymbol{Z}(\boldsymbol{Z}^\prime \boldsymbol{Z})^{-1} \boldsymbol{Z}^\prime
+ 	\end{align*}
+Then for the restricted residuals, $\boldsymbol{\gamma} = 0$, the restricted model is:
+	\begin{align*}
+		\tilde{\boldsymbol{Y}} = \boldsymbol{Z_1} \boldsymbol{\beta_1} + \boldsymbol{\varepsilon}
+	\end{align*}
+and the restricted residuals is:
+	\begin{align*}
+		\boldsymbol{e}_\star = \boldsymbol{M}_\star \tilde{Y} = \boldsymbol{M}_\star \boldsymbol{\varepsilon}
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{M}_\star = \boldsymbol{I} - \boldsymbol{P}_\star = \boldsymbol{I} - \boldsymbol{Z_1}(\boldsymbol{Z_1}^\prime \boldsymbol{Z_1})^{-1} \boldsymbol{Z_1}^\prime
+	\end{align*}
+Now we consider the statistic:
+	\begin{align*}
+		\frac{(\boldsymbol{e}^\prime_\star \boldsymbol{e}_\star - \boldsymbol{e}^\prime \boldsymbol{e}) / J}{\boldsymbol{e}^\prime \boldsymbol{e} / (n - K)} = 
+		\frac{(\boldsymbol{\varepsilon} / \sigma)^\prime (\boldsymbol{M}_\star - \boldsymbol{M}) (\boldsymbol{\varepsilon} / \sigma) / J}{(\boldsymbol{\varepsilon} / \sigma)^\prime \boldsymbol{M} (\boldsymbol{\varepsilon} / \sigma) / (n - K)}
+	\end{align*}	
+and we can prove that:
+	\begin{align*}
+		\frac{(\boldsymbol{e}^\prime_\star \boldsymbol{e}_\star - \boldsymbol{e}^\prime \boldsymbol{e}) / J}{\boldsymbol{e}^\prime \boldsymbol{e} / (n - K)} \sim F[J, n - K]
+	\end{align*}
+
+
+\subsection{Large-sample Tests and Robust Inference}
+For the model
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+With assumption \textbf{A.1, A.3, A.4, A.7}, we know that the OLS estimator is asymptotically normal.
+
+\subsubsection{Asymptotic t-test}
+Consider the hypothesis:
+	\begin{align*}
+		H_0 : \beta_j = \beta^0_j
+	\end{align*}
+Now we consider a statistic:
+	\begin{align*}
+		\frac{b_j - \beta^0_j}{se_j}
+	\end{align*}
+where $se_j = \sqrt{s^2 (\boldsymbol{X}^\prime \boldsymbol{X})^{-1}_j}$\\
+From \textbf{4.5} we know that:
+	\begin{align*}
+		t_j = \frac{b_j - \beta^0_j}{se_j} \xrightarrow{d} Z \sim N(0, 1)
+	\end{align*}
+We set the reject size $\alpha$, and the rejection rule:
+	\begin{align*}
+		\text{Reject}\ H_0:\ \beta_j = \beta^0_j,\ \text{if}\ |t_j| \geq z_{1 - \alpha / 2}
+	\end{align*}
+Then, because the convergence in distribution:
+	\begin{align*}
+		\lim\limits_{n\to\infty} |F_t(t_j \leq z_{1 - \alpha / 2} | H_0\ \text{is correct}) - F_z(Z \leq z_{1 - \alpha / 2})| = 0\\
+		\lim\limits_{n\to\infty} |F_t(t_j \leq -z_{1 - \alpha / 2} | H_0\ \text{is correct}) - F_z(Z \leq -z_{1 - \alpha / 2})| = 0
+	\end{align*}
+which means that:
+	\begin{align*}
+		&\lim\limits_{n\to\infty} |F_t(|t_j| \geq z_{1 - \alpha / 2} | H_0\ \text{is correct}) - F_z(|Z| \geq z_{1 - \alpha / 2})|\\ = &
+		\lim\limits_{n\to\infty} |F_t(|t_j| \geq z_{1 - \alpha / 2} | H_0\ \text{is correct}) - \alpha|\\ = &
+		0
+	\end{align*}
+which means that:
+	\begin{align*}
+		Pr(\text{reject}\ H_0 | H_0\ \text{is correct}) \to \alpha
+	\end{align*}	
+This test is called the (asymptotic) t-test
+
+\subsubsection{Wald test}
+Consider the hypothesis:
+	\begin{align*}
+		H_0: \boldsymbol{R} \boldsymbol{\beta} = \boldsymbol{q}
+	\end{align*}
+If $H_0$ is correct, from \textbf{4.5} we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q}) = \sqrt{n}\boldsymbol{R}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{R}\sigma^2 \boldsymbol{Q}^{-1} \boldsymbol{R}^\prime)
+	\end{align*}
+And we know that:
+	\begin{align*}
+		s^2 \left(\frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n}\right)^{-1} \xrightarrow{p} \sigma^2 \boldsymbol{Q}^{-1}
+	\end{align*}
+which means that that:
+	\begin{align*}
+		\frac{\sqrt{n}(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q})}{\sqrt{\boldsymbol{R} s^2 \left(\frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n}\right)^{-1} \boldsymbol{R}}} \xrightarrow{d} N(\boldsymbol{0},\boldsymbol{1} )
+	\end{align*}
+Thus, we can construct the Wald statistic:
+	\begin{align*}
+		W = &\sqrt{n}(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q})^\prime \left[\boldsymbol{R} s^2 \left(\frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n}\right)^{-1} \boldsymbol{R}\right]^{-1} \sqrt{n}(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q})\\= &
+		(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q})^\prime \left[\boldsymbol{R} s^2 \left(\boldsymbol{X}^\prime \boldsymbol{X}\right)^{-1} \boldsymbol{R}\right]^{-1}(\boldsymbol{R} \boldsymbol{b} - \boldsymbol{q}) \xrightarrow{d} \chi^2(J)
+	\end{align*}
+
+
+\subsection{Testing Nonlinear Restrictions}
+\subsubsection{Construction of Wald Test}
+Now we consider the nonlinear hypothesis:
+	\begin{align*}
+		H_0: \boldsymbol{c}(\boldsymbol{\beta}) = \boldsymbol{0}
+	\end{align*}
+where $\boldsymbol{c}(\boldsymbol{\beta})$ is a set of $J$ functions of $\boldsymbol{\beta}$.\\
+Then let :
+	\begin{align*}
+		\boldsymbol{G}(\boldsymbol{\beta}) = \frac{\partial \boldsymbol{c}(\boldsymbol{\beta})}{\partial \boldsymbol{\beta}^\prime}
+	\end{align*}
+which is a $J \times K$ Jacobian matrix.\\
+From \textbf{A.1, A.3, A.4, A.7}, we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q}^{-1})
+	\end{align*}
+If $H_0$ is correct, then by \textbf{Theorem 4.4.2 (Delta-method)}, we know that:
+	\begin{align*}
+		\sqrt{n}(c(\boldsymbol{b}) - c(\boldsymbol{\beta})) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{G}(\boldsymbol{\beta}) \sigma^2 \boldsymbol{Q}^{-1} \boldsymbol{G}(\boldsymbol{\beta})^\prime)
+	\end{align*}
+Then, similar to \textbf{5.2.2}, we can construct the Wald statistic:
+	\begin{align*}
+		W = &\sqrt{n} c(\boldsymbol{b})^\prime \left[\boldsymbol{G}(\boldsymbol{b}) s^2 \left( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \right)^{-1} \boldsymbol{G}(\boldsymbol{b})^\prime \right]^{-1} \sqrt{n} c(\boldsymbol{b}) \\= &
+		c(\boldsymbol{b})^\prime \left[\boldsymbol{G}(\boldsymbol{b}) s^2 \left( \boldsymbol{X}^\prime \boldsymbol{X} \right)^{-1} \boldsymbol{G}(\boldsymbol{b})^\prime \right]^{-1} c(\boldsymbol{b}) \xrightarrow{d} \chi^2(J)
+	\end{align*}
+
+\subsubsection{Drawbacks of Nonlinear Wald Test}
+\centerline{\textbf{5.3.2.1 Over-Rejection}}
+If we use the $100(1 - \alpha)$-percentile of $\chi^2(J)$ distribution, from the asymptotic property we know that as $n \to \infty$:
+	\begin{align*}
+		Pr(\text{reject}\ H_0 | H_0\ \text{is correct}) \to \alpha
+	\end{align*}
+However, if $n$ is finite, the rejection probability may exceed $\alpha$. For example, for $n = 200$, $\alpha = 0.05$, the real probability will exceed 0.15.\\\\
+\centerline{\textbf{5.3.2.2 Multiple Restriction}}
+For a nonlinear hypothesis, we may have multiple way to construct the continuous function, which lead to multiple Jacobian matrix. For example:
+	\begin{align*}
+		H_0: \beta_1 \beta_2 - 1 = 0
+	\end{align*}
+The restriction can be rewritten as:
+	\begin{align*}
+		H_{01}: \beta_1 - \frac{1}{\beta_2} = 0\\
+		H_{01}: \beta_2 - \frac{1}{\beta_1} = 0
+	\end{align*} 
+which lead to different Jacobian matrix:
+	\begin{align*}
+		\boldsymbol{G}_1(\boldsymbol{b}) = 
+		\begin{pmatrix}
+			1 & \frac{1}{\beta^2_2}
+		\end{pmatrix}\\
+		\boldsymbol{G}_2(\boldsymbol{b}) = 
+		\begin{pmatrix}
+			\frac{1}{\beta^2_1} & 1
+		\end{pmatrix}
+	\end{align*}
+
+
+\subsection{Choosing Between Nonnested Model}
+All the hypotheses above are just special cases of the origin model. If our hypothesis is to compare two different models:
+	\begin{align*}
+		H_0: \boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon_0}\\
+		H_1: \boldsymbol{Y} = \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon_1}
+	\end{align*}
+
+\subsubsection{Encompassing Model}
+One way is to construct another model:
+	\begin{align*}
+		\boldsymbol{Y} = \bar{\boldsymbol{X}} \bar{\boldsymbol{\beta}} + \bar{\boldsymbol{Z}} + \bar{\boldsymbol{\gamma}} + \boldsymbol{W} \boldsymbol{\delta} + \boldsymbol{\varepsilon}
+	\end{align*}
+where $\bar{\boldsymbol{X}}$ be the set of variables in $\boldsymbol{X}$ that are not in $\boldsymbol{Z}$, $\bar{\boldsymbol{Z}}$ be the set of variables in $\boldsymbol{Z}$ that are not in $\boldsymbol{X}$, $\boldsymbol{W}$ are the variables that the two models have in common.\\\\
+Then $H_1$ could be reject if we use test to verify $\bar{\boldsymbol{\gamma}} = 0$, and $H_0$ could be reject if we use test to verify $\bar{\boldsymbol{\beta}} = 0$
+
+\subsubsection{Drawbacks of Encompassing Model}
+\centerline{\textbf{5.4.2.1 Model Specification}}
+The first is that even we test that $\bar{\boldsymbol{\gamma}}$ or $\bar{\boldsymbol{\beta}}$ is 0, $\boldsymbol{\delta}$ is a hybrid term of these two terms, which means we still can not exclude $\boldsymbol{\beta}$ or $\boldsymbol{\gamma}$.\\
+What we really test is between $H_0$ or $H_1$ with the encompassing model.\\\\
+\centerline{\textbf{5.4.2.2 Variable Numbers}}
+If we use the encompassing model, there are two many variables, which may lead to collinearity problem.
+
+\subsubsection{Comprehensive Approach: the J test}
+We construct a new model:
+	\begin{align*}
+		\boldsymbol{Y} = (1 - \lambda) \boldsymbol{X} \boldsymbol{\beta} + \lambda \boldsymbol{Z} \boldsymbol{\gamma} + \boldsymbol{\varepsilon}
+	\end{align*}
+Then our test is to test whether $\lambda$ equals 0 or 1, and the steps are as follow:\\
+\indent First we regress $\boldsymbol{Y}$ on $\boldsymbol{Z}$ to get $\hat{\boldsymbol{\gamma}}$.\\
+\indent Then we regress $\boldsymbol{Y}$ on $\boldsymbol{X}$ and $\boldsymbol{Z} \hat{\boldsymbol{\gamma}}$ to get $\hat{\boldsymbol{\beta}}$ and $\hat{\lambda}$.\\
+\indent Then if $H_0$ is correct, we have:
+	\begin{align*}
+		\hat{\lambda} \xrightarrow{d} N(0, 1)
+	\end{align*}
+
+
+\subsection{Model Building}
+
+
+
+\newpage
+\section{Dummy Variables}
+\subsection{Dummy Variables}
+A dummy variable only takes values of 1 or 0. It can be used to represent the state variables.\\
+For $n$ state, we use $n - 1$ dummy variables.
+
+\subsubsection{Difference in Differences Regression}
+We want to verify the influence of some policy. If we use the simple regression model with dummy variables:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{D} \boldsymbol{\delta} + \boldsymbol{\varepsilon}
+	\end{align*}
+where $\boldsymbol{D}$ is the dummy variable, and we use $\delta$ to measure the influence of the policy.\\\\
+One problem is that $\boldsymbol{D}$ may correlate with the error term $\boldsymbol{\varepsilon}$. Thus, we add more dummy variables to use DiD. The new model is:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X}\boldsymbol{\beta_1} + \boldsymbol{T}\beta_2 + \boldsymbol{D}\beta_3 + (\boldsymbol{T} \boldsymbol{D}) \delta + \varepsilon
+	\end{align*}
+$\boldsymbol{T}$ is the time dummy variable. $T = 0$ if before the treatment and $T = 1$ if after the treatment.\\
+$\boldsymbol{D}$ is the treatment dummy variable. $D = 0$ if not in the treatment group $D = 1$ if in the treatment group.\\
+$\boldsymbol{D} \boldsymbol{T}$ equals $1$ only for treated individuals after the treatment.\\\\
+Thus, we first compute the treated group:
+	\begin{align*}
+		\mathbb{E} [y_{i1} | D_i = 1] - \mathbb{E} [y_{i0} | D_i = 1] = \boldsymbol{x_i}^\prime \boldsymbol{\beta_1} + \beta_2 + \beta_3 + \delta -  \boldsymbol{x_i}^\prime \boldsymbol{\beta_1} - \beta_3 = \beta_2 + \delta
+	\end{align*}
+Then, we compute the control group:
+	\begin{align*}
+		\mathbb{E} [y_{i1} | D_i = 0] - \mathbb{E} [y_{i0} | D_i = 0] = \boldsymbol{x_i}^\prime \boldsymbol{\beta_1} +  \beta_2 - \boldsymbol{x_i}^\prime \boldsymbol{\beta_1} = \beta_2 
+	\end{align*}
+Thus, we can get the influence of the treatment by:
+	\begin{align*}
+		\delta = \mathbb{E} [\Delta y_{i1} | D_i = 1] - \mathbb{E} [\Delta y_{i1} | D_i = 0]
+	\end{align*}
+One important assumption is the exogeneity of the treatment, which mean that:
+	\begin{align*}
+		\mathbb{E} [\varepsilon_{it} | \boldsymbol{D_i}] = 0
+	\end{align*}
+
+
+\subsection{Structural Break and Parameter Variation}
+\subsubsection{Chow Test}
+If we want to test whether the regression model are the same for two data set, we can use Chow test. Here we give the model:
+	\begin{align*}
+		\boldsymbol{Y_1} = \boldsymbol{X_1}\boldsymbol{\beta_1} + \boldsymbol{\varepsilon_1}\\
+		\boldsymbol{Y_2} = \boldsymbol{X_2}\boldsymbol{\beta_2} + \boldsymbol{\varepsilon_2}
+	\end{align*}
+The hypotheses are:
+	\begin{align*}
+		H_0:\ \boldsymbol{\beta_1} = \boldsymbol{\beta_2}\\
+		H_1:\ \boldsymbol{\beta_1} \neq \boldsymbol{\beta_2}
+	\end{align*}
+Then, for the unrestricted model:
+	\begin{align*}
+		\begin{bmatrix}
+			\boldsymbol{Y_1}\\
+			\boldsymbol{Y_2}
+		\end{bmatrix} = 
+		\begin{bmatrix}
+			\boldsymbol{X_1} & 0\\
+			0 & \boldsymbol{X_2}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{\beta_1}\\
+			\boldsymbol{\beta_2}
+		\end{bmatrix} + 
+		\begin{bmatrix}
+			\varepsilon_1\\
+			\varepsilon_2
+		\end{bmatrix}
+	\end{align*}
+The unrestricted SSR is the sum of the two SSR:
+	\begin{align*}
+		\boldsymbol{e}^\prime \boldsymbol{e} = \boldsymbol{e_1}^\prime\boldsymbol{e_1} + \boldsymbol{e_2}^\prime\boldsymbol{e_2}
+	\end{align*}
+For the restricted model:
+	\begin{align*}
+		\begin{bmatrix}
+			\boldsymbol{Y_1}\\
+			\boldsymbol{Y_2}
+		\end{bmatrix} = 
+		\begin{bmatrix}
+			\boldsymbol{X_1}\\
+			\boldsymbol{X_2}
+		\end{bmatrix} \boldsymbol{\beta} + 
+		\begin{bmatrix}
+			\varepsilon_1\\
+			\varepsilon_2
+		\end{bmatrix}
+	\end{align*}
+The restricted SSR is the SSR of the regression:
+	\begin{align*}
+		\boldsymbol{e}_\star = \boldsymbol{M}\boldsymbol{Y}
+	\end{align*}
+Then, we the assumption $\boldsymbol{\varepsilon} \sim N(0, \sigma^2 \boldsymbol{I})$, we can construct the F test:
+	\begin{align*}
+		F = \frac{[\boldsymbol{e}^\prime_\star \boldsymbol{e}_\star - (\boldsymbol{e_1}^\prime \boldsymbol{e_1} + \boldsymbol{e_2}^\prime \boldsymbol{e_2})] / K}{(\boldsymbol{e_1}^\prime \boldsymbol{e_1} + \boldsymbol{e_2}^\prime \boldsymbol{e_2}) / (n_1 + n_2 - 2k)}
+	\end{align*}
+
+\subsubsection{Wald Test for Structural Break}
+Chow test depends on the assumption that $\boldsymbol{\varepsilon} \sim N(0, \sigma^2 \boldsymbol{I})$. If the sample size is large, by asymptotic consistency, we can use the Wald test. For the unrestricted model: 
+	\begin{align*}
+		\begin{bmatrix}
+			\boldsymbol{Y_1}\\
+			\boldsymbol{Y_2}
+		\end{bmatrix} = 
+		\begin{bmatrix}
+			\boldsymbol{X_1} & 0\\
+			0 & \boldsymbol{X_2}
+		\end{bmatrix}
+		\begin{bmatrix}
+			\boldsymbol{\beta_1}\\
+			\boldsymbol{\beta_2}
+		\end{bmatrix} + 
+		\begin{bmatrix}
+			\varepsilon_1\\
+			\varepsilon_2
+		\end{bmatrix}
+	\end{align*}
+We assume that $(\boldsymbol{X_1}, \boldsymbol{\varepsilon_1})$ and $(\boldsymbol{X_2}, \boldsymbol{\varepsilon_2})$ are independent. Under the assumptions \textbf{A.1, A.3, A.4, A.7}, we have that:
+	\begin{align*}
+		\sqrt{n} 
+		\begin{pmatrix}
+			\boldsymbol{b_1} - \boldsymbol{\beta_1}\\
+			\boldsymbol{b_2} - \boldsymbol{\beta_2}
+		\end{pmatrix} \xrightarrow{d} N \left(
+		\begin{pmatrix}
+			0\\
+			0
+		\end{pmatrix},\
+		\begin{pmatrix}
+			\boldsymbol{\Sigma_1} & 0\\
+			0 & \boldsymbol{\Sigma_2}
+		\end{pmatrix} \right)
+	\end{align*}
+where $\Sigma_1 = \sigma^2 \boldsymbol{Q_1}^{-1}$ and $\Sigma_2 = \sigma^2 \boldsymbol{Q_2}^{-1}$\\\\
+Then, if $H_0$ is correct, we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b_1} - \boldsymbol{b_2}) \xrightarrow{d} N(0, \boldsymbol{\Sigma_1} + \boldsymbol{\Sigma_2})
+	\end{align*}
+Thus, we can construct the Wald test:
+	\begin{align*}
+		W = n (\boldsymbol{b_1} - \boldsymbol{b_2})^\prime (\hat{\boldsymbol{\Sigma}}_1 +  \hat{\boldsymbol{\Sigma}}_2)^{-1} (\boldsymbol{b_1} - \boldsymbol{b_2}) \xrightarrow{d} \chi^2(K)
+	\end{align*}
+
+
+\subsection{Bias-variance Trade-off}
+In regression, we often don't know what the true independent variables set is. We will analysis the consequences of (i) omitting relevant variables and (ii) including superfluous variables.\\\\
+Suppose the true model is:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X_1}\boldsymbol{\beta_1} + \boldsymbol{X_2}\boldsymbol{\beta_2} + \boldsymbol{\varepsilon}
+	\end{align*}  
+where:
+	\begin{align*}
+		\mathbb{E}[\varepsilon | \boldsymbol{X}] =& \boldsymbol{0}\\
+		Var[\boldsymbol{\varepsilon} | \boldsymbol{X}] =& \sigma^2 \boldsymbol{I}\\
+		\boldsymbol{X} =& [\boldsymbol{X_1}\ \boldsymbol{X_2}]
+	\end{align*}
+If we omit $\boldsymbol{X_2}$ and only regress $\boldsymbol{Y}$ on $\boldsymbol{X_1}$, then by OLS, $\boldsymbol{b_1}$ is:
+	\begin{align*}
+		\boldsymbol{b_1} = &(\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{Y}\\
+		= &\boldsymbol{\beta_1} + (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{X_2} \boldsymbol{\beta_2} + (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{\varepsilon}
+	\end{align*}
+Then, the expectation of $\boldsymbol{b_1}$ is:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{b_1} | \boldsymbol{X}] = \boldsymbol{\beta_1} + (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{X_2} \boldsymbol{\beta_2}
+	\end{align*}
+$\boldsymbol{b_1}$ is unbiased unless $\boldsymbol{X_1}^\prime \boldsymbol{X_2} = 0$ (they are orthogonal) or $\boldsymbol{\beta_2} = 0$ ($\boldsymbol{X_2}$ is superfluous).\\\\
+Now we consider the variance of $\boldsymbol{b_1}$:
+	\begin{align*}
+		Var[\boldsymbol{b_1} | \boldsymbol{X}] = &\mathbb{E}[(\boldsymbol{b_1} - \mathbb{E}[\boldsymbol{b_1} | \boldsymbol{X}]) (\boldsymbol{b_1} - \mathbb{E}[\boldsymbol{b_1} | \boldsymbol{X}])^\prime | \boldsymbol{X}]\\ = &
+		\mathbb{E}[(\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{\varepsilon} \boldsymbol{\varepsilon}^\prime \boldsymbol{X_1} (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} | \boldsymbol{X}]\\ = &
+		(\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \mathbb{E}[\boldsymbol{\varepsilon} \boldsymbol{\varepsilon}^\prime | \boldsymbol{X}] \boldsymbol{X_1} (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1}\\ = &
+		(\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \sigma^2 \boldsymbol{X_1} (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1}\\ = &
+		\sigma^2 (\boldsymbol{X_1}^\prime \boldsymbol{X_1})^{-1}
+	\end{align*}
+If we regress $\boldsymbol{Y}$ on $\boldsymbol{X}$, by FWL theorem, $\boldsymbol{b_{1,2}}$ is:
+	\begin{align*}
+		\boldsymbol{b_{1,2}} = &(\boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{Y}\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{X_1})^{-1} \boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{\varepsilon} 
+	\end{align*}
+Then the variance is:
+	\begin{align*}
+		Var[\boldsymbol{b_{1,2}} | \boldsymbol{X}] = & \sigma^2 (\boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{X_1})^{-1}
+	\end{align*}
+Note that:
+	\begin{align*}
+		(Var[\boldsymbol{b_1} | \boldsymbol{X}])^{-1} - (Var[\boldsymbol{b_{1, 2}} | \boldsymbol{X}])^{-1} = \sigma^2 (\boldsymbol{X_1}^\prime \boldsymbol{X} - \boldsymbol{X_1}^\prime \boldsymbol{M_2} \boldsymbol{X_1}) = \boldsymbol{X_1}^\prime \boldsymbol{P_2} \boldsymbol{X_1} = (\boldsymbol{P_2} \boldsymbol{X_1})^\prime \boldsymbol{P_2} \boldsymbol{X_1}
+	\end{align*}
+which means that $(Var[\boldsymbol{b_1} | \boldsymbol{X}])^{-1} - (Var[\boldsymbol{b_{1, 2}} | \boldsymbol{X}])^{-1}$ is positive semidefinite. Thus, $	Var[\boldsymbol{b_{1,2}} | \boldsymbol{X}] - Var[\boldsymbol{b_1} | \boldsymbol{X}]$ is positive semidefinite.\\
+We can see that the true model regression have larger variance.\\\\
+In conclusion:\\
+\indent When $\boldsymbol{\beta_2} = 0$, $\boldsymbol{b_1}$ is more efficient than $\boldsymbol{b_{1,2}}$.\\
+\indent When $\boldsymbol{\beta_2} \neq 0$, $\boldsymbol{b_{1,2}}$ is unbiased and $\boldsymbol{b_1}$ is biased.\\
+\indent $\boldsymbol{b_{1,2}}$ always has larger variance than $\boldsymbol{b_1}$.\\
+However, as $n \to \infty$, both variance converge to 0, but $\boldsymbol{b_1}$ is still biased. Thus in large samples, we prefer $\boldsymbol{b_{1,2}}$
+
+
+
+\newpage
+\section{Instrument Variables}
+The consistency of the OLS requires that:
+	\begin{align*}
+		\mathbb{E} [\varepsilon_i | \boldsymbol{x_i}] = 0
+	\end{align*}
+This assumption cannot always be satisfied, which means endogenous.
+
+
+\subsection{Assumptions of the Extended Model}
+To solve the problem, we slightly change the previous assumptions in OLG:\\
+\textbf{A.1 (Linearity)}
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+\textbf{A.2 (Full Rank)}
+	\begin{align*}
+		rank(\boldsymbol{X}) = K
+	\end{align*}
+\textbf{A.I3 (Endogeneity)}\\
+The regressors provide information about the expectation of the error term:
+	\begin{align*}
+		\mathbb{E}[\varepsilon_i | \boldsymbol{x_i}] = \eta(\boldsymbol{x_i}) \neq 0
+	\end{align*}
+We add additional vector of $L \times 1$ variables $\boldsymbol{z_i}$, which satisfies:\\
+\indent \textbf{Exogeneity}: $\boldsymbol{z_i}$ is uncorrelated with $\varepsilon_i$\\
+\indent \textbf{Relevance}: $\boldsymbol{z_i}$ is correlated with $\boldsymbol{x_i}$\\\\
+About $\boldsymbol{z_i}$, we add some assumptions:\\
+\textbf{A.I4 (Homoskedasticity)}
+	\begin{align*}
+		\mathbb{E}[\varepsilon^2_i | \boldsymbol{z_i}] = \sigma^2
+	\end{align*}
+\textbf{A.I5 (Random sampling)}
+	\begin{align*}
+		(\boldsymbol{x_i}, \boldsymbol{z_i}, \varepsilon_i) \sim i.i.d.
+	\end{align*}
+\textbf{A.I6 (Moments of $\boldsymbol{x_i}$ and $\boldsymbol{z_i}$)}
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{x_i} \boldsymbol{x_i}^\prime] = \boldsymbol{Q_{xx}},&\ rank(\boldsymbol{Q_{xx}}) = K\\
+		\mathbb{E}[\boldsymbol{z_i} \boldsymbol{z_i}^\prime] = \boldsymbol{Q_{zz}},&\ rank(\boldsymbol{Q_{zz}}) = L\\
+		\mathbb{E}[\boldsymbol{z_i} \boldsymbol{x_i}^\prime] = \boldsymbol{Q_{zx}},&\ rank(\boldsymbol{Q_{zx}}) = K\\
+	\end{align*}	
+\textbf{A.I7 (Exogeneity of instruments)}
+	\begin{align*}
+		\mathbb{E}[\varepsilon_i | \boldsymbol{z_i}] = 0
+	\end{align*}
+
+
+\subsection{Instrumental Variable Estimation}
+\subsubsection{The Biasedness and Inconsistency of OLS}
+Suppose we have that:
+	\begin{align*}
+		\eta(\boldsymbol{X}) = 
+		\begin{pmatrix}
+			\eta(\boldsymbol{x_1}) & \eta(\boldsymbol{x_2}) & \ldots & \eta(x_n)
+		\end{pmatrix}^\prime
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{b} | \boldsymbol{X}] = &\mathbb{E}[(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime (\boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}) | \boldsymbol{X}]\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \eta(\boldsymbol{X})\\ \neq &
+		\boldsymbol{\beta}
+	\end{align*}
+Thus, the OLG is biased under endogeneity.\\\\
+With \textbf{A.I3}, we have that;
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{x_i}\varepsilon_i] = & \mathbb{E}[\boldsymbol{x_i} \mathbb{E}[\varepsilon_i | \boldsymbol{x_i}]]\\ = &
+		\mathbb{E}[\boldsymbol{x_i} \eta(\boldsymbol{x_i})]\\ \neq &
+		0
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		\boldsymbol{b} = &\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime\\ \xrightarrow{p} &
+		\boldsymbol{\beta} + \mathop{plim}\limits_{n\to\infty} \left( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} \right)^{-1} \mathop{plim}\limits_{n\to\infty} \left( \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n} \right)\\ = &
+		\boldsymbol{\beta} + \boldsymbol{Q_{xx}}^{-1} \mathbb{E}[\boldsymbol{x_i} \varepsilon_i]\\ \neq &
+		\boldsymbol{\beta}
+	\end{align*}
+Thus, the OLG is inconsistent under endogeneity.	
+
+\subsubsection{Method of Moments}
+Besides OLG, we introduce a new estimating method. First, we go back to the ordinary assumption with exogeneity. Thus, we have that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{x_i} \varepsilon_i] = \mathbb{E}[\boldsymbol{x_i}(y_i - \boldsymbol{x_i}^\prime \boldsymbol{\beta})] = \boldsymbol{0}
+	\end{align*}
+Then, we can view this as the condition that $(y_i, \boldsymbol{x_i}, \boldsymbol{\beta})$ must satisfies.\\
+Then, for the sample estimator, we have that:
+	\begin{align*}
+		\frac{1}{n}\sum^n_{i=1} \boldsymbol{x_i}(y_i - \boldsymbol{x_i}^\prime \boldsymbol{b}_{MOM}) = \boldsymbol{0}
+	\end{align*}
+We get:
+	\begin{align*}
+		\boldsymbol{b}_{MOM} = \left( \frac{1}{n}\sum^n_{i=1} \boldsymbol{x_i}\boldsymbol{x_i}^\prime \right) \left( \frac{1}{n}\sum^n_{i=1} \boldsymbol{x_i}\boldsymbol{y_i} \right) = (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y} = \boldsymbol{b}_{OLS}
+	\end{align*}
+Now, we go back to the endogenous model, we have that;
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{z_i}\varepsilon_i] = 0
+	\end{align*}
+Then, the MOM sample estimator satisfies:
+	\begin{align*}
+		\frac{1}{n} \sum^n_{i=1} [\boldsymbol{z_i}(y_i - \boldsymbol{x_i}^\prime \boldsymbol{b}_{MOM})] = \boldsymbol{0}
+	\end{align*}
+If we have that $L = K$, we can solve it back to get:
+	\begin{align*}
+		\boldsymbol{b}_{MOM} = \left( \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i} \boldsymbol{x_i}^\prime \right)^{-1} \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i}y_i = (\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}
+	\end{align*}
+\centerline{\textbf{8.2.2.1 Consistency and Biasedness}}
+We can verify that $\boldsymbol{b}_{MOM}$ is consistent but maybe not unbiased.\\
+First, we verify the unbiasedness:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{b}_{MOM} - \boldsymbol{\beta} | \boldsymbol{X}, \boldsymbol{Z}] = &\mathbb{E}[(\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{\varepsilon} | \boldsymbol{X}, \boldsymbol{Z}]\\ = &
+		(\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X}, \boldsymbol{Z}]\\ \neq &
+		0
+	\end{align*}
+which means that it is not unbiased.\\
+Second, we verify the consistency:
+	\begin{align*}
+		\boldsymbol{b}_{MOM} = &(\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}\\ = &
+		(\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime (\boldsymbol{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon})\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{\varepsilon}\\ = &
+		\boldsymbol{\beta} + \left( \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i} \boldsymbol{x_i} \right)^{-1} \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i}\varepsilon_i\\ \xrightarrow{p} &
+		\boldsymbol{\beta} + (\mathbb{E}[\boldsymbol{z_i} \boldsymbol{x_i}^\prime])^{-1} \mathbb{E}[\boldsymbol{z_i} \varepsilon_i]\\ = &
+		\boldsymbol{\beta} + \boldsymbol{Q_{zx}}^{-1} \times 0\\ = &
+		\boldsymbol{\beta} 
+	\end{align*}
+which means it is consistent.\\\\
+\centerline{\textbf{8.2.2.2 Asymptotical Normality}}\\\\
+For the homoscedastic case, we have that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{MOM} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{zx}}^{-1} \boldsymbol{Q_{zz}} \boldsymbol{Q_{xz}}^\prime)
+	\end{align*}
+Here we give the proof:
+	\begin{proof}
+			\begin{align*}
+				\sqrt{n}(\boldsymbol{b}_{MOM} - \boldsymbol{\beta}) = \left( \frac{1}{n}\sum^n_{i=1} \boldsymbol{z_i}\boldsymbol{x_i}^\prime \right)^{-1} \frac{1}{\sqrt{n}} \sum^n_{i=1} \boldsymbol{z_i}\varepsilon_i
+			\end{align*}
+			By the \textbf{i.i.d. law of large number}, we have that:
+				\begin{align*}
+					\frac{1}{n}\sum^n_{i=1} \boldsymbol{z_i}\boldsymbol{x_i}^\prime \xrightarrow{p} \boldsymbol{Q_{zx}}^{-1}
+				\end{align*}		
+			By the \textbf{i.i.d. law of large number}, we also have that:
+				\begin{align*}
+					\mathbb{E} [\boldsymbol{z_i}\varepsilon_i] = &0\\
+					Var[\boldsymbol{z_i} \varepsilon] = &\mathbb{E}[\boldsymbol{z_i}\boldsymbol{z_i}^\prime \varepsilon^2_i]\\ = &
+					\sigma^2 \mathbb{E}[\boldsymbol{z_i} \boldsymbol{z_i}^\prime]\\ = &
+					\sigma^2 \boldsymbol{Q_{zz}}
+				\end{align*}
+			Thus, by \textbf{Central limit theorem}, we have that:
+				\begin{align*}
+					\frac{1}{\sqrt{n}} \sum^n_{i=1} \boldsymbol{z_i}\varepsilon_i \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{zz}})
+				\end{align*}	
+			And by the \textbf{rules of limiting distribution}, we have that:
+				\begin{align*}
+					\sqrt{n}(\boldsymbol{b}_{MOM} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{zx}}^{-1} \boldsymbol{Q_{zz}} \boldsymbol{Q_{xz}}^{-1})
+				\end{align*}
+	\end{proof}
+\noindent For the heteroskedastic case:\\
+If we have:
+	\begin{align*}
+		\mathbb{E}[\varepsilon^2_i | \boldsymbol{z_i}] = \omega(\boldsymbol{z_i})
+	\end{align*}
+Then, we have:
+	\begin{align*}
+		Var[\boldsymbol{z_i}\varepsilon_i] = \mathbb{E}[\boldsymbol{z_i}\boldsymbol{z_i}^\prime \varepsilon^2_i] = \mathbb{E}[\boldsymbol{z_i}\boldsymbol{z_i}^\prime \mathbb{E}[\varepsilon^2_i | \boldsymbol{z_i}]] = \mathbb{E}[\boldsymbol{z_i}\boldsymbol{z_i}^\prime \omega(\boldsymbol{z_i})]
+	\end{align*}
+We set:
+	\begin{align*}
+		\boldsymbol{Q_{zz}}^{\omega} = \mathbb{E}[\boldsymbol{z_i}\boldsymbol{z_i}^\prime \omega(\boldsymbol{z_i})]
+	\end{align*}
+Then, we have:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{MOM} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{zx}}^{-1} \boldsymbol{Q_{zz}}^{\omega} \boldsymbol{Q_{xz}}^{-1})
+	\end{align*}
+
+
+\subsection{Two-Stage Least Squares}
+In some cases, the number of the instruments, $L$, is larger than the number of independent variables, $K$. To fully use the instruments, we decide to use the projection of independent variable, $\boldsymbol{X}$, onto the instrumental variables, $\boldsymbol{Z}$:
+	\begin{align*}
+		\hat{\boldsymbol{X}} = \boldsymbol{Z} (\boldsymbol{Z}^\prime \boldsymbol{Z})^{-1} \boldsymbol{Z}^\prime \boldsymbol{X} = \boldsymbol{P_z}\boldsymbol{X}
+	\end{align*}
+and because the instruments are exogenous. $\hat{\boldsymbol{X}}$ is on the instruments space, thus $\hat{\boldsymbol{X}}$ is exogenous.\\
+Then, the two-stage least squares estimator is:
+	\begin{align*}
+		\boldsymbol{b}_{2SLS} = &(\hat{\boldsymbol{X}}^\prime \hat{\boldsymbol{X}})^{-1} \hat{\boldsymbol{X}} \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{Y}
+	\end{align*}
+
+\subsubsection{Consistency and Biasedness}
+\centerline{\textbf{8.3.1.1 Consistency of Two-Stage Least Squares}}
+First, we can prove that the 2-stage least squares estimator is consistent:
+	\begin{align*}
+		\boldsymbol{b}_{2SLS} = &(\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} (\boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon})\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}
+	\end{align*}
+From the \textbf{i.i.d. law of large number}, we have that:
+	\begin{align*}
+		\left( \frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X}}{n} \right)^{-1} = & \left( \frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \frac{\boldsymbol{Z}^\prime \boldsymbol{X}}{n} \right)^{-1} \xrightarrow{p} (\boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})^{-1}\\
+		\frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}}{n} = &\frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{p} \boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \mathbb{E}[\boldsymbol{z_i} \varepsilon_i] = 0
+	\end{align*}
+Thus, we have that:
+	\begin{align*}
+		\boldsymbol{b}_{2SLS} \xrightarrow{p} \boldsymbol{\beta}
+	\end{align*}
+
+\centerline{\textbf{8.3.1.2 Biasedness of Two-Stage Least Squares}}
+From above we know that:
+	\begin{align*}
+		\boldsymbol{b}_{2SLS} = \boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}
+	\end{align*}
+We can not guarantee that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon} | \boldsymbol{X} \boldsymbol{Z}] = 0
+	\end{align*}
+Thus, the estimator may not be unbiased.
+
+\subsubsection{Asymptotic Normality of Two-Stage Least Squares}
+For the homoscedastic case, we have that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{2SLS} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 (\boldsymbol{Q_{zx}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{xz}})^{-1})
+	\end{align*}
+	\begin{proof}
+		\mbox{}\\
+		We have that:
+			\begin{align*}
+				\boldsymbol{b}_{2SLS} - \boldsymbol{\beta} = (\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}
+			\end{align*}
+		We know that:
+			\begin{align*}
+				\left( \frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X}}{n} \right)^{-1} &  \xrightarrow{p} (\boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})^{-1}\\
+				\frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}}{n} = &\frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n}
+			\end{align*}
+		From \textbf{central limit theorem}, we know that:
+			\begin{align*}
+				\sqrt{n}\frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{zz}})
+			\end{align*}
+		Thus:
+			\begin{align*}
+				\frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}}{\sqrt{n}} \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 \boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})
+			\end{align*}
+		Thus, we have:
+			\begin{align*}
+				\sqrt{n}(\boldsymbol{b}_{2SLS} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 (\boldsymbol{Q_{zx}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{xz}})^{-1})
+			\end{align*}
+	\end{proof}
+\noindent For the heteroskedastic case:\\
+Suppose we have that:
+	\begin{align*}
+		\mathbb{E}[\varepsilon^2_i | \boldsymbol{z_i}] = \omega(\boldsymbol{z_i})
+	\end{align*}
+We set:
+	\begin{align*}
+		Var[\boldsymbol{z_i} \varepsilon_i] = \mathbb{E}[\boldsymbol{z_i} \boldsymbol{z_i}^\prime \omega(\boldsymbol{z_i})] = \boldsymbol{Q_{zz}}^\omega
+	\end{align*}
+We have that:
+	\begin{align*}
+		\sqrt{n} (\boldsymbol{b}_{2SLS} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{A}^{-1} \boldsymbol{B} (\boldsymbol{A}^{-1})^\prime)
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{A} = & \boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}}\\
+		\boldsymbol{B} = & \boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zz}}^\omega \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}}
+	\end{align*}
+	
+\subsubsection{Asymptotic Variance Estimation and t-statistic}
+From above we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{2SLS} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \sigma^2 (\boldsymbol{Q_{zx}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{xz}})^{-1})
+	\end{align*}
+If we want to conduct the statistical inference, we need to estimate the variance. $\boldsymbol{Q_{xz}}$ and $\boldsymbol{Q_{zz}}$ can be easily estimate by $n^{-1} \boldsymbol{X}^\prime \boldsymbol{Z}$ and $n^{-1} \boldsymbol{Z}^\prime \boldsymbol{Z}$, as for $\sigma^2$, we can prove that $1/n \sum^n_{i=1} (y_i - \boldsymbol{x_i}^\prime \boldsymbol{b_{2SLS}})^2$ is a consistent estimator. We give the proof:
+	\begin{proof}
+		\mbox{}\\
+			\begin{align*}
+				&\frac{1}{n} \sum\limits^n_{i=1} (y_i - \boldsymbol{x_i}^\prime \boldsymbol{b_{2SLS}})^2\\ = &
+				\frac{1}{n} \sum\limits^n_{i=1} [\varepsilon_i + \boldsymbol{x_i}^\prime (\boldsymbol{\beta} - \boldsymbol{b_{2SLS}})]^2\\ = &
+				\frac{1}{n}(\sum\limits^n_{i=1} \varepsilon^2_i + 2 \sum\limits^n_{i=1} \varepsilon_i \boldsymbol{x_i}^\prime (\boldsymbol{\beta} - \boldsymbol{b_{2SLS}}) + \sum\limits^n_{i=1} [\boldsymbol{x_i}^\prime (\boldsymbol{\beta} - \boldsymbol{b_{2SLS}})]^2)
+			\end{align*}
+		The last tow parts are converging to 0. Thus,
+			\begin{align*}
+				\frac{1}{n} \sum\limits^n_{i=1} (y_i - \boldsymbol{x_i}^\prime \boldsymbol{b_{2SLS}})^2 \xrightarrow{p} \mathbb{E}[\varepsilon^2_i] = \sigma^2
+			\end{align*}
+	\end{proof}
+\noindent And with the asymptotic estimation of variance, we can conduct the t test:
+	\begin{align*}
+		H_0 = \beta_j = \beta^0_j
+	\end{align*} 
+The t-statistics:
+	\begin{align*}
+		t_{b_j} = \frac{b_{j, 2SLS} - \beta^0_j}{\sqrt{\hat{\sigma}^2 S^{jj}}}
+	\end{align*}
+
+
+
+
+\subsection{Hypothesis Tests for Endogeneity}
+\subsubsection{The Efficiency of Instrumental Variable}
+Suppose that we have assumption \textbf{A.1, A.3, A.4, A.7, A.I4, A.I5, A.I6, A.I7}, then both OLS and IV estimators are consistent. To compare which one is more efficient, we consider the asymptotic variance. From above we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{OLS} - \boldsymbol{\beta}) \xrightarrow{d} & N(0, \sigma^2 \boldsymbol{Q_{xx}}^{-1})\\
+		\sqrt{n}(\boldsymbol{b}_{MOM} - \boldsymbol{\beta}) \xrightarrow{d} & N(0, \sigma^2 (\boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})^{-1})
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		&(\sigma^2 \boldsymbol{Q_{xx}}^{-1})^{-1} - [\sigma^2 (\boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})^{-1}]^{-1}\\ = &
+		\sigma^{-2} (\boldsymbol{Q_{xx}} - \boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})\\ = &
+		\sigma^{-2} \mathop{plim}\limits_{n\to\infty}(\frac{1}{n}\boldsymbol{X}^\prime\boldsymbol{X} - \frac{1}{n}\boldsymbol{X}^\prime\boldsymbol{P_z}\boldsymbol{X})\\ = &
+		\sigma^{-2}\mathop{plim}\limits_{n\to\infty}(\frac{1}{n}\boldsymbol{X}^\prime\boldsymbol{M_z}\boldsymbol{X})
+	\end{align*}
+We know that $\sigma^{-2}\mathop{plim}_{n\to\infty}(\frac{1}{n}\boldsymbol{X}^\prime\boldsymbol{M_z}\boldsymbol{X})$ is positive semidefinite, which means that $\sigma^2 (\boldsymbol{Q_{xz}} \boldsymbol{Q_{zz}}^{-1} \boldsymbol{Q_{zx}})^{-1} - \sigma^2 \boldsymbol{Q_{xx}}^{-1}$ is positive semidefinite. Thus, the OLG estimator is efficient, when $\boldsymbol{X}$ is exogenous.\\
+This result is along with the \textbf{Gauss-Markov Theorem}.
+
+\subsubsection{Hausman Test}
+Now, we want to test whether there is endogeneity in $\boldsymbol{X}$. We use the Hausman test, which is:
+	\begin{align*}
+		H_0:\ \mathbb{E}[\varepsilon_i | \boldsymbol{x_i}] = &0\\
+		H_1:\ \mathbb{E}[\varepsilon_i | \boldsymbol{x_i}] \neq & 0
+	\end{align*} 
+We set the difference of the two estimator as:
+	\begin{align*}
+		\boldsymbol{d} = \boldsymbol{b}_{MOM} - \boldsymbol{b}_{OLS}
+	\end{align*} 
+If $H_0$ holds, then by the property of normal distribution, we know that:
+	\begin{align*}
+		\sqrt{n}\boldsymbol{d} \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{V})
+	\end{align*}
+Here, we need to compute $\boldsymbol{V}$ so that we can construct the Wald test. To simplify $\boldsymbol{V}$, we give the Hauseman's principle:\\\\
+\textbf{Proposition 8.4.1 (Hauseman's principle)}\\
+Let $\boldsymbol{b_E}$ an estimator of $\boldsymbol{\beta}$ with $\sqrt{n}(\boldsymbol{b_E} - \boldsymbol{\beta}) \xrightarrow{d} N(0, \boldsymbol{V_E})$. $\boldsymbol{b_E}$ is efficient if:\\\
+For any other estimator $\boldsymbol{b}$ of $\boldsymbol{\beta}$ such that $\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(0, \boldsymbol{V})$, $V- V_E$ is positive semidefinite.\\
+Let $\boldsymbol{b_I}$ be an inefficient estimator of $\boldsymbol{\beta}$, then:
+	\begin{align*}
+		Asy.Cov(\boldsymbol{b_E}, \boldsymbol{b_I}) = &Asy.Var(\boldsymbol{b_E})\\
+		Asy.Cov(\boldsymbol{b_E}, \boldsymbol{b_I} - \boldsymbol{b_E}) = &0
+	\end{align*}
+Thus, under $H_0$, $\boldsymbol{b}_{OLS}$ is efficient and $\boldsymbol{b}_{MOM}$ is inefficient. Thus, we can calculate $\boldsymbol{V}$:
+	\begin{align*}
+		\boldsymbol{V} = &Var(\boldsymbol{b}_{MOM} - \boldsymbol{b}_{OLS})\\ = &
+		Var(\boldsymbol{b}_{MOM}) + Var(\boldsymbol{b}_{OLS}) - 2Cov(\boldsymbol{b}_{MOM}, \boldsymbol{b}_{OLS})\\ = &
+		Var(\boldsymbol{b}_{MOM}) + Var(\boldsymbol{b}_{OLS}) - 2Var(\boldsymbol{b}_{OLS})\\ = &
+		Var(\boldsymbol{b}_{MOM}) - Var(\boldsymbol{b}_{OLS})
+	\end{align*}
+Thus, we can construct the Wald statistic:
+	\begin{align*}
+		n\boldsymbol{d}^\prime (\hat{\boldsymbol{V}}_{MOM} - \hat{\boldsymbol{V}}_{OLS})\boldsymbol{d} \xrightarrow{d} \chi^2(r)
+	\end{align*}
+Here $r$ is the number of independent variables in $\boldsymbol{x_i}$ that is considered to be endogenous.
+
+
+\subsection{Weak Instruments and LIML}
+The key conditions for consistency of instrument variance is \textbf{A.I6}:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{z_i}\boldsymbol{x_i}^\prime] = \boldsymbol{Q_{zx}},\ rank(Q_{zx}) = K 
+	\end{align*}
+When the instruments are only slightly correlated with $\boldsymbol{x_i}$, it is called 'weak'. Under the weak instruments, we have:
+	\begin{align*}
+		rank(\boldsymbol{Q_{zx}}) < K
+	\end{align*}
+	
+\subsubsection{The Method of Moment under Weak Instrument}
+Under the MOM, we know the estimator is given as:
+	\begin{align*}
+		\boldsymbol{b}_{MOM} = &(\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}\\ = &
+		\left( \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i} \boldsymbol{x_i}^\prime \right)^{-1} \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i}y_i\\ = &
+		\boldsymbol{\beta} + \left( \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i} \boldsymbol{x_i}^\prime \right)^{-1} \frac{1}{n} \sum^n_{i=1} \boldsymbol{z_i}\varepsilon_i
+	\end{align*}
+As instruments only slightly correlated with $\boldsymbol{x_i}$
+
+
+\subsection{Measurement Error}
+\subsubsection{Measurement Error of Dependent Variable}
+Suppose the true model is:
+	\begin{align*}
+		y^\star = \boldsymbol{x}^\prime \boldsymbol{\beta} + \varepsilon
+	\end{align*}
+The reported $y$ has error:
+	\begin{align*}
+		y = y^\star + v
+	\end{align*}
+where $v$ is independent of $(y^\star, x)$, $\mathbb{E}[v] = 0$ and $Var[v] = \sigma^2_v$.\\
+Then we have that:
+	\begin{align*}
+		y = \boldsymbol{x}^\prime \boldsymbol{\beta} + \varepsilon + v
+	\end{align*}
+We regress $\boldsymbol{Y}$ on $\boldsymbol{X}$, the OLS estimator is:
+	\begin{align*}
+		\boldsymbol{b} = &(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime (\boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon} + \boldsymbol{v})\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{v}
+	\end{align*}
+It is still unbiased and consistent.
+
+\subsubsection{Measurement Error of Independent Variable}
+Suppose the true model is:
+	\begin{align*}
+		y^\star = \boldsymbol{x}^{\star\prime} \boldsymbol{\beta} + \varepsilon
+	\end{align*}
+The reported $\boldsymbol{x}$ has error:
+	\begin{align*}
+		\boldsymbol{x} = \boldsymbol{x}^\star + \boldsymbol{u}
+	\end{align*}
+where $\boldsymbol{u}$ is independent of $(y, \boldsymbol{x}^\star, \varepsilon)$, $\mathbb{E}[u] = 0$ and $Var[u] = \sigma^2_u$.\\
+Then we have that:
+	\begin{align*}
+		y = \boldsymbol{x}^\prime \boldsymbol{\beta} + [\varepsilon - \boldsymbol{u}^\prime \boldsymbol{\beta}] = \boldsymbol{x}^\prime \boldsymbol{\beta} + \boldsymbol{w}
+	\end{align*}
+Then, there is a endogeneity problem:
+	\begin{align*}
+		Cov[\boldsymbol{x}, \boldsymbol{w}] = Cov[\boldsymbol{x}^\star + \boldsymbol{u}, \varepsilon - \boldsymbol{u}^\prime \boldsymbol{\beta}] = -\boldsymbol{\beta} \sigma^2_u
+	\end{align*}
+Then, the OLS estimator is:
+	\begin{align*}
+		\boldsymbol{b} = &(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime (\boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{w})\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{w}
+	\end{align*}
+It is still unbiased.\\
+However:
+	\begin{align*}
+		\boldsymbol{b} \xrightarrow{p} \boldsymbol{\beta} + Cov(\boldsymbol{x}, \boldsymbol{w}) = \boldsymbol{\beta} \frac{\sigma^2_{\boldsymbol{x}^\star}}{\sigma^2_{\boldsymbol{x}^\star} + \sigma^2_u}
+	\end{align*}
+which means it is not consistent.
+
+
+
+\newpage
+\section{Generalized Least Squares}
+In the previous model, assumption \textbf{A.4} gives us homoskedasticity and non-autocorrelation assumption, in this chapter, we relax this assumption as:\\
+\textbf{Assumption A.H4 (Heteroskedasticity)}
+	\begin{align*}
+		Var[\varepsilon_i | \boldsymbol{X}] = \sigma^2_i,\ i = 1, 2, \ldots, n\\
+		Cov[\varepsilon_i, \varepsilon_j | \boldsymbol{X}] = 0,\ i \neq j		
+	\end{align*}
+
+
+\subsection{The Least Squares under Heteroskedasticity}
+We still consider the least squares estimator:
+	\begin{align*}
+		\boldsymbol{b} = ( \boldsymbol{X}^\prime \boldsymbol{X} )^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}
+	\end{align*}
+We can see that it is still unbiased and consistent.\\\\
+First, we gives a another assumption:\\
+\textbf{Assumption A.7 (Random Sampling with Heteroskedasticity)}\\
+$(y_i, \boldsymbol{x}_i, \varepsilon_i)$ are i.i.d., $Var[\varepsilon_i | \boldsymbol{x}_i] = g(\boldsymbol{x_i})$, where $g(\cdot)$ is unknown. We assume that $\mathbb{E} [\boldsymbol{x}_i \boldsymbol{x}^\prime_i \varepsilon^2_i] = \boldsymbol{Q}^\varepsilon_x < \infty$, $\mathbb{E} [\boldsymbol{x}_i \boldsymbol{x}^\prime_i] = \boldsymbol{Q}_x < \infty$, and $\boldsymbol{Q}^{-1}_x$ exists.
+\subsubsection{Unbiasedness and Consistency}
+We first verify the unbiasedness:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{b} | \boldsymbol{X} ] = &\mathbb{E} [ \boldsymbol{\beta} + ( \boldsymbol{X}^\prime \boldsymbol{X} )^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon} | \boldsymbol{X} ]\\ = &
+		\boldsymbol{\beta} + \mathbb{E} [ ( \boldsymbol{X}^\prime \boldsymbol{X} )^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon} | \boldsymbol{X} ]\\ = &
+		\boldsymbol{\beta}
+	\end{align*}
+The OLS estimator is unbiased.\\\\
+Now, we verify the consistency:  
+	\begin{align*}
+		\boldsymbol{b} = & \boldsymbol{\beta} + ( \boldsymbol{X}^\prime \boldsymbol{X} )^{-1} \boldsymbol{X}^\prime \boldsymbol{\varepsilon}\\ = &
+		\boldsymbol{\beta} + ( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} )^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{p}
+		\boldsymbol{\beta} + \boldsymbol{Q}^\prime_x \mathbb{E}[ \boldsymbol{x}^\prime_i \varepsilon_i ] = \boldsymbol{\beta}
+	\end{align*}
+
+\subsubsection{Asymptotic Normality}
+We know that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{x}^\prime_i \varepsilon_i] = &\boldsymbol{0}\\
+		Var[ \boldsymbol{x}^\prime_i \varepsilon_i] = & \mathbb{E} [\varepsilon_i \boldsymbol{x}_i \boldsymbol{x}^\prime_i \varepsilon_i] = \boldsymbol{Q}^\varepsilon_x
+	\end{align*}
+Then for the OLS estimator:
+	\begin{align*}
+		\sqrt{n}( \boldsymbol{b} - \boldsymbol{\beta} ) = & ( \frac{\boldsymbol{X}^\prime \boldsymbol{X}}{n} )^{-1} \sqrt{n} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n}
+	\end{align*}
+And:
+	\begin{align*}
+		\sqrt{n} \frac{\boldsymbol{X}^\prime \boldsymbol{\varepsilon}}{n} = \sqrt{n} \frac{1}{n} \sum^n_{i=1} \boldsymbol{x}^\prime_i \varepsilon_i \xrightarrow{d} N(0, \boldsymbol{Q}^\varepsilon_x)
+	\end{align*}
+Thus, we have that:
+	\begin{align*}
+		\sqrt{n}( \boldsymbol{b} - \boldsymbol{\beta} ) \xrightarrow{d} N(0, \boldsymbol{Q}^{-1}_x \boldsymbol{Q}^\varepsilon_x \boldsymbol{Q}^{-1}_x)
+	\end{align*}
+
+
+\subsection{Robust Least Squares Inference}
+From \textbf{9.1.2} we know that:
+	\begin{align*}
+		\boldsymbol{b} - \boldsymbol{\beta} \xrightarrow{d} N(0, \boldsymbol{Q}^{-1}_x \boldsymbol{Q}^\varepsilon_x \boldsymbol{Q}^{-1}_x)
+	\end{align*}
+We don't know the variance. Thus, we have to estimate the variance consistently:
+	\begin{align*}
+		\frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i e^2_i = &\frac{1}{n} \sum^n_{i=1} (y_i - \boldsymbol{x}^\prime_i \boldsymbol{b})^\prime \boldsymbol{x}_i \boldsymbol{x}^\prime_i (y_i - \boldsymbol{x}^\prime_i \boldsymbol{b})
+	\end{align*} 
+If we want to test the hypothesis:
+	\begin{align*}
+		H_0: \beta_j = \beta^0_j
+	\end{align*}
+We can construct the t-statistic:
+	\begin{align*}
+		t^R_j = \frac{b_j - \beta^0_j}{se^R_j} = \frac{\sqrt{n}(b_j - \beta^0_j)}{\sqrt{n}se^R_j} \xrightarrow{d} N(0, 1) 
+	\end{align*}
+where:
+	\begin{align*}
+		se^R_j = \sqrt{\frac{\hat{V}_{jj}}{n}}
+	\end{align*}
+Here, we want to find a $\hat{V}$ to estimate the variance, $\boldsymbol{Q}^{-1}_x \boldsymbol{Q}^\varepsilon_x \boldsymbol{Q}^{-1}_x$ consistently.\\
+The $\boldsymbol{Q}^{-1}_x$ is estimated by $(\boldsymbol{X}^\prime \boldsymbol{X} / n)^{-1}$.\\
+As for $\boldsymbol{Q}^\varepsilon_x$, we use $(1/n) \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i e^2_i$ to estimate it consistently. Here we give the proof:
+	\begin{proof}
+		\mbox{}\\
+		We have that
+			\begin{align*}
+				y_i = \boldsymbol{x}^\prime_i \boldsymbol{b} + e_i = \boldsymbol{x}^\prime_i \boldsymbol{\beta} + \varepsilon_i
+			\end{align*}
+		which means that:
+			\begin{align*}
+				e^2_i = \varepsilon^2_i + [\boldsymbol{x}^\prime_i (\boldsymbol{\beta} - \boldsymbol{b})]^2 + 2\varepsilon_i \boldsymbol{x}^\prime_i (\boldsymbol{\beta} - \boldsymbol{b}) \xrightarrow{p} \varepsilon^2_i
+			\end{align*}
+		Then, we have that:
+			\begin{align*}
+				\frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i e^2_i = &\frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i \varepsilon^2_i + \frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i (e^2_i - \varepsilon^2_i)\\ = &
+				\frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i \varepsilon^2_i + \frac{1}{n} \sum^n_{i=1} \boldsymbol{x}_i \boldsymbol{x}^\prime_i \{ [\boldsymbol{x}^\prime_i (\boldsymbol{\beta} - \boldsymbol{b})]^2 + 2\varepsilon_i \boldsymbol{x}^\prime_i (\boldsymbol{\beta} - \boldsymbol{b}) \}\\ \xrightarrow{p} &
+				\boldsymbol{Q}^\varepsilon_x
+			\end{align*}
+	\end{proof}
+
+
+\subsection{Instrumental Variance Estimation}
+Similar to \textbf{Chapter 8}, here we assume \textbf{A.1 (Linearity)}, \textbf{A.I5 (Random sampling)}, \textbf{A.I6 (Moments of $x_i$ and $z_i$)}, \textbf{A.I7 (Exogeneity of instruments)}. We also modify slightly the heteroskedasticity assumption:\\
+\textbf{A.I4H (Heteroskedasticity)}\\
+	\begin{align*}
+		\mathbb{E}[\varepsilon^2_i | \boldsymbol{z_i}] = g(\boldsymbol{z_i})
+	\end{align*}  
+where $g(\cdot)$ is unknown, and $\boldsymbol{Q}^\varepsilon_z = \mathbb{E}[\boldsymbol{z_i} \boldsymbol{z_i}^\prime \varepsilon^2_i]$ is finite.\\\\
+Now for the 2SLS estimator:
+	\begin{align*}
+		\boldsymbol{b} = (\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{Y}
+	\end{align*}
+We have some properties.
+
+\subsubsection{Consistency and Asymptotic Normality of 2SLS Estimator}
+For the estimator, we have that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) = & \left( \frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X}}{n} \right)^{-1} \sqrt{n} \frac{\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{\varepsilon}}{n}\\ = &
+		\left[ \frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \frac{\boldsymbol{Z}^\prime \boldsymbol{X}}{n} \right]^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \sqrt{n} \frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n}
+	\end{align*}
+We have that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{z}^\prime_i \varepsilon_i] = &0\\
+		Var[\boldsymbol{z}^\prime_i \varepsilon_i] = &\mathbb{E}[\boldsymbol{z}_i \boldsymbol{z}^\prime_i \varepsilon^2_i] = \boldsymbol{Q}^\varepsilon_z
+	\end{align*}
+Thus, we have that:
+	\begin{align*}
+		\sqrt{n} \frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{d} N(0, \boldsymbol{Q}^\varepsilon_z)
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{A}^{-1} \boldsymbol{B} \boldsymbol{A}^{-1})
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{A} = &\boldsymbol{Q}_{xz} \boldsymbol{Q}^{-1}_{zz} \boldsymbol{Q}_{zx}\\
+		\boldsymbol{B} = &\boldsymbol{Q}_{xz} \boldsymbol{Q}^{-1}_{zz} \boldsymbol{Q}^\varepsilon_z \boldsymbol{Q}^{-1}_{zz} \boldsymbol{Q}_{xz}
+	\end{align*}
+Similarly, we can use $(1/n)\sum^n_{i=1} \boldsymbol{z}^\prime_i \boldsymbol{z}_i e^2_i$ to estimate $\hat{\boldsymbol{Q}}^\varepsilon_z$ consistently.
+
+
+\subsection{Efficient Estimator by Generalized Least Squares}
+For the heteroskedastic model, we assume that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon} \boldsymbol{\varepsilon}^\prime | \boldsymbol{X}] = \boldsymbol{\Sigma}
+	\end{align*}
+The normal OLS estimator is no BLUE. However, we can construct another estimator.\\
+We first define:
+	\begin{align*}
+		\boldsymbol{\Sigma}^{-1/2} = 
+		\begin{bmatrix}
+			\frac{1}{\sigma_1} & 0 & \ldots & 0\\
+			0 & \frac{1}{\sigma_2} & \ldots & 0\\
+			& & \ddots &\\
+			0 & 0 & \ldots & \frac{1}{\sigma_n}
+		\end{bmatrix}
+	\end{align*}
+Premultiplying the model by $\boldsymbol{\Sigma}^{-1/2}$:
+	\begin{align*}
+		\boldsymbol{\Sigma}^{-1/2} \boldsymbol{Y} = &\boldsymbol{\Sigma}^{-1/2} \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\Sigma}^{-1/2} \boldsymbol{\varepsilon}\\
+		\boldsymbol{Y}_\star = &\boldsymbol{X}_\star \boldsymbol{\beta} + \boldsymbol{\varepsilon}_\star
+	\end{align*}
+Then, we can have that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{\varepsilon}_\star | \boldsymbol{X}_\star] = \boldsymbol{0}\\
+		\mathbb{E} [\boldsymbol{\varepsilon}_\star \boldsymbol{\varepsilon}^\prime_\star | \boldsymbol{X}_\star] = \boldsymbol{I}
+	\end{align*}
+It becomes a homoskedasticity model, then we can use OLS:
+	\begin{align*}
+		\boldsymbol{b}_{GLS} = (\boldsymbol{X}_\star^\prime \boldsymbol{X}_\star)^{-1} \boldsymbol{X}_\star^\prime \boldsymbol{Y}_\star
+	\end{align*}
+This is called the generalized least squares estimator. It satisfies the OLS assumptions, so this estimator is BLUE.\\
+If $\boldsymbol{\Sigma}$ is diagonal, this is called the weighted least squares estimator.
+
+\subsubsection{Asymptotic Normality of GLS}
+From above, we know that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{GLS} - \boldsymbol{\beta}) = &\left(\frac{\boldsymbol{X}_\star^\prime \boldsymbol{X}_\star}{n}\right)^{-1} \sqrt{n}\frac{\boldsymbol{X}_\star^\prime \boldsymbol{\varepsilon}_\star}{n}\\
+		\sqrt{n}\frac{\boldsymbol{X}_\star^\prime \boldsymbol{\varepsilon}_\star}{n} \xrightarrow{d} &N(0, 1)
+	\end{align*}
+Then, we can have that:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{GLS} \xrightarrow{d} N(0, plim \left(\frac{\boldsymbol{X}_\star^\prime \boldsymbol{X}_\star}{n}\right)^{-1})
+	\end{align*}
+
+\subsubsection{Feasible Generalized Least Squares}
+If we want to compute the GLS estimator, we need to know $\Sigma$. If the $\Sigma$ is parameterized as $\Sigma = \Sigma(\alpha)$ for an parameter $\alpha$, and we have a consistent estimator $\hat{\alpha}$ of $\alpha$.\\
+The estimator $ (\boldsymbol{X}^\prime \boldsymbol{\Sigma}(\hat{\boldsymbol{\alpha}})^{-1} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\Sigma}(\hat{\boldsymbol{\alpha}})^{-1} \boldsymbol{Y}$ is called feasible GLS estimator if:
+	\begin{align*}
+		\mathop{plim}\limits_{n\to\infty} \left( \frac{1}{n} \boldsymbol{X}^\prime \boldsymbol{\Sigma}(\hat{\boldsymbol{\alpha}})^{-1} \boldsymbol{X} - \frac{1}{n} \boldsymbol{X}^\prime \boldsymbol{\Sigma}^{-1} \boldsymbol{X} \right) = \boldsymbol{0}\\
+		\mathop{plim}\limits_{n\to\infty} \left( \frac{1}{n} \boldsymbol{X}^\prime \boldsymbol{\Sigma}(\hat{\boldsymbol{\alpha}})^{-1} \boldsymbol{\varepsilon} - \frac{1}{n} \boldsymbol{X}^\prime \boldsymbol{\Sigma}^{-1} \boldsymbol{\varepsilon} \right) = \boldsymbol{0} 
+	\end{align*}
+which means this estimator has the same asymptotic distribution.
+
+
+
+\newpage
+\section{Systems of Regression Equations}
+\subsection{GLS Estimator}
+We consider a model with $M$ equations, and each equations has $T$ observations:
+	\begin{align*}
+		\boldsymbol{Y_1} = &\boldsymbol{X_1} \boldsymbol{\beta_1} + \boldsymbol{\varepsilon_1}\\
+		\boldsymbol{Y_2} = &\boldsymbol{X_2} \boldsymbol{\beta_2} + \boldsymbol{\varepsilon_2}\\
+		&\vdots\\
+		\boldsymbol{Y_M} = &\boldsymbol{X_M} \boldsymbol{\beta_M} + \boldsymbol{\varepsilon_M}\\
+	\end{align*}
+We assume that $M$ is fixed and $T \to \infty$.\\
+The first method is just regression each equation to get the parameters:
+	\begin{align*}
+		\boldsymbol{b_i} = (\boldsymbol{X_i}^\prime \boldsymbol{X_i})^{-1} \boldsymbol{X_i}^\prime \boldsymbol{Y_i}
+	\end{align*}
+The second method is to combine all the equations into one equation:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\varepsilon}
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{Y} = 
+		\begin{bmatrix}
+			\boldsymbol{Y_1}\\
+			\vdots\\
+			\boldsymbol{Y_M}
+		\end{bmatrix}&\indent
+		\boldsymbol{X} = 
+		\begin{bmatrix}
+			\boldsymbol{X_1} & 0 & \ldots & 0\\
+			0 & \boldsymbol{X_2} & \ldots & \vdots\\
+			& & \ddots &\\
+			0 & \ldots & 0 & \boldsymbol{X_M} 
+		\end{bmatrix}\\
+		\boldsymbol{\beta} = 
+		\begin{bmatrix}
+			\boldsymbol{\beta_1}\\
+			\vdots\\
+			\boldsymbol{\beta_M}
+		\end{bmatrix}&\indent
+		\boldsymbol{\varepsilon} = 
+		\begin{bmatrix}
+			\boldsymbol{\varepsilon_1}\\
+			\vdots\\
+			\boldsymbol{\varepsilon_M}
+		\end{bmatrix}
+	\end{align*}
+Here, we assume that $\boldsymbol{X}$ is exogenous.\\
+We assume the errors are serially uncorrelated (in different time they are uncorrelated):
+	\begin{align*}
+		\mathbb{E}[\varepsilon_{it} \varepsilon_{js} | \boldsymbol{X}] = 0,\ \forall\ (i, j),\ \forall\ t \neq s
+	\end{align*}
+We assume the errors are correlated in the same time:
+	\begin{align*}
+		\mathbb{E}[\varepsilon_{it} \varepsilon_{jt} | \boldsymbol{X}] = \sigma_{ij}
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{\varepsilon_i} \boldsymbol{\varepsilon_j}^\prime \boldsymbol{X}] = \sigma_{ij} \boldsymbol{I}\\
+		\mathbb{E} [\boldsymbol{\varepsilon} | \boldsymbol{X}] = 0\\
+		\mathbb{E} [\boldsymbol{\varepsilon} \boldsymbol{\varepsilon}^\prime | \boldsymbol{X}] = \boldsymbol{\Sigma} \otimes \boldsymbol{I} = \boldsymbol{\Omega}
+	\end{align*}
+Then, the GLS estimator is:
+	\begin{align*}
+		\boldsymbol{b}_{GLS} = (\boldsymbol{X}^\prime \boldsymbol{\Omega}^{-1} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\Omega}^{-1} \boldsymbol{Y}
+	\end{align*}
+The GLS and OLS are identical under either of the following conditions:\\
+1. $\sigma_{ij} = 0$, $\forall\ i \neq j$.\\
+2. $\boldsymbol{X_i} = \boldsymbol{X_j}$, $\forall\ i, j$.
+
+
+\subsection{Feasible GLS}
+We need to estimate $\sigma_{ij}$ so that we can estimate the GLS estimator.\\
+Let $\boldsymbol{e_i}$ denotes the least squares residuals from the $i$th equations. Then the $\sigma_{ij}$ can be estimated consistently by:
+	\begin{align*}
+		\hat{\sigma}_{ij} = \frac{\boldsymbol{e_i}^\prime \boldsymbol{e_i}}{T}
+	\end{align*}
+Then, we can estimate the GLS estimator.	
+
+
+
+\newpage
+\section{General Method of Moments}
+\subsection{Identification of Model}
+The parameter $\boldsymbol{\beta}$ is \textbf{identified} if we can write $\boldsymbol{\beta}$ in terms of a function of population distribution, or we can pin down $\boldsymbol{\beta}$ uniquely when we have an infinite number of observations.\\
+Back to the moment of method for instrument variable:
+	\begin{align*}
+		y_i = \boldsymbol{x_i}^\prime \boldsymbol{\beta} + \varepsilon_i
+	\end{align*}
+where $\boldsymbol{x_i}$ and $\boldsymbol{\beta}$ are $k \times 1$, and $(y_i, \boldsymbol{x_i}, \varepsilon_i) \sim i.i.d.$\\
+We assume that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{z_i} \varepsilon_i] = \boldsymbol{0}\ (\textbf{A.I7})\\
+		rank(\mathbb{E}[\boldsymbol{z_i} \boldsymbol{x_i}^\prime]) = k\ (\textbf{A.I6})
+	\end{align*}
+Using the MOM:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{z_i}(y_i - \boldsymbol{x_i}^\prime \boldsymbol{\beta})] = 0
+	\end{align*}
+which means that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{z_i} y_i] = \boldsymbol{\beta} \mathbb{E} [\boldsymbol{z_i} \boldsymbol{x_i}^\prime ]
+	\end{align*}
+If $k = L$, from \textbf{A.I6} we know that $\mathbb{E} [\boldsymbol{z_i} \boldsymbol{x_i}^\prime ]$ is nonsingular, then the $\boldsymbol{\beta}$ is identified:
+	\begin{align*}
+		\boldsymbol{\beta} = (\mathbb{E} [\boldsymbol{z_i} \boldsymbol{x_i}^\prime ] )^{-1} \mathbb{E} [\boldsymbol{z_i} y_i]
+	\end{align*} 
+If $L < k$, we cannot identify $\boldsymbol{\beta}$. It is not identified.\\
+If $L > k$, $\boldsymbol{\beta}$ is overqualified.
+
+
+\subsection{GMM Estimator}
+We first define for a $k \times 1$ vector $\boldsymbol{b}$:
+	\begin{align*}
+		m_i(\boldsymbol{b}) = \boldsymbol{z_i} (y_i - \boldsymbol{x_i}^\prime \boldsymbol{b})
+	\end{align*} 
+Then, the MOM gives the population moment condition:
+	\begin{align*}
+		\mathbb{E} [m_i(\boldsymbol{\beta})] = \boldsymbol{0}
+	\end{align*}
+and the sample moment is:
+	\begin{align*}
+		\bar{m}_n (\boldsymbol{b}) = \frac{1}{n} \sum^n_{i=1} m_i(\boldsymbol{\beta})
+	\end{align*}
+by \textbf{i.i.d. law of large number}, we know that:
+	\begin{align*}
+		\bar{m}_n(\boldsymbol{b}) \xrightarrow{P} \mathbb{E} [m_i (\boldsymbol{b})]
+	\end{align*}
+Thus, the vector $\boldsymbol{b}$ that makes $\bar{m}_n(\boldsymbol{b})$ is a good estimator for $\boldsymbol{\beta}$.\\\\
+Similar to \textbf{11.2}, if $L = k$, we can solve the problem $\bar{m}_n(\boldsymbol{b}) = \boldsymbol{0}$ and get:
+	\begin{align*}
+		\boldsymbol{b} = (\boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}
+	\end{align*}
+However, if $L > k$, we can not solve the problem.\\\\
+Now we construct a optimality problem to estimate $\boldsymbol{\beta}$:
+	\begin{align*}
+		\hat{\boldsymbol{\beta}} = \mathop{arg\,min}\limits_{\boldsymbol{b}} Q_n (\boldsymbol{b}),\ Q_n(\boldsymbol{b}) = \bar{m}_n(\boldsymbol{b})^\prime \hat{\boldsymbol{W}} \bar{m}_n(\boldsymbol{b})
+	\end{align*}
+where $\hat{\boldsymbol{W}}$ is an $L \times L$ positive definite weighting matrix.\\
+We solve the problem by derivatives:
+	\begin{align*}
+		\hat{\boldsymbol{\beta}} = (\boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{Y}
+	\end{align*}
+This is called GMM estimator.
+
+
+\subsection{The Property of GMM Estimator}
+\subsubsection{Assumption for GMM}
+\textbf{A.GMM1 (Random Sampling)}
+	\begin{align*}
+		(y_i, \boldsymbol{x_i}, \boldsymbol{z_i}),\ i = 1, \ldots, n,\ \text{is i.i.d.}
+	\end{align*}
+\textbf{A.GMM2 (Population Moment Condition)}
+	\begin{align*}
+		\mathbb{E}[\boldsymbol{z_i}(y_i - \boldsymbol{x_i}^\prime \boldsymbol{\beta})] = \boldsymbol{0}
+	\end{align*}
+\textbf{A.GMM3 (Identification)}
+	\begin{align*}
+		rank(\mathbb{E}[\boldsymbol{z_i} \boldsymbol{x_i}^\prime]) = k
+	\end{align*}
+\textbf{A.GMM4 (Weighting Matrix)}\\
+$\hat{\boldsymbol{W}} \xrightarrow{p} \boldsymbol{W}$, which is nonrandom, symmetric, and positive definite.
+
+\subsubsection{Asymptotic Normality of GMM}
+From the GMM estimator, we have that:
+	\begin{align*}
+		\hat{\boldsymbol{\beta}} - \boldsymbol{\beta} = &(\boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{\varepsilon}\\ = &
+		 \left( \frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \hat{\boldsymbol{W}} \frac{\boldsymbol{Z}^\prime \boldsymbol{X}}{n} \right)^{-1} \frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \hat{\boldsymbol{W}} \frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n}
+	\end{align*}
+If we define:
+	\begin{align*}
+		\boldsymbol{C} = &\mathbb{E} [\boldsymbol{z_i} \boldsymbol{x_i}^\prime]\\
+		\boldsymbol{\Lambda} = &\mathbb{E} [\boldsymbol{z_i} \boldsymbol{z_i}^\prime \varepsilon^2_i] = Var[\boldsymbol{z_i}\varepsilon_i]
+	\end{align*}
+We have that:
+	\begin{align*}
+		\frac{\boldsymbol{X}^\prime \boldsymbol{Z}}{n} \xrightarrow{p} &\boldsymbol{C}\\
+		\frac{\boldsymbol{Z}^\prime \boldsymbol{\varepsilon}}{n} \xrightarrow{d} &N(0, \boldsymbol{\Lambda})\\
+		\hat{\boldsymbol{W}} \xrightarrow{p} &\boldsymbol{W} 
+	\end{align*}
+Then the asymptotic distribution is given as:
+	\begin{align*}
+		\sqrt{n} (\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{V})
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{V} = (\boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{C})^{-1} \boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{\Lambda} \boldsymbol{W} \boldsymbol{C} (\boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{C})^{-1}
+	\end{align*}
+
+\subsubsection{Optimal Weighting Matrix}
+If we set $\boldsymbol{W} = \boldsymbol{\Lambda}^{-1}$, then we can simplify of asymptotic variance of $\boldsymbol{\beta}$ to:
+	\begin{align*}
+		\sqrt{n}(\hat{\boldsymbol{\beta}} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, (\boldsymbol{C}^\prime \boldsymbol{\Lambda}^{-1} \boldsymbol{C})^{-1})
+	\end{align*}
+Then, for any other $\boldsymbol{W}$, we can see that:
+	\begin{align*}
+		(\boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{C})^{-1} \boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{\Lambda} \boldsymbol{W} \boldsymbol{C} (\boldsymbol{C}^\prime \boldsymbol{W} \boldsymbol{C})^{-1} - (\boldsymbol{C}^\prime \boldsymbol{\Lambda}^{-1} \boldsymbol{C})^{-1}
+	\end{align*}
+$\star$ We can prove that this is positive semi-definite. Thus, we set $\boldsymbol{W} = \boldsymbol{\Lambda}^{-1}$ is the most efficient GMM estimator. And this is actually the inverse of the variance of $m_i(\boldsymbol{\beta})$.\\\\ 
+Now, the problem is that how can we get the asymptotic estimation of the variance $(\boldsymbol{C}^\prime \boldsymbol{\Lambda}^{-1} \boldsymbol{C})^{-1}$.\\
+For $\boldsymbol{C}$, we can estimate it by:
+	\begin{align*}
+		\hat{\boldsymbol{C}} = \frac{\boldsymbol{Z}^\prime \boldsymbol{X}}{n} \xrightarrow{p} \boldsymbol{C} 
+	\end{align*}
+\centerline{\textbf{10.3.3.1 Homoskedastic Case}}
+For $\boldsymbol{\Lambda}$, in the homoskedastic case, we have that:
+	\begin{align*}
+		\boldsymbol{\Lambda} = Var(\boldsymbol{z_i}\varepsilon_i) = \sigma^2 \mathbb{E} [\boldsymbol{z_i} \boldsymbol{z_i}^\prime]
+	\end{align*}
+and it can be estimated by:
+	\begin{align*}
+		\hat{\boldsymbol{W}}_{opt} = \left( \hat{\sigma}^2 \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1} \xrightarrow{p} \boldsymbol{\Lambda}^{-1}
+	\end{align*}
+Thus, the efficient GMM estimator is actually:
+	\begin{align*}
+		\hat{\boldsymbol{\beta}} = &(\boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Z} \hat{\boldsymbol{W}} \boldsymbol{Z}^\prime \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{Z} (\boldsymbol{Z}^\prime \boldsymbol{Z})^{-1} \boldsymbol{Z}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Z} (\boldsymbol{Z}^\prime \boldsymbol{Z})^{-1} \boldsymbol{Z}^\prime \boldsymbol{Y}\\ = &
+		(\boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{P_z} \boldsymbol{Y}
+	\end{align*}
+This is actually the 2 steps least squares estimator.\\\\
+\centerline{\textbf{10.3.3.2 Hetrokedastic Case}}
+For the hetroskedastic case, where:
+	\begin{align*}
+		Var[\varepsilon_i | \boldsymbol{z_i}] \neq \sigma^2
+	\end{align*}
+We can first find a random matrix satisfying \textbf{A.GMM4}, for example:
+	\begin{align*}
+		\hat{\boldsymbol{W}} = \left( \frac{\boldsymbol{Z}^\prime \boldsymbol{Z}}{n} \right)^{-1}
+	\end{align*}
+Then, we use this to get the consistent GMM estimator $\tilde{\boldsymbol{\beta}}$, and compute the residuals:
+	\begin{align*}
+		\tilde{\varepsilon}_i = y_i - \boldsymbol{x_i}^\prime \tilde{\boldsymbol{\beta}}
+	\end{align*}
+Then, we can estimate the $\hat{\boldsymbol{W}}_{opt}$ by:
+	\begin{align*}
+		\hat{\boldsymbol{W}}_{opt} = \left( \frac{1}{n}\sum^n_{i=1} \tilde{\varepsilon_i} \boldsymbol{z_i} \boldsymbol{z_i}^\prime \right)^{-1}
+	\end{align*}
+and we can see that this estimator is consistent.(See 9.2)\\
+This is called 2-step GMM estimator.
+
+
+\subsection{Test of Overidentifying Restrictions}
+If $L > k$, the model is overidentified.\\
+Then, we can use k moment conditions to estimate $\boldsymbol{\beta}$ consistently, and use the remaining the $L - k$ conditions to test the exogeneity of the instruments.\\\\
+Now we let $\hat{\boldsymbol{\beta}}$ be the GMM estimator with the optimal weighting matrix $\hat{\boldsymbol{W}}_{opt}$, where $\hat{\boldsymbol{W}}_{opt} \xrightarrow{p} \boldsymbol{\Lambda}^{-1} = Var[m_i(\boldsymbol{\beta})]^{-1}$. Then we have the theorem:\\
+\textbf{Theorem 13.1}\\
+Suppose the assumptions for the consistency and asymptotic normality of the GMM estimator hold. If $H_0: \mathbb{E}[m_i(\boldsymbol{\beta})] = 0$ is true, the minimized value of the objective function with the optimal weighting matrix satisfies:
+	\begin{align*}
+		nQ_n(\hat{\boldsymbol{\beta}}) = n \bar{m}_n(\hat{\boldsymbol{\beta}})^\prime \hat{\boldsymbol{W}}_{opt} \bar{m}_n(\hat{\boldsymbol{\beta}}) \xrightarrow{d} \chi^2 (L-k)
+	\end{align*}
+If we use $\boldsymbol{\beta}$ to replace $\hat{\boldsymbol{\beta}}$, we have that:
+	\begin{align*}
+		n Q_n (\boldsymbol{\beta}) = n \bar{m}_n(\boldsymbol{\boldsymbol{\beta}})^\prime \hat{\boldsymbol{W}}_{opt} \bar{m}_n(\boldsymbol{\beta}) \xrightarrow{d} \chi^2(L)
+	\end{align*}
+
+
+
+\newpage
+\section{Models for Panel Data}
+\subsection{Models for Panel Data}
+Panel data means that we observe $n$ individuals for $T$ times:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + c_i + \varepsilon_{it},\ i = 1, \ldots, n;\ t = 1, \ldots, T
+	\end{align*}
+Here $c_i$ is the individual specific effect.\\
+$\boldsymbol{x}_{it}$ excludes all the constant term to $c_i$.\\
+$\varepsilon_{it}$ is i.i.d. error term satisfying $\mathbb{E} [\varepsilon_{it} | \boldsymbol{x}_{it}] = 0$\\\\
+Depending on the property of $c_i$, there are 3 models:\\
+1. Pooled Regression\\
+We assume that $c_i = \alpha$ is constant.\\
+2. Fixed Effect\\
+We assume that $c_i$ is unobservable and correlated with $\boldsymbol{x}_{it}$.\\
+3. Random Effect\\
+We assume that $c_i$ is random but $\mathbb{E} [c_i | \boldsymbol{x}_{it}]$ is constant.
+
+
+\subsection{Pooled Regression Model}
+Let $\boldsymbol{X_i} = (\boldsymbol{x}_{i1}, \ldots, \boldsymbol{x}_{iT})$
+Since $c_i$ is constant, the model is a standard regression model if we assume:\\
+1. $(y_{i1}, \ldots, y_{iT}, \boldsymbol{X}_i, \varepsilon_{i1}, \ldots, \varepsilon_{iT})$ is i.i.d. across $i$.\\
+2. $(\varepsilon_{i1}, \ldots, \varepsilon_{iT})$ is independent of $\boldsymbol{X_i}$ (must be $\boldsymbol{X_i}$, $\boldsymbol{x}_{it}$ may lead to endogeneity).\\
+3. $\varepsilon_{it}$ has 0 mean, $\mathbb{E} [\varepsilon_{it} | \boldsymbol{x}_{it}] = 0$.\\
+And under these assumptions, pooled OLS is consistent, asymptotically normal, and efficient.
+
+	
+\subsection{Fixed Effects Model}
+The fixed effects model means there is a correlation between $\alpha_i$ and $\boldsymbol{x}_{it}$:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \alpha_i + \varepsilon_{it},\ i = 1, \ldots, n;\ t = 1, \ldots, T
+	\end{align*}
+If we only regress $y$ on $\boldsymbol{x}$, the estimator is biased.
+
+\subsubsection{Fixed Effects Transformation}
+To eliminate the individual effects of $\alpha_i$, we consider compute the average for each $i$:
+	\begin{align*}
+		\bar{y}_i = \bar{\boldsymbol{x}}^\prime_{i} \boldsymbol{\beta} + \alpha_i + \bar{\varepsilon}_i
+	\end{align*}
+And we subtract it from the original model:
+	\begin{align*}
+		y_{it} - \bar{y}_i = (\boldsymbol{x}^\prime_{it} - \bar{\boldsymbol{x}}^\prime_{i}) \boldsymbol{\beta} + (\varepsilon_{it} - \bar{\varepsilon}_i)
+	\end{align*}
+The pooled OLS estimator of this transformed model is called the fixed effects estimator, which is written as:
+	\begin{align*}
+		\boldsymbol{b_{FE}} = &\frac{\boldsymbol{S}^{within}_{xy}}{\boldsymbol{S}^{within}_{xx}}\\ = &
+		\frac{\sum^n_{i=1} \sum^T_{t=1} (\boldsymbol{x}_{it} - \bar{\boldsymbol{x}}_i)(y_{it} - \bar{y}_i)}{\sum^n_{i=1} \sum^T_{t=1} (\boldsymbol{x}_{it} - \bar{\boldsymbol{x}}_i) (\boldsymbol{x}_{it} - \bar{\boldsymbol{x}}_i)^\prime}
+	\end{align*}
+
+\subsubsection{The Matrix Form of the Fixed Effects Model}
+Here, we define:
+	\begin{align*}
+		\boldsymbol{y_i} = 
+		\begin{bmatrix}
+			y_{i1}\\
+			\vdots\\
+			y_{iT}
+		\end{bmatrix},
+		\boldsymbol{X_i} = 
+		\begin{bmatrix}
+			\boldsymbol{x}^\prime_{i1}\\
+			\vdots\\
+			\boldsymbol{x}^\prime_{iT}
+		\end{bmatrix},
+		\boldsymbol{\varepsilon}_i = 
+		\begin{bmatrix}
+			\varepsilon_{i1}\\
+			\vdots\\
+			\varepsilon_{iT}
+		\end{bmatrix}
+	\end{align*}
+And we define the within transformation matrix:
+	\begin{align*}
+		\boldsymbol{M^0} = \boldsymbol{I}_T - \boldsymbol{\iota} (\boldsymbol{\iota}^\prime \boldsymbol{\iota})^{-1} \boldsymbol{\iota}^\prime
+	\end{align*}
+where $\boldsymbol{\iota}$ is a $T \times 1$ vector:
+	\begin{align*}
+		\boldsymbol{\iota} = 
+		\begin{bmatrix}
+			1\\
+			\vdots\\
+			1
+		\end{bmatrix}
+	\end{align*}
+Then, we can see that:
+	\begin{align*}
+		\begin{bmatrix}
+			y_{i1} - \bar{y}_i\\
+			\vdots\\
+			y_{iT} - \bar{y}_i
+		\end{bmatrix} = 
+		\boldsymbol{M^0} \boldsymbol{y_i},
+		\begin{bmatrix}
+			\boldsymbol{x}^\prime_{i1} - \bar{\boldsymbol{x}}^\prime_i\\
+			\vdots\\
+			\boldsymbol{x}^\prime_{iT} - \bar{\boldsymbol{x}}^\prime_i
+		\end{bmatrix} = 
+		\boldsymbol{M^0} \boldsymbol{X_i}
+	\end{align*}
+Thus, the fixed effects estimator is actually:
+	\begin{align*}
+		\boldsymbol{b}_{FE} = \left( \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{X}_i \right)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{y}_i 
+	\end{align*}
+
+\subsubsection{The Dummy Variable Method}
+Another method is to add a dummy variable for each individual:
+	\begin{align*}
+		\boldsymbol{y}_i = \boldsymbol{X}_i \boldsymbol{\beta} + \boldsymbol{\iota}_i \alpha_i + \boldsymbol{\varepsilon}_i
+	\end{align*}
+Then, we define:
+	\begin{align*}
+		\boldsymbol{Y} = 
+		\begin{bmatrix}
+			\boldsymbol{y_1}\\
+			\vdots\\
+			\boldsymbol{y_n}
+		\end{bmatrix},
+		\boldsymbol{X} = 
+		\begin{bmatrix}
+			\boldsymbol{X_1}\\
+			\vdots\\
+			\boldsymbol{X_n}
+		\end{bmatrix},
+		\boldsymbol{D} = 
+		\begin{bmatrix}
+			\boldsymbol{\iota} & & \boldsymbol{0}\\
+			& \ddots &\\
+			\boldsymbol{0} & & \boldsymbol{\iota}
+		\end{bmatrix},
+		\boldsymbol{\alpha} = 
+		\begin{bmatrix}
+			\alpha_1\\
+			\vdots\\
+			\alpha_n
+		\end{bmatrix},
+		\boldsymbol{\varepsilon} =
+		\begin{bmatrix}
+			\boldsymbol{\varepsilon_1}\\
+			\vdots\\
+			\boldsymbol{\varepsilon_n}
+		\end{bmatrix}
+	\end{align*}
+Then, the model is:
+	\begin{align*}
+		\boldsymbol{Y} = \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{D} \boldsymbol{\alpha} + \boldsymbol{\varepsilon}
+	\end{align*}
+Then, we define:
+	\begin{align*}
+		\boldsymbol{M_D} = &\boldsymbol{I} - \boldsymbol{D} (\boldsymbol{D}^\prime \boldsymbol{D})^{-1} \boldsymbol{D}^\prime\\ = &
+		\begin{bmatrix}
+			\boldsymbol{I}_T - \boldsymbol{\iota} (\boldsymbol{\iota}^\prime \boldsymbol{\iota})^{-1} \boldsymbol{\iota}^\prime & & \boldsymbol{0}\\
+			& \ddots &\\
+			\boldsymbol{0} & & \boldsymbol{I}_T - \boldsymbol{\iota} (\boldsymbol{\iota}^\prime \boldsymbol{\iota})^{-1} \boldsymbol{\iota}^\prime 
+		\end{bmatrix}\\ = &
+		\begin{bmatrix}
+			\boldsymbol{M^0} & & \boldsymbol{0}\\
+			& \ddots &\\
+			0 & & \boldsymbol{M^0}
+		\end{bmatrix}
+	\end{align*}
+Then, by FWL:
+	\begin{align*}
+		\boldsymbol{b}_{LSDV} = &(\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{Y}\\ = &
+		\left( \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{X}_i \right)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{y}_i \\ = &
+		\boldsymbol{b}_{FE}
+	\end{align*}
+
+\subsubsection{Estimation of the Individual Effect}
+From the OLS F.O.C, we know that:
+	\begin{align*}
+		\boldsymbol{D}^\prime (\boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}_{LSDV} - \boldsymbol{D}\boldsymbol{a}) = \boldsymbol{0}
+	\end{align*}
+We can solve out the estimated individual effect:
+	\begin{align*}
+		\boldsymbol{a} = (\boldsymbol{D}^\prime \boldsymbol{D})^{-1} \boldsymbol{D}^\prime (\boldsymbol{Y} - \boldsymbol{X}\boldsymbol{b}_{LSDV})
+	\end{align*}
+For each row:
+	\begin{align*}
+		a_i = \bar{y}_i - \bar{\boldsymbol{x}}^\prime_i \boldsymbol{b}_{LSDV} = \alpha_i + \bar{\boldsymbol{x}}^\prime_i \boldsymbol{\beta} + \bar{\varepsilon}_i - \bar{\boldsymbol{x}}^\prime_i \boldsymbol{b}_{LSDV}
+	\end{align*}
+Even $\boldsymbol{b}_{LSDV}$ is consistent, $a_i$ still not consistent.
+
+\subsubsection{The Least Squares Estimation of the Fixed Effects Model}
+We gives the assumptions of the fixed effects model:\\
+\textbf{A.FE1 (Linearity)}
+	\begin{align*}
+		y_{it} = \boldsymbol{x}_{it}^\prime \boldsymbol{\beta} + \alpha_i + \varepsilon_{it},\ i = 1, \ldots, n,\ t = 1, \ldots, T
+	\end{align*}
+\textbf{A.FE2 (Random Sampling)}\\
+$\{ y_{it}, \boldsymbol{x}_{it}, \varepsilon_{it} \}^T_{t=1},\ i = 1, \ldots, n$ is a sequence of i.i.d. observations.\\
+\textbf{A.FE3 (Strict Exogeneity)}
+	\begin{align*}
+		\mathbb{E} [\varepsilon_{is} | \{ \boldsymbol{x}_{it} \}^T_{t=1}] = 0,\ \forall\ s = 1, \ldots, T
+	\end{align*}
+\textbf{A.FE4 (Homoskedasticity and nonautocorrelation)}
+	\begin{align*}
+		Var[\varepsilon_{it} | \{ \boldsymbol{x}_{it} \}^T_{t=1}] = \sigma^2_{\varepsilon}\\
+		Cov[\varepsilon_{it}, \varepsilon_{is} | \{ \boldsymbol{x}_{it} \}^T_{t=1}] = 0,\ \forall\ t \neq s
+	\end{align*}
+Then, from the LSDV estimator, we have that:
+	\begin{align*}
+		\boldsymbol{b}_{FE} = &(\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{Y}\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{\varepsilon} 
+	\end{align*}
+\centerline{\textbf{11.3.5.1 The Unbiasedness and Consistency}}
+First, we know that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{b}_{FE} | \boldsymbol{X}] = \boldsymbol{\beta}
+	\end{align*}
+It is unbiased.\\\\
+Second, for consistency:
+	\begin{align*}
+		\boldsymbol{b}_{FE} = \boldsymbol{\beta} + (\frac{\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X}}{n})^{-1} \frac{\boldsymbol{X}^\prime (\boldsymbol{\varepsilon} - \bar{\boldsymbol{\varepsilon}})}{n}\\
+		\xrightarrow{p} \boldsymbol{\beta} + \mathbb{E} [\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X}]^{-1} (\mathbb{E} [\boldsymbol{X}^\prime \boldsymbol{\varepsilon} ] - \mathbb{E} [\boldsymbol{X}^\prime] \bar{\boldsymbol{\varepsilon}}) = \boldsymbol{\beta} 
+	\end{align*}
+Thus, it is consistent.\\\\
+\centerline{\textbf{11.3.5.2 The Efficiency of the Estimator}}\\
+We consider the variance of the fixed effects model estimator:
+	\begin{align*}
+		Var[\boldsymbol{b}_{FE} | \boldsymbol{X}] = &\mathbb{E} [(\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{\varepsilon} \boldsymbol{\varepsilon}^\prime \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} | \boldsymbol{X}]\\ = &
+		\sigma^2_{\varepsilon} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1}\\ = &
+		\sigma^2_{\varepsilon} (\sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{X_i})^{-1} 
+	\end{align*}
+Consider the pooled OLS estimator:
+	\begin{align*}
+		\boldsymbol{b}_{pooled} = (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}
+	\end{align*}
+its variance is:
+	\begin{align*}
+		Var[\boldsymbol{b}_{pooled} | \boldsymbol{X}] = \sigma^2_{\varepsilon} (\sum^n_{i=1} \boldsymbol{X}^\prime \boldsymbol{X})^{-1}
+	\end{align*}
+Because the demeaned variables $\boldsymbol{M^0} \boldsymbol{X_i}$ have less variation than the original regressors $\boldsymbol{X_i}$, thus we have:
+	\begin{align*}
+		\sum^n_{i=1} \boldsymbol{X}^\prime \boldsymbol{X} \geq \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{X_i} 
+	\end{align*}
+which means that
+	\begin{align*}
+		Var[\boldsymbol{b}_{pooled} | \boldsymbol{X}] \leq Var[\boldsymbol{b}_{FE} | \boldsymbol{X}] 
+	\end{align*}
+We sacrifices some of the efficiency for the unbiasedness of the estimator.\\\\
+\centerline{\textbf{11.3.5.3 The Asymptotic Estimation of the Variance}}\\
+We know that:
+	\begin{align*}
+		\boldsymbol{e} = &\boldsymbol{Y} - \boldsymbol{X}\boldsymbol{b}_{FE} - \boldsymbol{D} \boldsymbol{a}\\ = &
+		\boldsymbol{Y} - \boldsymbol{X}\boldsymbol{b}_{FE} - \boldsymbol{P_D} (\boldsymbol{Y} - \boldsymbol{X} \boldsymbol{b}_{FE})\\ = &
+		\boldsymbol{M_D} \boldsymbol{Y} - \boldsymbol{M_D} \boldsymbol{X} \boldsymbol{b}_{FE}\\ = &
+		\boldsymbol{M_D} \boldsymbol{Y} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{Y}\\ = &
+		(\boldsymbol{I} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D}) \boldsymbol{M_D} \boldsymbol{Y}\\ = &
+		(\boldsymbol{I} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D}) \boldsymbol{M_D} \boldsymbol{\varepsilon}
+	\end{align*}
+Then:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{e}^\prime \boldsymbol{e} | \boldsymbol{X}] = & \mathbb{E} [\boldsymbol{\varepsilon}^\prime \boldsymbol{M_D} (\boldsymbol{I} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D}) \boldsymbol{M_D} \boldsymbol{\varepsilon} | \boldsymbol{X}]\\ = &
+		\mathbb{E} [tr(\boldsymbol{M_D}(\boldsymbol{I} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D}) \boldsymbol{M_D} \boldsymbol{\varepsilon}^\prime \boldsymbol{\varepsilon}) | \boldsymbol{X}]\\ = &
+		\sigma^2_{\varepsilon} \mathbb{E} [tr(\boldsymbol{M_D} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D}) | \boldsymbol{X}]\\ = &
+		\sigma^2_{\varepsilon} \mathbb{E}[tr(\boldsymbol{M_D}) - tr((\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})) | \boldsymbol{X}]\\ = &
+		\sigma^2_{\varepsilon} (nT - n - K)
+	\end{align*}
+Thus, the unbiased estimator for variance $\sigma^2_\varepsilon$ is:
+	\begin{align*}
+		s^2 = \frac{\boldsymbol{e}^\prime \boldsymbol{e}}{nT - n - K}
+	\end{align*}
+\centerline{\textbf{11.3.5.4 Small $T$ Asymptotics Under Homoskedasticity}}
+From the i.i.d. LLN, we have that:
+	\begin{align*}
+		\sqrt{n} \frac{\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{\varepsilon}}{n} \xrightarrow{d} N(0, \sigma^2_\varepsilon \mathbb{E} [\boldsymbol{X}^\prime_i \boldsymbol{M_D} \boldsymbol{X_i}] )
+	\end{align*}
+Then, we have that:
+	\begin{align*}
+		\sqrt{n} (\boldsymbol{b} - \boldsymbol{\beta}) = (\frac{\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X}}{n})^{-1} \sqrt{n} \frac{\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{\varepsilon}}{n}\\
+		\xrightarrow{d} N(0, \sigma^2_{\varepsilon} \mathbb{E} [\boldsymbol{X}^\prime_i \boldsymbol{M_D} \boldsymbol{X_i}]) = N(0, \sigma^2_{\varepsilon} \mathbb{E} [\sum^T_{t=1} (\boldsymbol{x}_{it} - \bar{\boldsymbol{x}}_i) (\boldsymbol{x}_{it} - \bar{\boldsymbol{x}}_i)^\prime]^{-1} )
+	\end{align*}
+
+\subsubsection{First-Difference Estimator}
+Another way to deal with the individual effects is to do the first-differencing transformation of $y_{it}$:
+	\begin{align*}
+		\Delta y_{it} = y_{it} - y_{i,t-1}
+	\end{align*}
+The new model becomes:
+	\begin{align*}
+		\Delta y_{it} = \Delta \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \Delta \varepsilon_{it}
+	\end{align*}
+The estimator for this model is called the first-difference estimator.\\
+For $T = 2$, the first-difference estimator is identical to $\boldsymbol{b}_{FE}$.\\
+The problem is that there is always a autocorrelation problem in $\Delta \varepsilon_{it}$.
+
+
+\subsection{Radom Effects Model}
+If the individual effects $\alpha_i$ are uncorrelated with the regressors, it can treated as a random disturbance.\\
+For example, we decompose the random disturbance $\alpha_i$ into two parts $\alpha$ and $u_i$. Then the model becomes:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \alpha + u_{i} + \varepsilon_{it}
+	\end{align*}
+We make the following assumptions:\\
+\indent 1. $(\boldsymbol{y}_i, \boldsymbol{X}_i, \boldsymbol{u}_i, \boldsymbol{\varepsilon}_i) \sim i.i.d.$.\\
+\indent 2. Strict exogeneity:
+	\begin{align*}
+		\mathbb{E} [\varepsilon_{it} | \boldsymbol{X}_i] = 0,\ \mathbb{E} [u_i | \boldsymbol{X}_i] = 0
+	\end{align*}
+\indent 3. Homoskedasticity:
+	\begin{align*}
+		\mathbb{E} [\varepsilon^2_{it} | \boldsymbol{X}_i] = \sigma^2_\varepsilon,\ \mathbb{E} [u^2_i | \boldsymbol{X}_i] = \sigma^2_u
+	\end{align*}
+\indent 4. No correlation between $u_i$ and $\varepsilon_{it}$:
+	\begin{align*}
+		\mathbb{E} [u_i \varepsilon_{it} | \boldsymbol{X}_i] = 0
+	\end{align*}
+\indent 5. No serial correlation in $\varepsilon_{it}$:
+	\begin{align*}
+		\mathbb{E} [\varepsilon_{it} \varepsilon_{is} | \boldsymbol{X}_i] = 0,\ t \neq s
+	\end{align*}
+If we compose $u_i$ and $\varepsilon_{it}$ to $\eta_{it}$, and take $\alpha$ into $\boldsymbol{x}_i$ as a constant term, the model becomes:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \eta_{it}
+	\end{align*}
+Then, the assumption above gives that:
+	\begin{align*}
+		\mathbb{E} [\eta_{it} | \boldsymbol{X}_i] = & 0\\
+		\mathbb{E} [\eta^2_{it} | \boldsymbol{X}_i] = & \sigma^2_\varepsilon + \sigma^2_u\\
+		\mathbb{E} [\eta_{it} \eta_{is} | \boldsymbol{X}_i] = & \sigma^2_u
+	\end{align*}
+Then, the regression for $i$th individual is:
+	\begin{align*}
+		\boldsymbol{y}_i = \boldsymbol{X}_i \boldsymbol{\beta} + \boldsymbol{\eta}_i
+	\end{align*}
+The mean and the variance of the error term is:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{\eta}_i | \boldsymbol{X}_i] = &\boldsymbol{0}\\
+		Var[\boldsymbol{\eta}_i | \boldsymbol{X}_i] = &\mathbb{E} [\boldsymbol{\eta}_i \boldsymbol{\eta}^\prime_i | \boldsymbol{X}_i]\\
+		= &\boldsymbol{\Sigma}\\ = &
+		\begin{bmatrix}
+			\sigma^2_\varepsilon + \sigma^2_u & \sigma^2_u & \ldots & \sigma^2_u\\
+			\sigma^2_u & \sigma^2_\varepsilon + \sigma^2_u & \ddots & \vdots\\
+			\vdots & \ddots & \ddots & \vdots\\
+			\sigma^2_u \ldots & \sigma^2_u & \sigma^2_\varepsilon + \sigma^2_u
+		\end{bmatrix}\\ = &
+		\sigma^2_\varepsilon \boldsymbol{I} + \sigma^2_u \boldsymbol{\iota} \boldsymbol{\iota}^\prime
+	\end{align*}
+
+\subsubsection{Least Squares Estimation}
+For this model:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \alpha + u_i + \varepsilon_{it}
+	\end{align*}
+With assumption above, we use the pooled OLS and the estimator is consistent.\\
+If we use the norm fixed effects estimator, it is also consistent.\\
+We have that:
+	\begin{align*}
+		\frac{\boldsymbol{e}^\prime_{pooled} \boldsymbol{e}_{pooled}}{nT} = &\frac{\boldsymbol{\eta}^\prime \boldsymbol{M} \boldsymbol{\eta}}{nT}\\ = &
+		\frac{\boldsymbol{\eta}^\prime \boldsymbol{\eta}}{nT} - \frac{\boldsymbol{\eta}^\prime \boldsymbol{P_X} \boldsymbol{\eta}}{nT}\\ \xrightarrow{p} &
+		\mathbb{E} [\eta^2_{it}] + 0 = \sigma^2_{\varepsilon} + \sigma^2_u\\
+		\frac{\boldsymbol{e}^\prime_{FE} \boldsymbol{e}_{FE}}{nT} = & \frac{\boldsymbol{\boldsymbol{\varepsilon}^\prime \boldsymbol{M_D} (\boldsymbol{I} - \boldsymbol{M_D} \boldsymbol{X} (\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X}) \boldsymbol{X}^\prime \boldsymbol{M_D}) \boldsymbol{M_D} \boldsymbol{\varepsilon}}}{nT}\\ \xrightarrow{p} &
+		\mathbb{E} [\varepsilon_{it} - \bar{\varepsilon}_i]^2 = (1 - \frac{1}{T})\sigma^2_\varepsilon
+	\end{align*}
+
+\subsubsection{Generalized Least Squares}
+Here we define the covariance matrix:
+	\begin{align*}
+		\boldsymbol{\Omega} = 
+		\begin{bmatrix}
+			\boldsymbol{\Sigma} & 0 & \ldots & 0\\
+			0 & \boldsymbol{\Sigma} & \ldots & 0\\
+			& & \ddots &\\
+			0 & 0 & \ldots & \boldsymbol{\Sigma}
+		\end{bmatrix}
+	\end{align*}
+Since it is block diagonal, we can get its inverse:
+	\begin{align*}
+		\boldsymbol{\Omega}^{-1} = 
+		\begin{bmatrix}
+			\boldsymbol{\Sigma}^{-1} & 0 & \ldots & 0\\
+			0 & \boldsymbol{\Sigma}^{-1} & \ldots & 0\\
+			& & \ddots &\\
+			0 & 0 & \ldots & \boldsymbol{\Sigma}^{-1}
+		\end{bmatrix}
+	\end{align*}
+Similar to the GLS in previous chapter, we define:
+	\begin{align*}
+		\boldsymbol{\Omega}^{-1/2} = 
+		\begin{bmatrix}
+			\boldsymbol{\Sigma}^{-1/2} & 0 & \ldots & 0\\
+			0 & \boldsymbol{\Sigma}^{-1/2} & \ldots & 0\\
+			& & \ddots &\\
+			0 & 0 & \ldots & \boldsymbol{\Sigma}^{-1/2}
+		\end{bmatrix}
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{\Sigma}^{-1/2} = & (\sigma^2_\varepsilon \boldsymbol{I} + \sigma^2_u \boldsymbol{\iota} \boldsymbol{\iota}^\prime)^{-1/2}\\ = &
+		\frac{1}{\sigma_\varepsilon} (\boldsymbol{I} - \frac{\theta}{T}\boldsymbol{\iota} \boldsymbol{\iota}^\prime)\\
+		\theta = &1 - (\frac{\sigma^2_\varepsilon}{\sigma^2_\varepsilon + T \sigma^2_u})^{1/2}
+	\end{align*}
+Then we times this matrix in both side:
+	\begin{align*}
+		\boldsymbol{\Omega}^{-1/2} \boldsymbol{Y} = \boldsymbol{\Omega}^{-1/2} \boldsymbol{X} \boldsymbol{\beta} + \boldsymbol{\Omega}^{-1/2} \boldsymbol{\varepsilon}
+	\end{align*}
+The GLS estimator is:
+	\begin{align*}
+		\boldsymbol{b}_{GLS} = &(\boldsymbol{X}^\prime \boldsymbol{\Omega}^{-1} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{\Omega}^{-1} \boldsymbol{Y}\\ = &
+		(\sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{\Sigma}^{-1} \boldsymbol{X}_i)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{\Sigma}^{-1} \boldsymbol{Y}_i\\ = &
+		(\sum^n_{i=1} \boldsymbol{X}^\prime_i \sigma^2_\varepsilon \boldsymbol{\Sigma}^{-1} \boldsymbol{X}_i)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \sigma^2_\varepsilon \boldsymbol{\Sigma}^{-1} \boldsymbol{Y}_i
+	\end{align*}
+which means we can slightly change the model:
+	\begin{align*}
+		\boldsymbol{Y}^\star = \boldsymbol{X}^\star \boldsymbol{\beta} + \boldsymbol{\varepsilon}^\star
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{Y}^\star = & \sigma_\varepsilon \Sigma^{-1/2} \boldsymbol{Y}\\ = &
+		\begin{bmatrix}
+			y_{i1} - \theta \bar{y}_i\\
+			\vdots\\
+			y_{nT} - \theta \bar{y}_n
+		\end{bmatrix}
+	\end{align*}
+Similar for $\boldsymbol{X}^\star$, then the Random effects estimator is:
+	\begin{align*}
+		\boldsymbol{b}_{RE} = (\sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{X}^\star_i)^{-1} \sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{Y}^\star_i
+	\end{align*}
+and the RE transformation uses quasi-demeaned data:
+	\begin{align*}
+		y^\star_{it} = y_{it} - \theta\bar{y}_i\\
+		\boldsymbol{x}^\star_{it} = \boldsymbol{x}_{it} - \theta\bar{\boldsymbol{x}}_i
+	\end{align*}
+where:
+	\begin{align*}
+		\theta = 1 - (\frac{\sigma^2_\varepsilon}{\sigma^2_\varepsilon + T \sigma^2_u})^{1/2}
+	\end{align*}
+Then, we can see that:\\
+\indent if $\theta \simeq 0 \Rightarrow$ RE estimator $\simeq$ pooled OLS\\
+\indent if $\theta \simeq 1 \Rightarrow$ RE estimator $\simeq$ FE estimtaor
+
+\subsubsection{Feasible GLS}
+To get the estimation of $\sigma^2_u$ and $\sigma^2_{\varepsilon}$, we can use the fact that:
+	\begin{align*}
+		\frac{\boldsymbol{e}^\prime_{pooled} \boldsymbol{e}_{pooled}}{nT} \xrightarrow{p} \sigma^2_{\varepsilon} + \sigma^2_u\\
+		\frac{\boldsymbol{e}^\prime_{FE} \boldsymbol{e}_{FE}}{nT} \xrightarrow{p} (1 - \frac{1}{T})\sigma^2_\varepsilon
+	\end{align*}
+We can compute the estimator:
+	\begin{align*}
+		\hat{\sigma}^2_\varepsilon = \frac{\boldsymbol{e}^\prime_{FE} \boldsymbol{e}_{FE}}{nT - n} \xrightarrow{p} \sigma^2_\varepsilon\\
+		\hat{\sigma}^2_u = \frac{\boldsymbol{e}^\prime_{FE} \boldsymbol{e}_{FE}}{nT} - \hat{\sigma}^2_\varepsilon \xrightarrow{p} \sigma^2_u
+	\end{align*}
+
+\subsubsection{Hausman Specification Test for the Random Effects Model}
+We want to test that the individual effects is random or individual specific. If it is random, the RE estimator is consistent. If it is individual specific, the FE estimator is consistent.\\
+Then, we can construct the $H_0$:
+	\begin{align*}
+		H_0:\ \text{the assumptions of the random effects model are correct}
+	\end{align*}
+Then, we can construct the Wald statistics:
+	\begin{align*}
+		W = n (\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE})^\prime \hat{\boldsymbol{\Psi}}^{-1} (\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE})
+	\end{align*}
+where:
+	\begin{align*}
+		\hat{\boldsymbol{\Psi}} \xrightarrow{p} \boldsymbol{\Psi}
+	\end{align*}
+If $H_0$ is correct, we know that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE}] =& \boldsymbol{0}\\
+		Var[\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE}] =& \mathbb{E} [(\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE})(\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE})^\prime]\\ = &
+		Var[\boldsymbol{b}_{FE}] - Var[\boldsymbol{b}_{RE}] = \boldsymbol{\Psi}
+	\end{align*}
+By i.i.d. LLN, we have that:
+	\begin{align*}
+		\sqrt{n} (\boldsymbol{b}_{FE} - \boldsymbol{b}_{RE}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{\Psi})
+	\end{align*}
+Then, we can see that under $H_0$, we have that:
+	\begin{align*}
+		W \xrightarrow{d} \chi^2(dim(\boldsymbol{\beta}))
+	\end{align*}
+One thing very important is that the Hausman test relies on the assumptions \textbf{2,3,4,5}:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{\eta}_i \boldsymbol{\eta}^\prime_i | \boldsymbol{X}_i] = \boldsymbol{\Sigma}
+	\end{align*}
+
+
+\subsection{Cluster-Robust Covariance Matrix Estimation}
+In the previous chapter, we often assume that $\varepsilon_{it}$ is homoskedastic and non-autocorrelation. In this part, we relax this part.\\
+Here, we give the general model for the panel data, depending on the property of $\alpha$ and $w_i$, this model can be transformed to the 3 models:
+	\begin{align*}
+		y_{it} = \boldsymbol{x}^\prime_{it} \boldsymbol{\beta} + \alpha + w_{it}
+	\end{align*}
+For every individual, we give the regression matrix:
+	\begin{align*}
+		\boldsymbol{y}_i = \boldsymbol{X}_i \boldsymbol{\beta} + \boldsymbol{w}_i
+	\end{align*}
+Here, we only assume:\\
+\indent 1. $(\boldsymbol{y_i}, \boldsymbol{X}_i, \boldsymbol{w}_i) \sim i.i.d.$ for $i$\\
+\indent 2. $\mathbb{E} [\boldsymbol{w_i} | \boldsymbol{X}_i] = \boldsymbol{0}$ (Strict exogeneity)\\
+We assume that:
+	\begin{align*}
+		\mathbb{E} [\boldsymbol{w}_i \boldsymbol{w}^\prime_i \boldsymbol{X}_i] = \boldsymbol{\Omega}_i
+	\end{align*}
+here it may not be diagonal.
+
+\subsubsection{Pooled Model}
+For the pooled model:
+	\begin{align*}
+		\boldsymbol{b}_{pooled} = & (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{Y}\\ = &
+		\boldsymbol{\beta} + (\boldsymbol{X}^\prime \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{W}\\ = &
+		\boldsymbol{\beta} + (\sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{X}_i)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{w}_i
+	\end{align*}
+Then, for the asymptotic normality:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{pooled} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, \boldsymbol{Q}^{-1}_x \boldsymbol{Q}^w_x \boldsymbol{Q}^{-1}_x)
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{Q}_x = &\mathbb{E} [\boldsymbol{X}^\prime_i \boldsymbol{X}_i]\\
+		\boldsymbol{Q}^w_x = &\mathbb{E} [\boldsymbol{X}^\prime_i \boldsymbol{w}_i \boldsymbol{w}^\prime_i \boldsymbol{X}_i] = \mathbb{E} [\boldsymbol{X}^\prime_i \boldsymbol{\Omega}_i \boldsymbol{X}_i]
+	\end{align*}
+For the feasible estimation:
+	\begin{align*}
+		\hat{\boldsymbol{Q}}_x = &\frac{1}{n} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{X}_i \xrightarrow{p} \boldsymbol{Q}_x\\
+		\hat{\boldsymbol{Q}}^w_x = &\frac{1}{n} \sum^n_{i=1} \boldsymbol{X}^\prime_i \hat{\boldsymbol{w}}_i \hat{\boldsymbol{w}}^\prime_i \boldsymbol{X}_i \xrightarrow{p} \boldsymbol{Q}^w_x
+	\end{align*}
+
+\subsubsection{Random Effects Model}
+Similar to the previous model:
+	\begin{align*}
+		\boldsymbol{b}_{RE} = &(\sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{X}^\star_i)^{-1} \sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{Y}^\star_i\\ = &
+		\boldsymbol{\beta} + (\sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{X}^\star_i)^{-1} \sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{w}^\star_i
+	\end{align*}
+The asymptotic normality is:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{RE} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, (\boldsymbol{Q}^{\star}_x)^{-1} \boldsymbol{Q}^{w\star}_x (\boldsymbol{Q}^{\star}_x)^{-1})
+	\end{align*}
+where:
+	\begin{align*}
+		\boldsymbol{Q}^\star_x = &\mathbb{E} [(\boldsymbol{X}^\star_i)^\prime \boldsymbol{X}^\star_i]\\
+		\boldsymbol{Q}^{w\star}_x = &\mathbb{E} [(\boldsymbol{X}^\star_i)^\prime \boldsymbol{w}^\star_i (\boldsymbol{w}^\star_i)^\prime \boldsymbol{X}^\star_i]
+	\end{align*}
+For the feasible estimation:
+	\begin{align*}
+		\hat{\boldsymbol{Q}}^\star_x =& \frac{1}{n} \sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \boldsymbol{X}^\star_i\\
+		\hat{\boldsymbol{Q}}^{w\star}_x =& \frac{1}{n} \sum^n_{i=1} (\boldsymbol{X}^\star_i)^\prime \hat{\boldsymbol{w}}^\star_i (\hat{\boldsymbol{w}}^\star_i)^\prime \boldsymbol{X}^\star_i 
+	\end{align*}
+where:
+	\begin{align*}
+		\hat{\boldsymbol{w}}_i = \boldsymbol{Y}^\star_i - \boldsymbol{X}^\star_i \boldsymbol{b}_{RE}
+	\end{align*}
+
+\subsubsection{Fixed Effects Model}
+We know that:
+	\begin{align*}
+		\boldsymbol{b}_{FE} = &(\boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{X})^{-1} \boldsymbol{X}^\prime \boldsymbol{M_D} \boldsymbol{Y}\\ = &
+		\boldsymbol{\beta} + \left( \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{X}_i \right)^{-1} \sum^n_{i=1} \boldsymbol{X}^\prime_i \boldsymbol{M^0} \boldsymbol{\varepsilon}_i
+	\end{align*}
+The asymptotic normality is:
+	\begin{align*}
+		\sqrt{n}(\boldsymbol{b}_{FE} - \boldsymbol{\beta}) \xrightarrow{d} N(\boldsymbol{0}, (\dot{\boldsymbol{Q}}_x)^{-1} \dot{\boldsymbol{Q}}^{w}_x (\dot{\boldsymbol{Q}}_x)^{-1})
+	\end{align*}
+where:
+	\begin{align*}
+		\dot{\boldsymbol{Q}}_x = &\mathbb{E} [(\boldsymbol{X}_i)^\prime \boldsymbol{M^0} \boldsymbol{X}_i]\\
+		\dot{\boldsymbol{Q}}^{w}_x = &\mathbb{E} [(\boldsymbol{X}_i)^\prime \boldsymbol{M^0} \boldsymbol{w}_i (\boldsymbol{w}_i)^\prime \boldsymbol{M^0} \boldsymbol{X}_i]
+	\end{align*}
+For the feasible estimation:
+	\begin{align*}
+		\hat{\dot{\boldsymbol{Q}}}_x =& \frac{1}{n} \sum^n_{i=1} (\boldsymbol{X}_i)^\prime \boldsymbol{M^0} \boldsymbol{X}_i\\
+		\hat{\dot{\boldsymbol{Q}}}^{w}_x =& \frac{1}{n} \sum^n_{i=1} (\boldsymbol{X}_i)^\prime \boldsymbol{M^0} \hat{\boldsymbol{w}}_i (\hat{\boldsymbol{w}}_i)^\prime \boldsymbol{M^0} \boldsymbol{X}_i 
+	\end{align*}
+where:
+	\begin{align*}
+		\hat{\boldsymbol{w}}_i = \boldsymbol{M^0}\boldsymbol{Y}_i - \boldsymbol{M^0} \boldsymbol{X}_i \boldsymbol{b}_{FE}
+	\end{align*}
+
+
+
+
+\end{document}
