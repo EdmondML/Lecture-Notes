@@ -1,0 +1,2417 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb, color, mathrsfs}
+\usepackage[hidelinks]{hyperref}
+\usepackage{newtxtext,newtxmath}
+
+\title{Notes for Macroeconomics II}
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+
+
+\newpage
+\section{Lecture 1: Introduction}%第一课%
+
+\subsection{Macro Model}
+
+\subsubsection{What is a macro model?}
+\centerline{$A\ probability\ distribution\ over\ a\ sequence.$}
+\rightline{$--Hansen\ \&\ Sargent$}
+\textbf{Some primitives included in a macro model}\\
+a. Preferences of agents over commodities ($what\ we\ want?$)\\
+b. Endowment of commodities ($what\ we\ have?$)\\
+c. Technology to transform commodities (inputs) to commodities (outputs) ($how\ we\ get\ it?$)
+
+\subsubsection{A simple example of macro model}
+$s_t \in S$: a state of the economy\\
+Suppose that $s_t \sim Markov$, which means\\
+\centerline{$\pi(s^\prime | s) = prob(s_{t + 1} = s^\prime | s_t = s)$, and $\pi_0(s) = prob(s_0 = s)$}
+So, for the state of $s^t = \{s_t, s_{t-1}, \ldots, s_0\}$
+\begin{align*}
+	\pi_t(s^t) &= prob(s_t, s_{t-1}, \ldots s_0)	\\
+	&= prob(s_t | s_{t-1}, \ldots s_0)\ prob(s_{t-1}, \ldots s_0)\\
+	&= pron(s_t | s_{t-1})\ prob(s_{t-1}, \ldots s_0)\\
+	&\ldots\\
+	&= prob(s_t | s_{t-1})\ prob(s_{t-1} | s_{t-2})\ldots prob(s_1 | s_0)\ prob(s_0)\\
+	&= \pi(s_t | s_{t-1})\pi(s_{t-1} | s_{t-2})\ldots \pi(s_1 | s_0)\pi(s_0)
+\end{align*}
+Because of the $Curse\ of\ dimensionality$, it will be really difficult to compute. So, we will need \textbf{dynamic programming}.
+
+
+\subsection{Market Structure}
+Now we thinking about the equilibrium, consider an economy.\\
+a. Infinitely-lived agents $i \in \{1, \ldots I\}$\\
+b. State of economy $s_y \in S$\\
+c. Endowment $y^i_t = y^i(s_t)$\\
+d. Preference over $c^i = \{c^i_t(s^t)\}^\infty_{t=0}$\\
+Here, we can compute the utility of agent $i$ at $t = 0$ point
+\begin{align*}
+	u(c^i) &= \sum^\infty_{t=0}\sum_{s_t} \beta^t U(c^i_t(s^t)) \pi_t(s^t)\\
+	&= \color{red}{E_0 \sum^\infty_{t=0} \beta^t U(c^i_t)}
+\end{align*}
+
+
+\subsection{Property of $U(c)$}
+For the utility function\\
+\centerline{$u(c^i) = \sum^\infty_{t=0} \beta^t U(c^i_t)$}
+it must satisfy\\
+a. Time separability\\
+b. Time discounting, which means $0 < \beta < 1$\\\\
+Some \textbf{Standard} properties\\
+a. Continuous, twice continuously differentiable\\
+b. Strictly increasing and strictly concave\\
+c. Satisfies Inada conditions\\
+\centerline{$lim_{c \to 0} U^\prime (c) = +\infty$}
+\centerline{$lim_{c \to +\infty} U^\prime (c) = 0$}
+
+\subsubsection{A example of standard utility function}
+Constant Relative Risk Aversion utility function:\\
+\centerline{$U(c) = \frac{c^{1-\sigma} - 1}{1 - \sigma}$, $\sigma > 0$}
+we verify the standard properties\\
+\centerline{$U^\prime(c) = \frac{(1 - \sigma)c^{-\sigma}}{1 - \sigma} = c^{-\sigma} > 0$}
+\centerline{$U^{\prime \prime}(c) = -\sigma c^{-\sigma-1} < 0$}
+and they satisfy Inada condition
+
+\subsubsection{Some of the other properties}
+a. if $\sigma \to 1$, we have
+\begin{align*}
+	lim_{\sigma \to 1}U(c) &= lim_{\sigma \to 1}\frac{c^{1 - \sigma} - 1}{1 - \sigma}\\
+	&= \frac{\frac{\partial (c^{1 - \sigma} - 1)}{\partial \sigma}}{\frac{\partial (1 - \sigma)}{\partial \sigma}}\\
+	&= \frac{-c^{1-\sigma} lnc}{-1}\\
+	&= lnc
+\end{align*}\\
+b. As for the Arrow-Pratt coefficient of relative risk aversion
+\begin{align*}
+	RRA &= -\frac{U^{\prime \prime}(c)c}{U^\prime(c)}\\
+	&= -\frac{-\sigma c^{-\sigma -1}c}{c^{-\sigma}}\\
+	&= \sigma
+\end{align*}
+which means it is constant\\\\
+c. Marginal rate of substitution between consumption at $t$ and $t+1$
+\begin{align*}
+	MRS_{t+1} &= \frac{\partial u(c_{t+1})/ \partial c_{t+1}}{\partial u(c_t) / \partial c_t}\\
+	&= \beta (\frac{c_{t+1}}{c_t})^{-\sigma}
+\end{align*}
+where $\beta$ means the discounting\\\\
+d. Intertemporal elasticity of substitution: a $\%$-change in the consumption ratio in response to a $\%$-change in MRS
+\begin{align*}
+	IES &= -\frac{[\frac{d(c_{t+1}/c_t)}{c_{t+1}/c_t}]}{\frac{d(MRS_{t+1})}{MRS_{t+1}}}\\
+	&= -\frac{[\frac{d(c_{t+1}/c_t)}{c_{t+1}/c_t}]}{\frac{d(\beta (\frac{c_{t+1}}{c_t})^{-\sigma})}{\beta (\frac{c_{t+1}}{c_t})^{-\sigma}}}\\
+	&= -\frac{[\frac{d(c_{t+1}/c_t)}{c_{t+1}/c_t}]}{\frac{-\beta \sigma (\frac{c_{t+1}}{c_t})^{-\sigma-1}d(c_{t+1}/c_t)}{\beta (\frac{c_{t+1}}{c_t})^{-\sigma}}}\\
+	&= -\frac{[\frac{d(c_{t+1}/c_t)}{c_{t+1}/c_t}]}{-\sigma\frac{d(c_{t+1}/c_t)}{c_{t+1}/c_t}}\\
+	&= \frac{1}{\sigma}
+\end{align*}
+As we can see, it is a constant.\footnote{If $\sigma = 0$, $c_t$ and $c_{t+1}$ are perfect substitutes. If $\sigma \to \infty$, $c_t$ and $c_{t+1}$ are perfect complements.}\\\\
+e. \textbf{Euler equation}: in a model with no risk and borrowing constraint
+\begin{center}
+	$\mathop{max}\limits_{c_t, c_{t+1}}\ U(c_t) + \beta U(c_{t+1})$\\
+	$c_t + \frac{c_{t+1}}{1 + r_{t+1}} = Y_t + \frac{Y_{t+1}}{1 + r_{t+1}}$
+\end{center}
+We use the $Lagrange\ algorithm$
+\begin{center}
+$\mathscr{L} = U(c_t) + \beta U(c_{t+1}) + \lambda(Y_t + \frac{Y_{t+1}}{1 + r_{t+1}} - c_t - \frac{c_{t+1}}{1 + r_{t+1}})$\\
+$\frac{\partial \mathscr{L}}{\partial c_t} = U^\prime(c_t) - \lambda = 0$\\
+$\frac{\partial \mathscr{L}}{\partial c_{t+1}} = \beta U^\prime(c_{t+1}) - \frac{\lambda}{1 + r_{t+1}} = 0$\\
+$\frac{\partial \mathscr{L}}{\partial \lambda} = Y_t + \frac{Y_{t+1}}{1 + r_{t+1}} - c_t - \frac{c_{t+1}}{1 + r_{t+1}} = 0$\\
+\end{center}
+So we have\\
+\centerline{$\beta U^\prime(c_{t+1}) - \frac{\lambda}{1 + r_{t+1}} = \beta U^\prime(c_{t+1}) - \frac{U^\prime(c_t)}{1 + r_{t+1}} = 0$}
+which means\\
+\centerline{$U^\prime(c_t) = (1 + r_{t+1})\beta U^\prime(c_{t+1})$}
+As we know that\\
+\centerline{$U^\prime(c) = c^{-\sigma}$}
+So\\
+\centerline{$(1 + r_{t+1})\beta (\frac{c_{t+1}}{c_{t}})^{-\sigma} = 1$}
+And we take the logs\\
+\centerline{$ln\ c_{t+1} - ln\ c_{t} = \frac{1}{\sigma}ln\ \beta + \frac{1}{\sigma}ln\ (1 + r_{t+1})$}
+
+
+\subsection{Properties of Production Function $F$}
+For the production function\\
+\centerline{$Y_t = F(K_t + N_t)$}
+There are two inputs: capital $K$ and labor $L$.\\
+ And we make a assumption: $F$ exhibits a constant returns to scale (homogeneous of degree of 1)\\
+\centerline{$F(\lambda K_t, \lambda L_t) = \lambda F(K_t, L_t)$ for all $\lambda > 0$}
+\subsubsection{Euler's Theorem}
+A function $f$ that is homogeneous of degree $m$ and differentiable at $x \in R^L$ satisfies:\\
+\centerline{$mf(x) = \sum\limits^L_{i=1}x_i\frac{\partial f(x)}{\partial x_i}$}
+Here's the proof:\\
+Because $f$ is homogeneous of degree $m$, we know that\\
+\centerline{$f(\lambda x) = \lambda^m f(x)$}
+And we can differentiate both side\\
+\centerline{$\sum\limits^L_{i=1}x_i \frac{\partial f(\lambda x)}{\partial (\lambda x_i)} = m\lambda^{m-1}f(x)$}
+If we set $\lambda = 1$, we have\\
+\centerline{$\sum\limits^L_{i=1}x_i \frac{\partial f(x)}{\partial x_i} = mf(x)$}
+
+\subsubsection{Some properties about $F$}
+a. From Euler's theorem, we can know that\\
+\centerline{$F(K_t, N_t) = F_K(K_t, N_t)K_t + F_N(K_t, N_t)N_t$}
+b. The marginal products are homogeneous of degree 0. We know that\\
+\centerline{$F(\lambda K_t, \lambda L_t) = \lambda F(K_t, L_t)$ for all $\lambda > 0$}
+We differentiate both side on $K$\\
+\centerline{$\lambda F_K(\lambda K_t, \lambda N_t) = \lambda F(K_t, N_t)$}
+So we have\\
+\centerline{$F_K(\lambda K_t, \lambda N_t) = F(K_t, N_t$}
+Same as $L$\\
+c. Profit maximization of firms under perfect competition and CRS implies that the number of the firms is irrelevant.\\
+To see this, considering the maximal problem\\
+\centerline{$\pi_t = \mathop{max}\limits_{K_t, N_t}\{F(K_t, N_t) - r_tK_t - w_tN_t\}$}
+The FOC of this problem
+\begin{center}
+	$r_t = F_K(K_t, N_t)$\\
+	$w_t = F_N(K_t, N_t)$
+\end{center}
+From b we know that the marginal products are homogeneous of degree 0, so we have
+\begin{align*}
+	r_t &= (\frac{1}{N_t})^0 F_K(K_t/N_t, 1)\\
+	&= F_K(K_t/N_t, 1)
+\end{align*}
+So the number of the firms is irrelevant\\
+d. Also, as for the same total output, it can be produced by one or by many firms\\
+\centerline{$F(K_t, N_t) = N_t F(K_t/N_t, 1)$}
+
+\subsubsection{A example of $F$: CES Production Function}
+We define the CES production function as belows\\
+\centerline{$Y = [\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}]^{\frac{\rho}{\rho-1}}$}\\\\
+\textbf{Some properties of CES production function}\\
+a. $\alpha$ and $(1 - \alpha)$ measure the relative importance of the two factors. To see this, we differentiate both $K$ and $L$
+\begin{align*}
+	\frac{\partial Y}{\partial K} &= \frac{\rho}{\rho - 1}[\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}]^{\frac{1}{\rho-1}}\alpha \frac{\rho - 1}{\rho} K^{\frac{-1}{\rho}}\\
+	&= \alpha (\frac{K}{Y})^{\frac{-1}{\rho}}
+\end{align*}
+\begin{align*}
+	\frac{\partial Y}{\partial L} &= \frac{\rho}{\rho - 1}[\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}]^{\frac{1}{\rho-1}}(1 - \alpha)\frac{\rho - 1}{\rho} L^{\frac{-1}{\rho}}\\
+	&= (1 - \alpha)(\frac{L}{Y})^{\frac{-1}{\rho}}
+\end{align*}
+b. $\rho$ represents the elasticity of substitution between two factors, which measure a $\%$-change in the ratio of two inputs to a $\%$ change in the relative price.\\
+To see this, we first use the total differential\\
+\centerline{$dY = dKY_K + dLY_L = 0$}
+So we have\\
+\centerline{$\frac{dK}{dL} = -\frac{Y_L}{Y_K} = -\frac{\alpha}{1 - \alpha}(\frac{K}{L})^{\frac{-1}{\rho}}$}
+Also, considering the price\\
+\centerline{$dKP_K + dLP_L = 0$}
+So we have\\
+\centerline{$\frac{P_K}{P_L} = -\frac{dL}{dK} = \frac{1- \alpha}{\alpha} (\frac{K}{L})^{\frac{1}{\rho}}$}
+To show the elasticity
+\begin{align*}
+	\frac{d(K/L)/(K/L)}{d(P_K/P_L)/(P_K/P_L)}
+	&= \frac{d(\frac{K}{L})/(\frac{K}{L})}{[\frac{1 - \alpha}{\alpha}\frac{1}{\rho}(\frac{K}{L})^{\frac{1}{\rho}-1}d(\frac{K}{L})]/[\frac{1- \alpha}{\alpha} (\frac{K}{L})^{\frac{1}{\rho}}]}\\
+	&= \frac{d(\frac{K}{L})/(\frac{K}{L})}{\frac{1}{\rho}(\frac{K}{L})^{-1}d(\frac{K}{L})}\\
+	&= \rho
+\end{align*}
+Considering a special case that $\rho = 1$, then
+\begin{align*}
+	ln\ Y &= ln\ [\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}]^{\frac{\rho}{\rho-1}}\\
+	&= \frac{\rho ln\ [\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}]}{\rho - 1}\\
+	&= \frac{ln\ [\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}] + \rho \frac{\alpha K^{\frac{\rho - 1}{\rho}}ln\ K(\frac{1}{\rho^2}) + (1 - \alpha)L^{\frac{\rho - 1}{\rho}}ln\ L(\frac{1}{\rho^2})}{\alpha K^{\frac{\rho-1}{\rho}} + (1 - \alpha) L^{\frac{\rho-1}{\rho}}}}{1}\ (L'Hopital's\ rule)\\
+	&= \alpha ln\ K + (1 - \alpha)ln\ L\\
+	&= ln\ K^\alpha L^{1-\alpha}
+\end{align*}
+So, the production function $F$ is\\
+\centerline{$Y = K^\alpha L^{1- \alpha}$}
+which is Cobb-Douglas
+
+\subsubsection{Cobb-Douglas production funtion}
+For a Cobb-Douglas production function\\
+\centerline{$Y_t = Z_t K^\alpha_t L^{1-\alpha}_t$}
+Considering the growth rate, we take the log\\
+\centerline{$ln\ Y_t = ln\ Z_t + \alpha ln\ K_t + (1 - \alpha)ln\ L_t$}
+Then we differentiate both side
+\begin{center}
+	$\frac{dY_t}{Y_t} = \frac{dZ_t}{Z_t} + \alpha\frac{dK_t}{K_t} + (1 - \alpha)\frac{dL_t}{L_t}$\\
+	$g_Y = g_Z + \alpha g_K + (1 -\alpha)g_L$
+\end{center}
+Same for the per-capita form
+\subsubsection{Balanced Growth Path} 
+If we set the growth rate of the output equals to the growth rate of capital, and technology and labor grow at exogenous rates, we have
+\begin{align*}
+	g_Y &= g_Z + \alpha g_K + (1 - \alpha)g_L\\
+	g &= g_Z + \alpha g + (1 - \alpha)g_L\\
+	g &= \frac{g_Z}{1 - \alpha} + g_L
+\end{align*}
+And also, we have
+\begin{align*}
+	c_t &= (1 + g)^t c_0\\
+	r_{t+1} &\equiv r
+\end{align*}
+\textbf{Homothetic}\\
+The utility function $u$ is said to be homothetic if\\
+\centerline{$MRS(c_{t+s}, c_t) = MRS(\lambda c_{t+s}, \lambda c_t)$}
+for all $\lambda > 0$ and $c$.\\\\
+As we all know the equation of the MRS:\\
+\centerline{$MRS(c_{t+1}, c_t) = \frac{\partial u(c)/\partial c_{t+1}}{\partial u(c)/\partial c_t}$}
+and because of the Euler equation:\\
+\centerline{$U^\prime(c_t) = (1 + r_{t+1})\beta U^\prime(c_{t+1})$}
+We can easily find that\\
+\centerline{$MRS(c_{t+1}, c_t) = \frac{1}{\beta (1 + r)}$}
+We have\\
+\centerline{$MRS(c_{t+1}, c_t) = MRS((1 + g)^tc_1, (1 + g)^tc_0) = MRS(c_1, c_0)$}
+So $u$ is homothetic. And homothetic lifetime utility is a necessary condition for the existence of balanced growth path.\\\\
+Considering the CRRA period utility, which means we add a discounting parameter\\
+\centerline{$U(c_t) = \beta^t \frac{c^{1-\sigma} - 1}{1 - \sigma}$, $\sigma > 0$}
+Then we will have
+\begin{align*}
+	MRS(\lambda c_{t+s}, \lambda c_t) &= \frac{\partial (\beta^{t+s} \frac{\lambda c^{1-\sigma}_{t+s} - 1}{1 - \sigma})}{\partial c_{t+s}} / \frac{\partial (\beta^{t} \frac{\lambda c^{1-\sigma}_t - 1}{1 - \sigma})}{\partial c_t}\\
+	&= (\beta^{t+s} \frac{\lambda(1 - \sigma)c^{-\sigma}_{t+s}}{1 - \sigma}) / (\beta^t \frac{\lambda(1 - \sigma)c^{-\sigma}_t}{1 - \sigma})\\
+	&= \frac{\beta^{t+s}c^{-\sigma}_{t+s}}{\beta^t c^{-\sigma}_t} = MRS(c_{t+s}, c_t)
+\end{align*}
+So the CRRA utility function satisfies the homotheticity.
+
+
+
+\newpage
+\section{Lecture 2: A Simple Dynamic Economy}%第二课%
+
+
+\subsection{A very simple model}
+Here we considering a model with only two agents. There is no \textbf{storage}, which means two agents will consume all the good. There is only a one-time trade on the beginning of the period (period 0).\\\\
+\textbf{Definition 2.1.1}\\
+An allocation is a sequence $(c^1, c^2) = \{(c^1_t, c^2_t)\}^\infty_{t=0}$ of consumption in each period for each individual.
+
+
+\subsection{Basic elements in the model}
+a. \textbf{Allocations} $\{(c^1_t, c^2_t)\}^\infty_{t=0}$ as we sentenced above.\\
+b. \textbf{Utility function}, which represents the preferences over consumption allocations\\
+\centerline{$u(c^i) = \sum\limits^\infty_{t=0} \beta^t ln(c^i_t)$}
+c. \textbf{Endowment stream} shows the endowments of each agents in each period\\
+\centerline{$e^1_t = \left\{
+		 					\begin{array}{lr}
+								2,\ if\ t\ is\ even\\
+								0,\ if\ t\ is\ odd
+		 					\end{array}
+		 			  \right.$
+		 		}
+\centerline{$e^2_t = \left\{
+		 					\begin{array}{lr}
+								0,\ if\ t\ is\ even\\
+								2,\ if\ t\ is\ odd
+		 					\end{array}
+		 			  \right.$
+		 		}		 		
+In this model, there are no firm, government or storage. All agents will meet at $t = 0$ to make a contract about their future trade and then there will be no more trade after.
+
+
+\subsection{Definition of Competitive Equilibrium}
+For every agents, he meets a optimization problem, and we give a definition about  $Arrow-Debreu\ equilibrium$, in which the price is proper to induce the agents to choose the total consumption which equals the total endowments in each period.\\\\
+\textbf{Definition 2.1.2}\\
+$Arrow-Debreu\ equilibrium$ are prices $\{\hat{p}_t\}^\infty_{t=0}$ and allocations $(\{\hat{c}^i_t\}^\infty_{t=0})_{i=1,2}$ s.t. \\
+\indent 1. Given $\{\hat{p}_t\}^\infty_{t=0}$, for $i = 1, 2$, $\{\hat{c}^i_t\}^\infty_{t=0}$ solves
+\begin{align*}
+	& \mathop{max}\limits_{\{\hat{c}^i_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t ln(c^i_t)\\
+	&s.t.\\
+	&\indent \sum\limits^\infty_{t=0} \hat{p}_t c^i_t \leq \sum\limits^\infty_{t=0} \hat{p}_t e^i_t\\
+	&\indent \indent \indent c^i_t \geq 0,\ for\ all\ t
+\end{align*}
+\indent 2.\\
+\centerline{$\hat{c}^1_t + \hat{c}^2_t = e^1_t + e^2_t,\ for\ all\ t$}\footnote{
+About the $c^i_t$ and $\hat{c}^i_t$ in 1 and 2. In 1, it is the equilibrium price that works, which means even not equilibrium allocation also satisfy the constraint as long as there is the equilibrium price. In 2, it is the equilibrium that works.}
+
+
+\subsection{Solution for ADE}
+\subsubsection{Common method}
+To solve the equilibrium, we first considering the Lagrange algorithm. For any arbitrary prices $\{p_t\}^\infty_{t=0}$:\\
+\centerline{$\mathscr{L} = \sum\limits^\infty_{t=0} \beta^t ln(c^i_t) + \lambda^i (\sum\limits^\infty_{t=0} p_t e^i_t - \sum\limits^\infty_{t=0} p_tc^i_t)$}
+F.O.C.
+\begin{align*}
+	\frac{\partial \mathscr{L}}{\partial c^i_t} &= \frac{\beta^t}{c^i_t} - \lambda^i p_t = 0\\
+	\frac{\partial \mathscr{L}}{\partial c^i_{t+1}} &= \frac{\beta^{t+1}}{c^i_{t+1}} - \lambda^i p_{t+1} = 0
+\end{align*}
+So we have
+\begin{align*}
+	\frac{\beta^t}{c^i_t} & = \lambda^i p_t\\
+	\frac{\beta^{t+1}}{c^i_{t+1}} &= \lambda^i p_{t+1}
+\end{align*}
+Then\\
+\centerline{$p_{t+1}c^i_{t+1} = \beta p_tc^i_t$}
+Now, considering the market clear condition\\
+\centerline{$c^1_t + c^2_t = e^1_t + e^2_t$}
+We can get\\
+\centerline{$p_{t+1}(c^1_{t+1} + c^2_{t+1}) = \beta p_t(c^1_t + c^2_t)$}
+Hence,\\
+\centerline{$p_{t+1} = \beta p_t$}
+We set $p_0 = 1$ without loss of generality, and because we know that the equilibrium price $\{\hat{p}_t\}^\infty_{t=0}$ has also satisfies the maximal problem, then we get\\
+\centerline{$\hat{p}_t = \beta^t$}
+In adition,\\
+\centerline{$\beta \hat{p}_t c_t = \beta^{t+1} c^i_t = \hat{p}_{t+1} c^i_{t+1} = \beta^{t+1} c^i_{t+1}$}
+So,\\
+\centerline{$c^i_t = c^i_{t+1} = c^i_0$}
+Which means the agents will consume the same amount of goods every period.
+\\\\
+We have solve the price, as for the numerical solution of \textbf{consumption}, considering the budget constraint for the agents, because the agents will consume as much as they can each period in total, which is $e^1_t + e^2_t$, so we have the equation\\
+\centerline{$\sum\limits^\infty_{t=0}\hat{p}_t c^i_t = \sum\limits^\infty_{t=0}\hat{p}_t e^i_t$}
+For L.H.S.\\
+\centerline{$\sum\limits^\infty_{t=0}\hat{p}_t c^i_t = c^i_0\sum\limits^\infty_{t=0}\beta^t = \frac{c^i_0}{1 - \beta}$}
+For R.H.S.\\
+\centerline{$\sum\limits^\infty_{t=0}\hat{p}_t e^i_t = 
+\left\{
+		\begin{array}{lr}
+	   		\frac{2}{1 - \beta^2} ,\ if\ i = 1\\
+			\frac{2\beta}{1 - \beta^2} ,\ if\ i = 2
+		\end{array}
+\right.$}
+By solving the equation, we can find out the consumption\\
+\centerline{$\left\{
+					\begin{array}{lr}
+						c^1_0 = \frac{2}{1 + \beta}\\
+						c^2_0 = \frac{2\beta}{1 + \beta}
+					\end{array}
+			 \right.$}
+
+
+\subsection{Negishi's Method to Compute Equilibrium}
+\subsubsection{Pareto Efficient}
+\textbf{Definition 2.5.1}\\
+An allocation $\{c^1_t, c^2_t\}^\infty_{t=0}$ is feasible if:\\
+\indent a. $c^i_t \geq 0$ for all $t$, for all $i$.\\
+\indent b. $c^1_t + c^2_t = e^1_t + e^2_t$ for all $t$\\\\
+\textbf{Definition 2.5.2}\\
+An allocation $\{c^1_t, c^2_t\}$ is Pareto efficient if it is feasible and if there is no other feasible allocation $\{\tilde{c}^1_t, \tilde{c}^2_t\}$ s.t.
+\begin{align*}
+	u(\hat{c}^i) &\geq u(c^i)\ \text{for both $i = 1, 2$.}\\
+	u(\hat{c}^i) &> u(c^i)\ \text{for at least one $i = 1, 2$.}
+\end{align*}
+\textbf{Theorem 2.1} ($First\ Welfare\ Theorem$)\\
+Let $\{c^{1\star}_t, c^{2\star}_t\}^\infty_{t=0}$ be an allocation in competitive equilibrium. Then allocation is Pareto efficient.\\
+Proof:
+
+
+
+
+
+
+\subsubsection{Negishi's Method to Compute Equilibrium}
+In the Negishi's algorithm, we consider the social planner's problem with Pareto weights $\alpha = \{\alpha^1, \alpha^2\}$.
+\begin{align*}
+	&\mathop{max}\limits_{\{c^1_t, c^2_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t [\alpha^1 u(c^1_t) + \alpha^2 u(c^2_t)] \\
+	&s.t. \\
+	&\indent \indent c^i_t \geq 0,\ \text{for all $i$ and all $t$} \\
+	&\ \ \,  c^1_t + c^2_t = e^1_t + e^2_t,\ \text{for all $t$}
+\end{align*}
+Here we give the propositions without proof.\\
+\textbf{Proposition 2.5.3}\\
+All allocation $\{c^1_t, c^2)t\}^\infty_{t=0}$ that solves the social planner problem for some $\alpha > 0$ is Pareto efficient.\\\\
+\textbf{Proposition 2.5.4}\\
+Any Pareto efficient allocation $\{c^1_t, c^2)t\}^\infty_{t=0}$ is the solution to the social planner problem for some $\alpha > 0$.\\\\
+With these two proposition, we solve the problem by the following steps:\\
+a. For some arbitrary $\alpha$, we find the solution, which is Pareto efficient.\\
+b. We find use the Pareto efficient set to fit the competitive equilibrium condition, so that we can find the $\alpha$.\\\\
+Here we give the example:\\
+a. For any $\alpha$, we use the Lagrange method:
+\begin{align}
+	\mathscr{L} &= \sum\limits^\infty_{t=0} \beta^t [\alpha^1 u(c^1_t) + \alpha^2 u(c^2_t)] + \sum\limits^\infty_{t=0} \mu_t(e^1_t + e^2_t - c^1_t - c^1_t)  \nonumber\\
+	\frac{\partial \mathscr{L}}{\partial c^1_t} &= \frac{\beta^t \alpha^1}{c^1_t} - \mu_t = 0 \label{eq: 251} \\
+	\frac{\partial \mathscr{L}}{\partial c^2_t} &= \frac{\beta^t \alpha^2}{c^2_t} - \mu_t = 0 \label{eq: 252}
+\end{align}
+From equation \eqref{eq: 251} and \eqref{eq: 252}, we can have:
+\begin{equation}
+	\frac{c^1_t}{c^2_t} = \frac{\alpha^1}{\alpha^2}
+\end{equation} 
+Combining with the market clear condition, we have:
+\begin{align*}
+	c^1_t &= \frac{\alpha^1 (e^1_t + e^2_t)}{\alpha^1 + \alpha^2}\\
+	c^1_t &= \frac{\alpha^2 (e^1_t + e^2_t)}{\alpha^1 + \alpha^2}
+\end{align*}
+So, for any $\alpha$, we get the Pareto efficient set:
+\begin{equation*}
+	\{\{(c^1_t, c^2_t)\}^\infty_{t=0}: c^1_t = \frac{\alpha^1 (e^1_t + e^2_t)}{\alpha^1 + \alpha^2}, c^2_t = \frac{\alpha^2 (e^1_t + e^2_t)}{\alpha^1 + \alpha^2}\ \text{for some} \alpha > 0\}
+\end{equation*}
+b. Now we need to verify whether or not the Pareto efficient sets satisfies the competitive equilibrium.\\
+\indent i. The market clear condition. Because we use the condition to solve the Pareto efficient set, this condition is satisfied automatically.\\
+\indent ii. \\
+\indent iii. The life-time budget constraints of individuals must be satisfied. So we define the transfer functions:
+\begin{equation}
+	t^i(\alpha) = \sum\limits_t u_t[c^i_t(\alpha) - e^i_t]
+\end{equation}
+And this equation must equal 0, so:
+\begin{equation}
+	\sum\limits_t \frac{\beta^t (\alpha^1 + \alpha^2)}{e^1_t + e^2_t}[\frac{\alpha^i (e^1_t + e^2_t)}{\alpha^1 + \alpha^2} - e^i_t] = 0
+\end{equation}
+So, we can solve the equation to find $\alpha$.
+
+
+
+
+\subsection{Sequential Market Equilibrium}
+Now we consider some changes on the model, where trade of one-period securities occurs each period. And these securities are called $Arrow\ securities$. Now we can give the definition of sequential market equilibrium:\\\\
+\textbf{Definition 2.1.3}\\
+A sequential markets equilibrium is allocations $\{(c^i_t, a^i_{t+1})_{i \in I}\}^\infty_{t=0}$ and interest rates $\{r_{t+1}\}^\infty_{t=0}$ s.t.\\ 
+\indent 1. For each $i \in I$, given interest rates $\{r_{t+1}\}^\infty_{t=0}$, $\{(c^i_t, a^i_{t+1})_{i \in I}\}^\infty_{t=0}$ solve
+\begin{align*}
+	&\mathop{max}\limits_{\{c^i_t, a^i_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t ln\, (c^i_t)\\
+	&s.t. \\
+	& c^i_t + \frac{a^i_{t+1}}{1 + r_{t+1}} \leq e^i_t + a^i_t\\
+	&\indent\indent\indent\ \ c^i_t \geq 0\\
+	&\indent\indent\ \ \ a^i_{t+1} \geq -\bar{A}^i,\ \text{for all $t$}
+\end{align*}
+\indent 2. For all $t \geq 0$
+\begin{align*}
+	\sum\limits_{i \in I} c^i_t &= \sum\limits_{i \in I} e^i_t\\
+	\sum\limits_{i \in I} a^i_{t+1} &= 0
+\end{align*}
+
+\subsubsection{No-Ponzi schemes}
+Here we have the conditions that:
+\begin{equation*}
+	a^i_{t+1} \geq -\bar{A}^i,\ \text{for all $t$}
+\end{equation*}
+That is because if we don't set a limits, suppose agent $i$ consume $\varepsilon$ more in period 0, then his bond changes as follows:
+\begin{align*}
+	c^i_0 &= \hat{c}^i_t + \varepsilon\\
+	a^i_1 &= \hat{a}^i_t - (1 + \hat{r}_1)\varepsilon\\
+	&\ \ \vdots\\
+	a^i_t &= \hat{a}^i_t - \prod\limits^t_{\tau=1}(1 + \hat{r}_\tau)\varepsilon  
+\end{align*}
+Since $\varepsilon$ can be large enough, so to prevent the Ponzi scheme, we have to set the limits.
+
+\subsection{Solution for SME}
+\subsubsection{Common method}
+We also use the Lagrange method:
+\begin{align}
+	\mathscr{L} &= \sum\limits^\infty_{t=0} \beta^t ln\, (c^i_t) + \sum\limits^\infty_{t=0}\lambda^i_t (e^i_t + a^i_t - c^i_t - \frac{a^i_{t+1}}{1 + r_{t+1}}) \\
+	\frac{\partial \mathscr{L}}{\partial c^i_t} &= \frac{\beta^t}{c^i_t} - \lambda^i_t = 0 \label{eq: 262}\\
+	\frac{\partial \mathscr{L}}{\partial c^i_{t+1}} &= \frac{\beta^{t+1}}{c^i_{t+1}} - \lambda^i_{t+1} = 0 \label{eq: 263}\\
+	\frac{\partial \mathscr{L}}{\partial a^i_{t+1}} &= \lambda^i_{t+1} - \frac{\lambda^i_t}{1 + r_{t+1}} = 0 \label{eq: 264}
+\end{align}
+From the equation \eqref{eq: 262} and \eqref{eq: 263} we can have:
+\begin{equation}
+	\frac{c^i_{t+1}}{c^i_t} = \beta \frac{\lambda^i_t}{\lambda^i_{t+1}} \label{eq: 265}
+\end{equation}
+From equation \eqref{eq: 264} we can have:
+\begin{equation}
+	\frac{\lambda^i_t}{\lambda^i_{t+1}} = 1 + r_{t+1} \label{eq: 266}
+\end{equation}
+So, from equation \eqref{eq: 265} and \eqref{eq: 266} we can have that:
+\begin{equation}
+	c^i_t = \beta^t \prod\limits^t_{j=0} (1 + r_j) c^i_0 \footnote{Here we suggest that $r_0 = 0$.} \label{eq: 267}
+\end{equation}
+Then from the market clear condition we know that:
+\begin{equation}
+	\sum\limits_{i \in I} c^i_t = \beta^t \prod\limits^t_{j=0} (1 + r_j) \sum\limits_{i \in I} c^i_0 = \beta^t \prod\limits^t_{j=0} (1 + r_j) \sum\limits_{i \in I} e^i_0 = \sum\limits_{i \in I} e^i_t
+\end{equation}
+So we can get the price in ADE:
+\begin{equation}
+	\frac{1}{\prod\limits^t_{j=0}(1 + r_j)} = \frac{\beta^t \sum_{i \in I} e^i_0}{\sum_{i \in I} e^i_t} = p_t \label{eq: 269}
+\end{equation}
+Now we back to the budget constraints:
+\begin{align}
+	c^i_0 + \frac{a^i_1}{1 + r_1} &= e^i_0  \label{eq: 268}\\
+	c^i_1 + \frac{a^i_2}{1 + r_2} &= e^i_1 + a^i_1 \label{eq: 269}\\
+	c^i_2 + \frac{a^i_3}{1 + r_3} &= e^i_2 + a^i_2 \label{eq: 2610}\\
+	& \ \ \vdots \nonumber \\
+	c^i_t + \frac{a^i_{t+1}}{1 + r_{t+1}} &= e^i_t + a^i_t \label{eq:2611}
+\end{align}
+To eliminate $a^i_t$ we use equation \eqref{eq: 268} to add $\frac{\eqref{eq: 269}}{1 + r_1}$ to get:
+\begin{equation}
+	c^i_0 + \frac{c^i_1}{1 + r_1} + \frac{a^i_2}{(1 + r_1)(1 + r_2)} = e^i_0 + \frac{e^i_1}{1 + r_i}
+\end{equation} 
+We repeat this process and in the end we will get:
+\begin{equation}
+	\sum\limits^\infty_{t=0} \frac{c^i_t}{\prod\limits^t_{\tau=0}(1 + r_\tau)} = \sum\limits^\infty_{t=0} \frac{e^i_t}{\prod\limits^t_{\tau=0}(1 + r_\tau)} \label{eq: 2613}
+\end{equation}
+From equation \eqref{eq: 267} we know equation \eqref{eq: 2613} can be rewritten as:
+\begin{equation}
+	\sum\limits^\infty_{t=0} \beta^t c^i_0 = \frac{c^i_0}{1 - \beta} = \sum\limits^\infty_{t=0} \frac{e^i_t}{\prod\limits^t_{\tau=0}(1 + r_\tau)}
+\end{equation}
+And then we can get $c^i_0$:
+\begin{equation}
+	c^i_0 = (1 - \beta) \sum\limits^\infty_{t=0} \frac{e^i_t}{\prod\limits^t_{\tau=0}(1 + r_\tau)}
+\end{equation}
+From equation \eqref{eq: 269}, we can eliminate $r_t$:
+\begin{equation}
+	c^i_0 = (1 - \beta) \sum\limits^\infty_{t=0} \frac{\beta^t \sum_{i \in I} e^i_0}{\sum_{i \in I} e^i_t} e^i_t
+\end{equation}
+Now for the consumption of agent $i$ in period $T$:
+\begin{align}
+	c^i_T &= \beta^T \prod\limits^T_{j=0} (1 + r_j) (1 - \beta) \sum\limits^\infty_{t=0} \frac{\beta^t \sum_{i \in I} e^i_0}{\sum_{i \in I} e^i_t} e^i_t \nonumber\\
+	&= \beta^T \frac{\sum_{i \in I} e^i_T}{\beta^T \sum_{i \in I} e^i_0} (1 - \beta) \sum\limits^\infty_{t=0} \frac{\beta^t \sum_{i \in I} e^i_0}{\sum_{i \in I} e^i_t} e^i_t \nonumber\\
+	&= (1 - \beta) \sum_{i \in I} e^i_T \sum\limits^\infty_{t=0} \frac{\beta^t e^i_t}{\sum_{i \in I} e^i_t} 
+\end{align}
+
+
+
+
+
+
+
+
+
+
+\newpage
+\section{Lecture 3: Dynamic Programming Part I} %第3课%
+\subsection{Intro: The Neoclassical Growth Model}
+\subsubsection{Some essential elements in the model}
+\indent \indent a. Two participants: household and firm\\
+\indent b. Time is discrete: $t = 1, 2, \ldots$\\
+\indent c. In each period, there are three state variables:
+\begin{center}
+	$labor :\ n_t$\\
+	$capital :\ k_t$\\
+	$final\ output good : \ y_t$
+\end{center}
+
+\indent d. No risk, which means the future is predictable.\\
+\indent e. Equilibrium is competitive.\\\\
+\textbf{For the firm}\\
+The output is produced by production function $F$:
+\begin{equation*}
+	y_t = F(k_t, n_t)
+\end{equation*}
+The output can only be consumed or invested:
+\begin{equation*}
+	y_t = c_t + \dot{l}_t
+\end{equation*}
+As for the investment, it augments the capital stock, which depreciates at rate $\delta$ over time:
+\begin{equation*}
+	k_{t+1} = (1 - \delta)k_t + \dot{l}_t
+\end{equation*}
+or
+\begin{equation*}
+	\dot{l}_t = (k_{t+1} - k_t) + \delta k_t
+\end{equation*}
+
+\subsubsection{For the household}
+We assume they are all identical and infinitely-lived, which means they are equivalent to a infinitely-lived representative agent.\\\\
+The preferences over $\{c_t\}^\infty_{t=0}$ is expressed by the utility function:
+\begin{equation*}
+	u(\{c_t\}^\infty_{t=0}) = \sum\limits^\infty_{t=0} \beta^t U(c_t)
+\end{equation*}
+As for household's endowment, we assume:\\
+\indent a. It has a initial capital $k_0$.\\
+\indent b. It provides one unit of labor in each period.
+
+\subsubsection{The Optimal Problem}
+Here we give the optimal problem:
+\begin{align*}
+	&\mathop{max}\limits_{\{c_t, k_t, n_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(c_t)\\
+	&s.t.\\
+	&\indent F(k_t, n_t) = c_t + k_{t+1} - (1 - \delta)k_t\\
+	&\indent \indent \ c_t, k_t \geq 0\\
+	&\indent \indent \indent \ 1 \geq n_t \geq 0\\
+	&\indent \indent \indent k_0 > 0\ as\ given
+\end{align*}
+First, we take it as given that $n_t = 1$ in the optimal problem. Then, we define $f(k)$ as follows:
+\begin{equation*}
+	f(k) \equiv F(k, 1) + (1 - \delta)k
+\end{equation*}
+So, we can rewrite the resource constraint:
+\begin{align*}
+	c_t + k_{t+1} = f(k_t)\\
+	0 \leq k_{t+1} \leq f(k_t)
+\end{align*}
+Then the optimal problem can be expressed as:
+\begin{align*}
+	&\mathop{max}\limits_{\{k_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(f(k_t) - k_{t+1})\\
+	&s.t.\\
+	&\indent \indent f(k_t) \geq k_{t+1} \geq 0\\
+	&\indent \indent \ \ \ K_0 > 0\ as\ given 
+\end{align*}
+We let:
+\begin{equation*}
+	w(k_0) = \mathop{max}\limits_{\{k_{t+1}\}^\infty_{t=0},\ k_0\ as\ given} \sum\limits^\infty_{t=0} \beta^t U(f(k_t) - k_{t+1})
+\end{equation*}
+Then, the optimal problem can be rewritten as:
+\begin{align*}
+	w(k_0) &= \mathop{max}\limits_{\{k_{t+1}\}^\infty_{t=0},\ k_0\ as\ given} \{ U(f(k_0) - k_1) + \sum\limits^\infty_{t=1} \beta^t U(f(k_t) - k_{t+1})\}\\
+	&= \mathop{max}\limits_{k_1} \{U(f(k_0) - k_1) + \beta \mathop{max}\limits_{\{k_{t+1}\}^\infty_{t=0},\ k_1\ as\ given} \{\sum\limits^\infty_{t=0} \beta^t U(f(k_t) - k_{t+1}\}\}\\
+	&= \mathop{max}\limits_{k_1} \{U(f(k_0) - k_1) + \beta w(k_1)\}\\
+	&s.t.\\
+	&\indent \indent \indent f(k_0) \geq k_1 \geq 0\\
+	&\indent \indent \indent \indent k_0 > 0\ as\ given
+\end{align*}
+
+
+\subsection{Method to solute the problem}
+\subsubsection{Guess and verify}
+The idea is simple, we first guess a particular functional form of the solution and then verify it.\\\\
+$e.g.$\\
+Suppose we have:
+\begin{align*}
+	U(c) &= ln\ c\\
+	F(k, n) &= k^\alpha n^{(1-\alpha)}\\
+	\delta &= 1
+\end{align*}
+Then we have:
+\begin{equation*}
+	f(k) = F(k, 1) + (1 - \delta)k = k^\alpha
+\end{equation*}
+Then, we first guess that:
+\begin{equation}
+	w(k) = A + Bln\ k
+	\label{eq: guess}
+\end{equation}
+Then, we have:
+\begin{equation}
+	w(k_0) = \mathop{max}\limits_{0 \leq k_1 \leq k^\alpha_0,\ k_0\ as\ given} \{ ln(k^\alpha_0 - k_1) + \beta (A + Bln\ k_1)\}
+	\label{eq: max k_0}
+\end{equation}
+We take the F.O.C:
+\begin{equation*}
+	\frac{\partial w(k_0)}{\partial k_1} = -\frac{1}{k^\alpha_0 - k_1} + \frac{\beta B}{k_1} = 0
+\end{equation*}
+So, we have:
+\begin{equation}
+	k_1 = \frac{\beta B k^\alpha_0}{1 + \beta B}
+	\label{eq: k_1}
+\end{equation}
+Then, we plug \eqref{eq: k_1} back into \eqref{eq: max k_0}:
+\begin{align}
+	w(k_0) &= ln(k^\alpha_0 - \frac{\beta B k^\alpha_0}{1 + \beta B}) + \beta (A + Bln(\frac{\beta B k^\alpha_0}{1 + \beta B})) \nonumber\\
+	&= ln(\frac{k^\alpha_0}{1 + \beta B}) + \beta A + \beta Bln(\frac{\beta B k^\alpha_0}{1 + \beta B})\\
+	&= ln(\frac{1}{1 + \beta B}) + \beta A + \beta B ln(\frac{\beta B}{1 + \beta B}) + \alpha ln(k_0) + \alpha \beta B ln(k_0)
+	\label{eq: to_be_verified}
+\end{align}
+Compare \eqref{eq: to_be_verified} with \eqref{eq: guess} we have:
+\begin{align}
+	\left\{
+			\begin{array}{lr}
+				A = ln(\frac{1}{1 + \beta B}) + \beta A + \beta B ln(\frac{\beta B}{1 + \beta B})\\
+				B = \alpha + \alpha \beta B
+			\end{array}
+	\right.
+	\label{eqset: guess}
+\end{align} 
+By solving \eqref{eqset: guess}, we have:
+\begin{align}
+	\left\{
+			\begin{array}{lr}
+				A = \frac{q}{1 - \beta}[\frac{\alpha \beta}{1 - \alpha \beta}ln(\alpha \beta) + ln(1 - \alpha \beta)]\\
+				B = \frac{\alpha}{1 - \alpha \beta}	
+			\end{array}
+	\right.
+	\label{eqsolution: guess}
+\end{align}
+Plug \eqref{eqsolution: guess} back into \eqref{eq: k_1}, we have:
+\begin{equation}
+	k_1 = \frac{\beta B k^\alpha_0}{1 + \beta B} = \alpha \beta k^\alpha_0
+\end{equation}
+By introduction, we have:
+\begin{align*}
+	k_1 &= \alpha \beta k^\alpha_0\\
+	k_2 &= \alpha \beta k^\alpha_1 = \alpha \beta (\alpha \beta k^\alpha_0)^\alpha = (\alpha \beta)^{1+\alpha}k^{\alpha^2}_0\\
+	&\indent \indent \indent \indent \indent\vdots\\
+	k_t &= (\alpha \beta)^{\sum\limits^{t-1}_{j=0} \alpha^j} k^{\alpha^t}_0  
+\end{align*}
+
+\subsubsection{Value Function Iteration}
+We come back to the Bellman-function in previous part:
+\begin{equation}
+	w(k_0) = \mathop{max}\limits_{0 \leq k_1 \leq f(k_0)}\{U(f(k_0) - k_1) + \beta w(k_1)\} \label{eq: 329}
+\end{equation}
+Here, we define that $k_0$ to be the state variable, and $k_1$ to be the control variable. In each period, the state variable is predetermined, and the planner needs to decide the control variable to maximize the problem.\\\\
+In the VFI method, we follows the following steps:\\
+\indent a. First guess an arbitrary $w(k_1)$,denoted as $w_0(k_1)$, then we plug it into the equation. Since there is only one variable $k_1$, so we can choose a best $k_1$ to maximize the problem, and we denoted this $w(k_0)$ as $w_1(k_0)$.\\
+\indent b. Then, we plug $w_1(k_0)$ back into equation \eqref{eq: 269}:
+\begin{equation}
+	w(k_0) = \mathop{max}\limits_{0 \leq k_1 \leq f(k_0)}\{U(f(k_0) - k_1) + \beta w_1(k_1)\} \nonumber
+\end{equation}
+\indent Still, there is only one control variable $k_1$, we can choose the best $k_1$, and denote this $w(k_0)$ as $w_2(k_0)$.\\
+\indent c. We repeat this process until the $w(k_0)$ converges.\\\\
+$e.g.$\\
+Suppose we have:
+\begin{align*}
+	U(c) &= ln\ c\\
+	F(k, n) &= k^\alpha n^{(1-\alpha)}\\
+	\delta &= 1
+\end{align*}
+Then we can have the Bellman-function as below:
+\begin{equation}
+	w(k_0) = \mathop{max}\limits_{0 \leq k_1 \leq f(k_0)}\{ln(k^\alpha - k_1) + \beta w_1(k_1)\} \nonumber
+\end{equation}
+Suppose we have a set of choice of variables:
+\begin{equation*}
+	\mathscr{K} = \{0.04, 0.08, 0.012, 0.016, 0.20\}
+\end{equation*}
+We first choose $w_0(k_1) = 0$, then the equation is:
+\begin{equation}
+	w(k_0) = ln(k^\alpha - k_1) + \beta * 0 \nonumber
+\end{equation}
+Then, we can see that we should choose $k_1 = 0.04$ to maximize the equation. So, we can get $w_1(k_0)$:
+\begin{equation}
+	w_1(k_0) = ln(k^\alpha - 0.04) \nonumber
+\end{equation}
+Then we plug this back to the equation:
+\begin{equation}
+	w(k_0) = lm(k^\alpha - k_1) + \beta ln(k^\alpha_1 - 0.04) \nonumber
+\end{equation}
+Then we choose the optimal $k_1$ and repeat until it converges.
+
+\subsubsection{Euler Equations and TVC method}
+\textbf{I. We first consider a finite-horizon case}\\
+The social planner's problem with a finite time horizon $T$ is:
+\begin{align*}
+	&w^T(k_0) = \mathop{max}\limits_{\{k_{t+1}\}^T_{t=0}} \sum\limits^T_{t=0} \beta^t U(f(k_t) - k_{t+1})\\
+	&s.t.\\
+	&\indent\indent 0 \leq k_{t+1} \leq f(k_t)\\
+	&\indent\ \ \ \, k_0 > 0,\ \text{as given}
+\end{align*}
+We first use the Lagrange method:
+\begin{align*}
+	\mathscr{L} &= \sum\limits^T_{t=0} \beta^t U(f(k_t) - k_{t+1})\\
+	\frac{\partial \mathscr{L}}{\partial k_{t+1}} &= -\beta^t U^\prime(f(k_t) - k_{t+1}) + \beta^{t+1} U^\prime(f(k_{t+1}) - k_{t+2}) f^\prime(k_{t+1}) = 0	
+\end{align*} 
+which gives us the Euler equation:
+\begin{equation*}
+	U^\prime(f(k_{t} - k_{t+1}) = \beta U^\prime(f(k_{t+1}) - k_{t+2}) f^\prime(k_{t+1})
+\end{equation*}
+To solve the equation, we introduce a method called $shooting\ method$:\\
+\indent a. Guess a $\hat{k}_T$.\\
+\indent b. With $\hat{k}_{T+1} = 0$, we can compute $\hat{k}_{T-1}$, then we can repeat this process to get $\hat{k}_0$ backwards.\\
+\indent c. Check if $\hat{k}_0 = k_0$. If $\hat{k}_0 > k_0$, lower the $\hat{k}_T$. If $\hat{k}_0 < k_0$, raise the $\hat{k}_T$. We repeat b. until $|\hat{k}_0 - k_0|$ is small enough.\\\\
+$e.g.$\\
+Suppose we have:
+\begin{align*}
+	U(c) &= ln\ c\\
+	F(k, n) &= k^\alpha n^{(1-\alpha)}\\
+	\delta &= 1
+\end{align*}
+Then, the Euler equation is:
+\begin{equation}
+	\frac{1}{k^\alpha_t - k_{t+1}} = \frac{\beta \alpha k^{\alpha-1}_{t+1}}{k^\alpha_{t+1} - k_{t+2}} \label{eq: 3210}
+\end{equation}
+If we define the saving rate as follows:
+\begin{equation}
+	z_t \equiv \frac{k_{t+1}}{k_t}
+\end{equation}
+Then the equation \eqref{eq: 3210} can be written as:
+\begin{equation}
+	z_{t+1} = 1 + \alpha \beta - \frac{\alpha \beta}{z_t}
+\end{equation}
+With the condition that $z_T = \frac{k_{T+1}}{k_T} = 0$, we can solve it backwards and get:
+\begin{equation}
+	z_t = \alpha \beta \frac{1 - (\alpha \beta)^{T-t}}{1 - (\alpha \beta)^{T-t+1}}
+\end{equation}
+Withe $z_T = 0$, we can solve the problem backwards.\\\\
+\textbf{II. We now consider the infinite-horizon case}
+The social planner's problem is:
+\begin{align*}
+	&w^T(k_0) = \mathop{max}\limits_{\{k_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(f(k_t) - k_{t+1})\\
+	&s.t.\\
+	&\indent\indent 0 \leq k_{t+1} \leq f(k_t)\\
+	&\indent\ \ \ \, k_0 > 0,\ \text{as given}
+\end{align*}
+We also have the Euler equation:
+\begin{equation*}
+	U^\prime(f(k_{t} - k_{t+1}) = \beta U^\prime(f(k_{t+1}) - k_{t+2}) f^\prime(k_{t+1})
+\end{equation*}
+Besides, we also have the TVC:
+\begin{equation*}
+	\lim\limits_{t \to \infty} \beta^t U^\prime(f(k_t) - k_{t+1}) f^\prime(k_t) k_t = 0
+\end{equation*}
+Then we give the theorem without a proof:\\
+\textbf{Theorem 3.1}\\
+Let $U$, $\beta$ and $F$ satisfy some assumptions.\footnote{a. $U$ is continuously differentiable, strictly increasing, strictly concave and bounded. It satisfies the Inada conditions. The discount factor $\beta \in (0, 1)$.\\
+b.  $F$ is continuously differentiable and homogenous of degree 1, strictly increasing and bounded. Furthermore $F(k, 0) = F(0, n) = 0$, $\forall\ k, n > 0$. Also $F$ satisfies the Inada conditions. Also $\delta \in [0, 1]$.}
+ Then an allocation $\{k_{t+1}\}^\infty_{t=0}$ that satisfies the Euler equations and the TVC solves the sequential social planners problem, for a given $k_0$.\\
+$e.g.$\\
+Suppose we have:
+\begin{align*}
+	U(c) &= ln\ c\\
+	F(k, n) &= k^\alpha n^{(1-\alpha)}\\
+	\delta &= 1
+\end{align*}
+Then the TVC is:
+\begin{align}
+	&\lim\limits_{t \to \infty} \beta^t U^\prime(f(k_t) - k_{t+1}) f^\prime(k_t) k_t \nonumber\\
+	=& \lim\limits_{t \to \infty} \beta^t \frac{1}{k^\alpha_t - k_{t+1}} (\alpha k^{\alpha-1}) k_t \nonumber\\
+	=& \lim\limits_{t \to \infty} \frac{\alpha \beta^t k^\alpha_t}{k^\alpha_t - k_{t+1}} \nonumber\\
+	=& \lim\limits_{t \to \infty} \frac{\alpha \beta ^t}{1 - z_t} \label{eq: 3214}
+\end{align}
+Combining the equation we get from Euler equation:
+\begin{equation}
+	 z_{t+1} = 1 + \alpha \beta - \frac{\alpha \beta}{z_t}
+\end{equation}
+We can guess a $z_0$ and verify whether it violates equation \eqref{eq: 3214}.
+
+
+\subsection{Competitive Equilibrium}
+\subsubsection{Definition of Competitive Equilibrium}
+First considering the firm, we assume that there is only a single, representative firm. The firm's problem is that:\\
+\indent Given a sequence of prices $\{p_t, w_t, r_t\}^\infty_{t=0}$ to solve:
+\begin{align*}
+	&\pi = \mathop{max}\limits_{\{y_t, k_t, n_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} p_t(y_t - r_t k_t - w_t n_t)\\
+	&s.t.\\
+	&\indent\indent\indent y_t = F(k_t, n_t),\ \forall\ t \geq 0\\
+	&\indent\indent\indent\indent y_t, k_t, n_t \geq 0
+\end{align*} 
+However, consider that $k_t$ and $n_t$ is actually decided by the household, so there is nothing dynamic in the firm's problem. It will just decide separately each period.\\\\
+Now consider the household's problem, we also give a representative consumer in the economy:\\
+\indent Given a sequence of price $\{p_t, w_t, r_t\}^\infty_{t=0}$ to solve:
+\begin{align*}
+	&\mathop{max}\limits_{\{c_t, i_t, x_{t+1}, k_t, n_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(c_t)\\
+	&s.t.\\
+	& \sum\limits^\infty_{t=0} p_t(c_t + i_t) \leq \sum\limits^\infty_{t=0} p_t(r_t k_t + w_t n_t) + \pi\\
+	&\indent\indent\ \ \ \ x_{t+1} = (1 - \delta)x_t + i_t,\ \forall\ t \geq 0\\
+	&\indent\indent\indent\ 0 \leq n_t \leq 1,\ \forall\ t \geq 0\\
+	&\indent\indent\indent\ 0 \leq k_t \leq x_t,\ \forall\ t \geq 0\\
+	&\indent\indent\indent c_t, x_{t+1} \geq 0,\ \forall\ t \geq 0\\
+	&\indent\indent\indent\indent\indent x_0\ \text{as given}
+\end{align*}
+Now we can define the competitive equilibrium:\\
+\textbf{Definition 3.3.1}\\
+A Competitive Equilibrium consists of prices $\{p_t, w_t, r_t\}^\infty_{t=0}$ and allocations for the firm $\{y_t, k_t, n_t\}^\infty_{t=0}$ and the household $\{c_t, i_t, x_{t+1}, k_t, n_t\}^\infty_{t=0}$ s.t.\\
+\indent a. Given prices, the allocation of the representative firm solves the firm's problem.\\
+\indent b. Given prices, the allocation of the representative household solves the household's problem.\\
+\indent c. Markets clear
+\begin{align*}
+	y_t &= c_t + i_t\\
+	n^d_t &= n^s_t\\
+	k^d_t &= k^s_t
+\end{align*}
+
+\subsubsection{Characterization o the Competitive Equilibrium and the Welfare Theorems}
+First, we consider the firm's problem:\\
+\indent Because, the firm does not face a dynamic problem, so in each period, the firm's problem is that:
+\begin{equation*}
+	\pi_t = \mathop{max}\limits_{k_t, n_t \geq 0} p_t(F(k_t, n_t) - r_t k_t - w_t n_t)
+\end{equation*}
+\indent If we take the FOC, we will get:
+\begin{align*}
+	r_t &= F_k(k_t, n_t)\\
+	w_t &= F_n(k_t, n_t)
+\end{align*}
+\indent And because of the Euler Theorem, we can get:
+\begin{align*}
+	\pi_t &= p_t (F(k_t, n_t) - r_t k_t - w_t n_t)\\
+	&= p_t(F(k_t, n_t) - F_k(k_t, n_t)k_t - F_n(k_t, n_t)n_t)\\
+	&= 0
+\end{align*}
+\indent which means that the profit is 0 in each period.\\\\
+Now we consider the household problem:\\
+\indent To maximize the utility problem, we know that:
+\begin{align*}
+	&n_t = 1, k_t = x_t\\
+	&i_t = k_{t+1} - (1 - \delta)k_t
+\end{align*}
+\indent Then from the goods market clear condition, we know that:
+\begin{equation*}
+	F(k_t, 1) = c_t + k_{t+1} - (1 - \delta)k_t
+\end{equation*}
+\indent Now the household's problem turn to be:
+\begin{align*}
+	&\indent\indent\indent \mathop{max}\limits_{\{c_t, k_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(c_t)\\
+	&s.t.\\
+	& \sum\limits^\infty_{t=0} p_t(c_t + k_{t+1} - (1 - \delta)k_t) \leq \sum\limits^\infty_{t=0} p_t(r_t k_t + w_t)\\
+	&\indent\indent\indent c_t, k_{t+1} \geq 0,\ \forall\ t \geq 0\\
+	&\indent\indent\indent\indent\indent k_0\ \text{as given}
+\end{align*}
+\indent Now we use the the Lagrange method:
+\begin{align*}
+	&\mathscr{L} = \sum\limits^\infty_{t=0} \beta^t U(c_t) + \mu(\sum\limits^\infty_{t=0} p_t(r_t k_t + w_t) - \sum\limits^\infty_{t=0} p_t(c_t + k_{t+1} - (1 - \delta)k_t))\\
+	&\frac{\partial \mathscr{L}}{\partial c_t} = \beta^t U^\prime(c_t) - \mu p_t = 0\\
+	&\frac{\partial \mathscr{L}}{\partial c_{t+1}} = \beta^{t+1} U^\prime(c_{t+1}) - \mu p_{t+1} =0\\
+	&\frac{\partial \mathscr{L}}{\partial k_t} = \mu p_t (r_t + 1 - \delta) - \mu p_{t-1} = 0
+\end{align*}
+\indent Then we can get the Euler equation:
+\begin{equation*}
+	\frac{U^\prime(c_t)}{\beta U^\prime(c_{t+1})} = \frac{p_t}{p_{t+1}} = (r_{t+1} + 1 - \delta)
+\end{equation*}
+\indent If we make the following definition:
+\begin{equation*}
+	f(k_t) = F(k_t, 1) + (1 - \delta)k_t
+\end{equation*}
+\indent From the firm's problem we know that:
+\begin{equation*}
+	F_k(k_t + 1) = r_{t} = f^\prime(k_t) - (1 - \delta)
+\end{equation*}
+\indent Then, Euler equation can be rewritten as:
+\begin{equation*}
+	U^\prime(f(k_t) - k_{t+1}) = \beta U^\prime(f(k_{t+1}) - k_{t+2})f^\prime(k_{t+1}) 
+\end{equation*}
+\indent This exactly the Euler equation of the social planner.\\
+\indent Also, we need to make sure that in the limit the value of the capital stock carried forward by the household converges to zero:
+\begin{equation*}
+	\lim\limits_{t \to \infty} p_t k_t = 0
+\end{equation*}
+\indent By using the FOC in Lagrange method, we know that:
+\begin{align*}
+	\lim\limits_{t \to \infty} p_t k_t &= \lim\limits_{t \to \infty} \frac{\beta^t U^\prime(c_t)}{\mu} k_t\\
+	&= \frac{1}{\mu} \lim\limits_{t \to \infty} \beta^t U^\prime(c_t) k_t\\
+	&= \frac{1}{\mu} \lim\limits_{t \to \infty} \beta^{t-1} U^\prime(c_{t-1}) k_t\\
+	&= \frac{1}{\mu} \lim\limits_{t \to \infty} \beta^{t-1} \beta U^\prime(f(k_{t}) - k_{t+1})f^\prime(k_{t}) k_t\\
+	&= \frac{1}{\mu} \lim\limits_{t \to \infty} \beta^t U^\prime(f(k_{t}) - k_{t+1})f^\prime(k_{t}) k_t
+\end{align*}
+\indent Because the budget constraint is binding, so $\frac{1}{\mu} \neq 0$. So we have:
+\begin{equation*}
+	\lim\limits_{t \to \infty} \beta^t U^\prime(f(k_{t}) - k_{t+1})f^\prime(k_{t}) k_t = 0
+\end{equation*}
+\indent This is exactly the TVC for social planner.
+
+\subsection{Sequential Market Equilibrium} 
+In the sequential market equilibrium, the household problem is:\\
+\indent Given a sequence of price $\{w_t, r_t\}^\infty_{t=0}$ to solve:
+\begin{align*}
+	&\indent\indent \mathop{max}\limits_{\{c_t, k_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t U(c_t)\\
+	&s.t.\\
+	& c_t + k_{t+1} - (1 - \delta)k_t = w_t + r_t k_t\\
+	&\indent\indent\indent\ \ \ \  c_t, k_{t+1} \geq 0\\
+	&\indent\indent\indent\indent k_0\ \text{as given}
+\end{align*}
+Firm also face the static optimal problem in each period:
+\begin{equation*}
+	\mathop{max}\limits_{\{k_t, n_t\}^\infty_{t=0}} F(k_t, n_t) - w_t n_t - r_t k_t
+\end{equation*}
+Now we define the sequential market equilibrium:\\
+\textbf{Definition 3.4.2}\\
+A sequential market equilibrium is a sequence of prices $\{w_t, r_t\}^\infty_{t=0}$ allocations for the representative household $\{c_t, k^s_{t+1}\}^\infty_{t=0}$
+and allocations for representative firm $\{n_t, k^s_{t}\}^\infty_{t=0}$ s.t.\\
+\indent a. Given $k_0$ and $\{w_t, r_t\}^\infty_{t=0}$, allocations $\{c_t, k^s_{t+1}\}^\infty_{t=0}$ solves the household maximization problem.\\
+\indent b. For each $t > 0$, given $(w_t, r_t)$, the firm allocation $\{n_t, k^s_{t}\}^\infty_{t=0}$ solves the firms' maximization problem.\\
+\indent c. Market clear: $\forall\ t \geq 0$
+\begin{align*}
+	n^d_t &= 1\\
+	k^d_t &= k^s_t\\
+	F(k^d_t, n^d_t) &= c_t + k^s_{t+1} - (1 - \delta)k^s_t
+\end{align*}
+
+
+\subsection{Recursive Competitive Equilibrium}
+In recursive competitive equilibrium, we first need to verify the state variables for the hold.\\
+First, the households own capital stock at the beginning of the period, denoted by $k$. Also, the households know the price $r$ and $w$, which equal the marginal products of the aggregate production function, evaluated at the the aggregate capital stock $K$ and labor supply $N = 1$. So the state variables of the household is $(k, K)$ and the control variables are consumption $c$ and capital stock being brought to tomorrow $k^\prime$.\\
+So, the Bellman equation of the household problem is:
+\begin{align*}
+	&v(k, K) = \mathop{max}\limits_{c, k^\prime \geq 0} \{U(c) + \beta v(k^\prime, K^\prime)\}\\
+	&s.t.\\
+	& c + k^\prime = w(K) + (1 + r(K) - \delta)k\\
+	&\ \ \ \  K^\prime = H(K) 
+\end{align*}
+$H(K)$ is the aggregate law of motion, which describes how the aggregate capital evolves between today and tomorrow.\\
+As for the firm, the same as before, we can get the wage and return function:
+\begin{align*}
+	w(K) &= F_l(K, 1)\\
+	r(K) &= F_K(K, 1)
+\end{align*}
+Now, we can give the definition of the recursive competitive equilibrium:\\
+\textbf{Definition 3.5.1}\\
+A recursive competitive equilibrium is a value function $v: \textbf{R}^2_+ \to \textbf{R}_+$ and policy function $C$, $G: \textbf{R}^2_+ \to \textbf{R}_+$ for the representative household, pricing functions $w$, $r: \textbf{R}_+ \to \textbf{R}_+$ and aggregate law of motion $H: \textbf{R}_+ \to \textbf{R}_+$ s.t.\\
+\indent a. Given the function $w$, $r$ and $H$, the value function $v$ solves the Bellman equation of the household problem and $C$, $G$ are associated policy functions.\\
+\indent b. The pricing functions satisfy the FOC of the firm's problem.\\
+\indent c. Consistency
+\begin{equation*}
+	H(K) = G(k, K)
+\end{equation*}
+\indent d. $\forall\ K \in \textbf{R}_+$
+\begin{equation*}
+	C(k, K) + G(k, K) = F(K, 1) + (1 - \delta)K
+\end{equation*}
+
+
+
+\newpage
+\section{Lecture 4: Dynamic Programming Part II}
+\subsection{Intro}
+In the last lecture, we take it for guaranteed that the iteration will finally converge. But what is the theory behind this. We will discuss it in this lecture.\\\\
+Generally, the social planner faces a sequential problem as follows: 
+\begin{align*}
+	&\mathop{sup}\limits_{\{x_{t+1}\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t F(x_t,  x_{t+1})\\
+	&s.t.\\
+	&\indent x_{t+1} \in \Gamma(x_t), t = 0, 1, \cdots\\
+	&\indent\indent x_0 \in X,\ \text{as given}
+\end{align*}
+In the last lecture, we transfer it into a functional equation:
+\begin{align*}
+	v(x) = \mathop{max}\limits_{y \in \Gamma(x)} \{F(x, y) + \beta v(y)\}
+\end{align*}
+
+
+\subsection{Operator $T$}
+Now we first introduce operator $T$:
+\begin{align*}
+	(Tv)(x) = \mathop{max}\limits_{y \in \Gamma(x)} \{F(x, y) + \beta v(y)\}
+\end{align*}
+Operator $T$ takes the function $v$ as input and returns a new function $Tv$.\\\\
+$e.g.$\\
+\indent In the last lecture, the VIF method, we first take $v_0(k^\prime) = 0$ and then we plug it into the Bellman equation:
+\begin{align*}
+	v(k) = U(k, k^\prime) + \beta v(k^\prime)
+\end{align*}
+\indent Then, by FOC, we get the optimal $k^\prime$ and corresponding $v_1$. And this procedure is what $T$ does.\\\\
+We want to show that there is a fixed point for operator $T$, which means:
+\begin{align*}
+	v^\star = T v^\star
+\end{align*}
+So, we generally faces 3 problems:\\
+\indent \textbf{Existence}: Under what conditions does the operator $T$ have a fixed point $v^\star$.\\
+\indent \textbf{Uniqueness}: Under what conditions is the fixed point $v^\star$ unique.\\
+\indent \textbf{Convergence}: Under what conditions does the sequence of functions $\{v_n\}^\infty_{n=0}$, defined recursively by $v_0$ (arbitrary guessed) and $v_{n+1} = Tv_n$ converge to this $v^\star$.
+
+
+\subsection{Contraction Mapping Theorem}
+To solve the 3 problems in the last section, we need contraction mapping theorem. First, we give the definition of contraction mapping.\\
+\textbf{Definition 4.1}\\
+Let $(S, d)$ be a metric space and $T: S \to S$ is a function mapping $S$ into itself. The function $T$ is a contraction mapping if there exists a number $\beta \in (0, 1)$, s.t
+\begin{equation*}
+	d(Tx, Ty) \leq \beta d(x, y),\ \forall\ x, y \in S 
+\end{equation*}
+The number $\beta$ is called the modulus of the contraction mapping.\\\\
+From the definition of contraction mapping, we can have an important lemma:\\
+\textbf{Lemma 4.2}\\
+Let $(S, d)$ be a metric space and $T: S \to S$ be a function mapping $S$ to itself. If $T$ is a contraction mapping, then $T$ is continuous.\\
+The proof is quite straight:\\
+\indent $\forall\ s_0 \in S$ and $\forall\ \delta > 0$, we have $s \in S$ s.t.
+\begin{align*}
+	d(s, s_0) \leq \delta
+\end{align*}
+\indent Then, by the definition of contraction mapping:
+\begin{align*}
+	d(Ts, Ts_0) \leq \beta d(s, s_0) = \beta \delta \leq \delta
+\end{align*}
+\indent So, $T$ is continuous.\\\\
+Then, we can give the contraction mapping theorem:\\
+\textbf{Theorem 4.1}($contraction\ mapping\ theorem$)\\
+Let $(S, d)$ be a complete metric space and let $v_n = T^n v_0$. Suppose that $T: S \to S$ is a contraction mapping with modulus $\beta$. Then:\\
+\indent a. the operator $T$ has exactly one fixed point $v^\star \in S$ and\\
+\indent b. $\forall\ v_0 \in S$ and $\forall\ n \in \mathbb{N}$, we have
+\begin{equation*}
+	d(T^n v_0, v^\star) \leq \beta^n d(v_0, v^\star)
+\end{equation*} 
+i.e. a. guarantee the existence and uniqueness, and b. guarantee the convergence.
+
+\subsubsection{Existence and Uniqueness} 
+We first pick an arbitrary $v_0 \in S$, then by the fact that $v_{n+1} = Tv_n$, we construct a sequence $\{v_n\}^\infty_{n=0}$.\\\\
+Then we have to prove that this sequence converges:\\
+As we know that $T$ is a contraction mapping with modulus $\beta$, so we have:
+\begin{align*}
+	d(v_{n+1}, v_{n}) = d(Tv_{n}, Tv_{n-1}) \leq \beta d(v_{n}, v_{n-1}) = \beta d(Tv_{n-1}, Tv_{n-2})
+\end{align*}
+By repeating these steps, we can find that:
+\begin{align*}
+	d(v_{n+1}, v_{n}) \leq \beta^n d(v_1, v_0)
+\end{align*}
+So, because of the triangular inequality, for any $m > n$, we have:
+\begin{align*}
+	&d(v_m, v_n) \leq d(v_m, v_{m-1}) + \cdots + d(v_{n+1}, v_n) \leq \sum\limits^{m-1}_{i=n}\beta^i d(v_1, v_0)\\
+	&= \frac{\beta^n - \beta^m}{1 - \beta} d(v_1, v_0) \leq \frac{\beta^n}{1 - \beta} d(v_1, v_0)
+\end{align*}
+As $1 > \beta >0$, we have that for any $\delta > 0$, there exists a $n > 0$ s.t.
+\begin{align*}
+	\forall\ m > n,\ d(v_m, v_n) \leq \delta
+\end{align*}
+So, $\{v_n\}^\infty_{n=0}$ is a Cauchy sequence, then as $S$ is a complete metric space, $\lim\limits_{n \to \infty}v_n$ converges to some $v^\star \in S$.\\\\
+Now, we have to prove this $v^\star$ is a fixed point:\\
+We know that:
+\begin{align*}
+	Tv^\star = T(\lim\limits_{n \to \infty}v_n)
+\end{align*}
+Because $T$ is continuous, we have:
+\begin{align*}
+	T(\lim\limits_{n \to \infty}v_n) = \lim\limits_{n \to \infty}Tv_n = \lim\limits_{n \to \infty}v_{n+1} = v^\star
+\end{align*}
+So $v^\star$ is a fixed point.\\\\
+Now, we have to prove that the fixed point is unique:\\
+Suppose $\exists\ \hat{v} \neq v^\star$ s.t.
+\begin{align*}
+	T\hat{v} = \hat{v}
+\end{align*}
+Then we have that:
+\begin{align*}
+	0 < d(v^\star, \hat{v}) = d(Tv^\star, T\hat{v}) \leq \beta d(v^\star, \hat{v}) < d(v^\star, \hat{v})
+\end{align*}
+which is a contradiction, then $v^\star$ is unique.
+
+\subsubsection{Convergence}
+Last, we come to the convergence:\\
+For $n = 0$, we have that
+\begin{align*}
+	d(T^0 v_0, v^\star) = \beta^0 d(v_0, v^\star)
+\end{align*}
+We suppose that for $n = k$, the inequality holds, then for $n = k + 1$:
+\begin{align*}
+	d(T^{k+1} v_0, v^\star) \leq \beta d(T^k v_0, v^\star) \leq \beta \beta^k d(v_0, v^\star) \leq \beta^{k+1} d(v_0, v^\star)
+\end{align*}
+which satisfies the inequality. So, we finish our proof.
+
+
+\subsection{Blackwell's Sufficient Conditions}
+By contraction mapping theorem, We have verified that the function equation has a solution and it is a unique fixed point. Then, how can we make sure the operator is a contraction mapping. We need Blackwell's Sufficient Condition.\\\\
+\textbf{Theorem 4.2}($Blackwell's\ Sufficient\ Conditions$)\\
+Let $X \subseteq \mathbb{R}^L$ and $B(X)$ be the space of bounded functions $f: X \to \mathbb{R}$ with the sup-norm. Let $T: B(X) \to B(X)$ be an operator satisfying:\\
+\indent	\textbf{Monotonicity}: If $f, g \in B(X)$ and $f(x) \leq g(x)$ $\forall\ x \in X$, then $(Tf)(x) \leq (Tg)(x)$, $\forall\ x \in X$.\\
+\indent	\textbf{Discounting}: Let the function $f + a$, for $f \in B(X)$ and $a \geq 0$, be defined by $(f + a)(x) = f(x) + a$. There exists some $\beta \in (0, 1)$ s.t.
+\begin{align*}
+	[T(f + a)](x) \leq [Tf](x) + \beta a,\ \forall\ f \in B(X),\ a \geq 0,\ x \in X.
+\end{align*}
+Then $T$ is a contraction with modulus $\beta$.\\\\
+Here we give the proof:\\
+\indent $\forall\ x \in X$, we have:
+\begin{align*}
+	f(x) - g(x) \leq \mathop{sup}\limits_{y \in X} |f(x) - g(y)| = d(f, g)
+\end{align*}
+\indent So we have:
+\begin{align*}
+	f(x) \leq d(f, g) + g(x),\ \forall x \in X.
+\end{align*}
+\indent By monotonicity:
+\begin{align*}
+	(Tf)(x) \leq T[g(x) + d(f, g)],\ \forall\ x \in X.
+\end{align*}
+\indent By discounting:
+\begin{align*}
+	(Tf)(x) \leq T[g(x) + d(f, g)] \leq (Tg)(x) + \beta d(f, g),\ \forall\ x \in X.
+\end{align*}
+\indent Similarly, we can have:
+\begin{align*}
+	-f(x) + g(x) \leq \mathop{sup}\limits_{y \in X} |-f(x) + g(y)| = d(f, g)
+\end{align*}
+\indent We also have:
+\begin{align*}
+	(Tg)(x) \leq (Tf)(x) + \beta d(f, g),\ \forall\ x \in X.
+\end{align*}
+\indent Therefore, we have:
+\begin{align*}
+	\mathop{sup}\limits_{x \in X} |(Tf)(x) - (Tg)(x)| = d(Tf, Tg) \leq \beta d(f, g).
+\end{align*}
+\indent So $T$ is a contraction mapping.\\\\
+For the Neoclassical Growth Model, we give the proof why it is a contraction with modulus $\beta$:\\
+\indent For monotonicity:\\
+\indent\indent Suppose $v < w$. Set $g_v(k)$ be the optimal policy corresponding to $v$, then:
+\begin{align*}
+	Tv(k) &= U(f(k) - g_v(k)) + \beta v(g_v(k))\\
+	&\leq U(f(k) - g_v(k)) + \beta w(g_v(k))\\
+	&\leq \mathop{max}\limits_{0 \leq k^\prime \leq f(k)} \{U(f(k)) - k^\prime) + \beta w(k^\prime)\}\\
+	&= Tw(k)
+\end{align*}
+\indent\indent so it is monotone.\\
+\indent For discounting:\\
+\indent\indent $\forall\ a \in \mathbb{R}$, $(v + a)(k) = v(k) + a$, then :\\
+\begin{align*}
+	T(v + a)(k) &= \mathop{max}\limits_{0 \leq k^\prime \leq f(k)} \{U(f(k) - k^\prime) + \beta (v(k^\prime) + a)\}\\
+	&= \mathop{max}\limits_{0 \leq k^\prime \leq f(k)} \{U(f(k) - k^\prime) + \beta v(k^\prime)\} + \beta a\\
+	&= Tv(k) + \beta a
+\end{align*}
+
+
+
+\newpage
+\section{Lecture 5: Models with Risk}%第四课%
+\subsection{What is the risk}
+Risk means that there is an uncertainty about the future state. Here we give some notations:\\
+\indent $s^t = (s_0, s_1, \cdots, s_t)$: the history of events up to $t$.\\
+\indent $\pi(s^t)$: unconditional probability of observing $s^t$.\\
+\indent $\pi_t(s^t | s^\tau)$: probability of $s^t$ conditional on the realization of $s^\tau$, for $t > \tau$.\\
+\indent $S^t$: The space of all histories of events at $t$.
+
+
+\subsection{ADE model with risk}
+\subsubsection{Some Notations}
+In chapter 2, we give the model of ADE without risk, which means that what the agents get, the endowments, and what the agents consume, the consumptions, are certain.\\
+However, in the ADE model with risk, the endowments and consumptions are not certain, which will change subject to the history of the state, which is $s^t$. So we will give some notations:\\
+\indent The consumption allocation:
+\begin{align*}
+	(c^1, c^2) = \{c^1_t (s^t), c^2_t (s^t)\}^\infty_{t=0, s^t \in S^t}
+\end{align*}
+\indent The endowments:
+\begin{align*}
+	(e^1, e^2) = \{e^1_t (s^t), e^2_t (s^t)\}^\infty_{t=0, s^t \in S^t}
+\end{align*}
+\indent The preferences:
+\begin{align*}
+	u(c^i) = \sum\limits^\infty_{t=0} \sum\limits_{s^t \in S^t} \beta^t \pi_t(s^t) U(c^i_t(s^t))
+\end{align*}
+\indent The Arrow-Debreu prices
+\begin{align*}
+	\{p_t(s^t)\}^\infty_{t=0, s^t \in S^t}
+\end{align*}
+
+\subsubsection{Arrow-Debreu Equilibrium}
+With the notations above, we can now give the definition of ADE with risk:\\
+A competitive Arrow-Debreu equilibrium, is prices $\{\hat{p}_t (s^t)\}^\infty_{t=0, s^t \in S^t}$ and allocations $\{\hat{c}^i_t (s^t)\}^\infty_{t=0, s^t \in S^t}$ for $i = 1, 2$ s.t.\\
+\indent 1. Given $\{\hat{p}_t (s^t)\}^\infty_{t=0, s^t \in S^t}$, for $i = 1, 2$, $\{\hat{c}^i_t (s^t)\}^\infty_{t=0, s^t \in S^t}$ solves
+\begin{align*}
+	&\max\limits_{\{\hat{c}^i_t (s^t)\}^\infty_{t=0, s^t \in S^t}} \sum\limits^\infty_{t=0} \sum\limits_{s^t \in S^t} \beta^t \pi_t(s^t) U(c^i_t(s^t))\\
+	&s.t.\\
+	& \sum\limits^\infty_{t=0} \sum\limits_{s^t \in S^t} \hat{p}_t (s^t) c^i_t (s^t) \leq \sum\limits^\infty_{t=0} \sum\limits_{s^t \in S^t} \hat{p}_t (s^t) e^i_t (s^t)\\
+	&\indent\indent\indent\indent\ \, c^i_t(s^t) \geq 0,\ \forall\ t \geq 0,\ \forall\ s^t \in S^t 
+\end{align*}
+\indent 2. Goods markets clear
+\begin{align*}
+	\sum\limits^2_{i=1} \hat{c}^i_t (s^t) = \sum\limits^2_{i=1} e^i_t (s^t),\ \forall\ t \geq 0,\ \forall\ s^t \in S^t
+\end{align*}
+
+\subsubsection{Solution for ADE with risk}
+We still use the Lagrange method
+\begin{align*}
+	\mathscr{L}^i = \sum\limits^\infty_{t=0} \sum\limits_{s^t \in S^t} \beta^t \pi_t(s^t) U(c^i_t(s^t)) + \mu^i (\sum\limits_{s^t \in S^t} \hat{p}_t (s^t) e^i_t (s^t) - \sum\limits_{s^t \in S^t} \hat{p}_t (s^t) c^i_t (s^t))
+\end{align*}
+F.O.C.
+\begin{align}
+	\frac{\partial \mathscr{L}^i}{\partial c^i_t (s^t)} &= \beta^t \pi(s^t) U^\prime(c^i_t(s^t)) - \mu^i p_t(s^t) = 0\\
+	\frac{\partial \mathscr{L}^i}{\partial c^i_0 (s^0)} &= \pi(s^0) U^\prime(c^i_0(s^0)) - \mu^i p_0(s^0) = 0
+\end{align}
+Combining, we get
+\begin{align}
+	\frac{p_t(s^t)}{p_0(s^0)} = \beta^t \frac{\pi(s^t)}{\pi(s^0)} \frac{U^\prime(c^i_t(s^t))}{U^\prime(c^i_0(s^0))}
+\end{align}
+Here, we normalize the $p_0(s^0) = 1$.
+\footnote{Here, we have to make a clarification. The normalization only happens on the state $s^0$ at $t = 0$. That is say, if at $t = 0$, the state is $\tilde{s}^0$, then the price is not 1, since we don't normalize it.}\\
+So, we can get
+\begin{align}
+	\frac{U^\prime(c^1_t(s^t))}{U^\prime(c^1_0(s^0))} = \frac{U^\prime(c^2_t(s^t))}{U^\prime(c^2_0(s^0))}
+\end{align}
+If we have the CRRA utility, which is
+\begin{align}
+	U(c) = \frac{c^{1 - \sigma}}{1 -\sigma}
+\end{align}
+Then we have
+\begin{align}
+	(\frac{c^1_t(s^t)}{c^2_t(s^t)})^{-\sigma} = (\frac{c^1_0(s^0)}{c^2_0(s^0)})^{-\sigma} 
+\end{align}
+So, we know that for all $t$, the proportion between $c^1$ and $c^2$ are the same. And suppose that the sum of endowments in each period is $e_t(s^t)$. So because the market clear condition, we can have $\theta^i \geq 0$ with $\sum_{i} \theta^i = 1$ s.t.
+\begin{align}
+	c^i_t(s^t) = \theta^i e_t(s^t). \label{eq: 5.2.3 7}
+\end{align}
+Then we can have the price at $t$ with the history of $s^t$, and $s^0$
+\begin{align}
+	p_t(s^t) &= \beta^t \frac{\pi(s^t)}{\pi(s^0)} \frac{U^\prime(c^i_t(s^t))}{U^\prime(c^i_0(s^0))} \nonumber \\
+	&= \beta^t \frac{\pi(s^t)}{\pi(s^0)} (\frac{e_t(s^t)}{e_0(s^0)})^{-\sigma} \label{eq: 5.2.3 8}
+\end{align}
+
+\subsubsection{A Little Problem}
+As we clarify before, all of our computation is based on the fact that we normalize $p_0(s^0) = 1$, what about $\hat{s}_0$ at $t = 0$. Similarly, we can use the Lagrange method
+\begin{align}
+	\frac{\partial \mathscr{L}^i}{\partial \hat{c}^i_0 (s^0)} &= \pi(\hat{s}^0) U^\prime(\hat{c}^i_0(s^0)) - \mu^i p_0(\hat{s}^0) = 0\\
+	\frac{\partial \mathscr{L}^i}{\partial c^i_0 (s^0)} &= \pi(s^0) U^\prime(c^i_0(s^0)) - \mu^i p_0(s^0) = 0
+\end{align}
+Combining them we get
+\begin{align}
+	\frac{p_0(\hat{s}^0)}{p_0(s^0)} = \frac{\pi(\hat{s}^0)}{\pi(s^0)} \frac{U^\prime(\hat{c}^i_0(s^0))}{U^\prime(c^i_0(s^0))}
+\end{align}
+Similarly, we have
+\begin{align}
+	\frac{U^\prime(\hat{c}^1_0(s^0))}{U^\prime(c^1_0(s^0))} = \frac{U^\prime(\hat{c}^2_0(s^0))}{U^\prime(c^2_0(s^0))}
+\end{align}
+If we have the CRRA utility, we can prove that the proportion of the consumption between $c^1_0(\hat{s}^0)$ and $c^2_0(\hat{s}^0)$ equals to the proportion between $c^1_0(s^0)$ and $c^2_0(s^0)$. Then by combining with the market clear condition, we can have
+\begin{align}
+	\frac{p_0(\hat{s}^0)}{p_0(s^0)} = \frac{\pi(\hat{s}^0)}{\pi(s^0)} \bigg( \frac{e_0(\hat{s}^0)}{e_0(s^0)}\bigg) ^{-\sigma}
+\end{align}
+
+\subsubsection{Characterization of ADE}
+From our solution about ADE with risk, we can have some insights:\\
+\indent a. From the equation \eqref{eq: 5.2.3 7} we know that the consumption of an agent at a period is proportion to the total endowments of this period, so the consumption is subject to aggregate endowment risk $e_t(s^t)$, which means idiosyncratic individual endowment risk is perfectly shared.\\
+\indent b. From equation \eqref{eq: 5.2.3 8}, we know that the equilibrium prices depend only on aggregate endowment not the distribution.\\
+\indent c. Since the prices only depend on the aggregate endowment, so we can choose a representative agent, who has endowment stream of $e_t(s^t)$.
+
+
+\subsection{Pareto Efficient with Risk}
+Similar as before, we talk about the Pareto efficient.\\
+\textbf{Definition 5.3.1}\\
+An allocation $\{c^1_t(s^t), c^2_t(s^t)\}^\infty_{t=0, s^t \in S^t}$ is feasible if\\
+\indent a. $c^i_t(s^t) > 0$ for all $t$, and for all $s^t \in S^t$, and for $i = 1, 2$.\\
+\indent b. $c^1_t(s^t) + c^2_t(s^t) = e^1_t(s^t) + e^2_t(s^t)$ for all $t$, and for all $s_t \in S^t$.\\\\
+\textbf{Definition 5.3.2}\\
+An allocation $\{c^1_t(s^t), c^2_t(s^t)\}^\infty_{t=0, s^t \in S^t}$ is Pareto efficient if it is feasible and if there is no feasible allocation $\{\tilde{c}^1_t(s^t), \tilde{c}^2_t(s^t)\}^\infty_{t=0, s^t \in S^t}$ s.t.
+\begin{align*}
+	u(\tilde{c}^i) &\geq u(c^i),\ \forall\ i \in \{1, 2\}\\
+	u(\tilde{c}^i) &> u(c^i),\ \text{for at least one $i = 1, 2$}
+\end{align*}
+\textbf{Proposition 5.3.3} ($First\ Welfare\ Theorem$)\\
+Let $(\{\hat{c}^i_t(s^t)\}^\infty_{t=0, s^t \in S^t})_{i=1,2}$ be a competitive equilibrium allocation. Then the allocation is Pareto efficient.
+
+
+\subsection{Sequential Markets Equilibrium}
+\subsubsection{Some Notations}
+As in chapter 2, in Arrow-Debreu, the trade takes place at $t = 0$, before the start. In sequential market, the trade takes place at each period, agents buy or sell Arrow securities.\\
+In the model with risk, we have to introduce a new bond, one-period state-contingent bond, which is a financial contracts bought in $t$ that pay out one unit of the consumption good in $t+1$ only for a particular realization of $s_{t+1} = j$. So the budget constraint of agent $i$ in time $t$ is given by
+\begin{align*}
+	c^i_t(s^t) + \sum\limits_{s_{t+1} \in S} q_t(s^t, s_{t+1}) a^i_{t+1}(s^t, s_{t+1}) \leq e^i_t(s^t) + a^i_t(s^t)
+\end{align*}
+
+\subsubsection{Sequential Markets Equilibrium}
+First, we assume that $a^i_0(s_0)= 0$, for all $s_0 \in S$. Now we can define the SME as follows:\\
+\textbf{Definition 5.4.1}\\
+A SME is allocations $\{(\hat{c}^i_t(s^t), \{\hat{a}^i_t(s^t, s_{t+1}\}_{s_{t+1} \in S})_{i = 1, 2}\}^\infty_{t = 0, s^t \in S^t}$, and prices for Arrow securities $\{\hat{q}_t(s^t, s_{t+1})\}^\infty_{t=0, s^t \in S^t, s_{t+1} \in S}$ s.t.\\
+\indent a. Given $\{\hat{q}_t(s^t, s_{t+1})\}^\infty_{t=0, s^t \in S^t, s_{t+1} \in S}$, for all $i$, $\{\hat{c}^i_t(s^t), \{\hat{a}^i_t(s^t, s_{t+1}\}_{s_{t+1} \in S})_{i = 1, 2}\}^\infty_{t = 0, s^t \in S^t}\}^\infty_{t = 0, s^t \in S^t}$ solves
+\begin{align*}
+	&\mathop{max}\limits_{\{c^i_t(s^t), \{a^i_t(s^t, s_{t+1}\}_{s_{t+1} \in S})_{i = 1, 2}\}^\infty_{t = 0, s^t \in S^t}\}^\infty_{t = 0, s^t \in S^t}} u(c^i)\\
+	&s.t.\\
+	& c^i_t(s^t) + \sum\limits_{s_{t+1} \in S} q_t(s^t, s_{t+1}) a^i_{t+1}(s^t, s_{t+1}) \leq e^i_t(s^t) + a^i_t(s^t)\\
+	&\indent\indent\indent\indent\indent\indent\indent\indent\indent\ \ \ c^i_t(s^t) \geq 0\\
+	&\indent\indent\indent\indent\indent\indent\indent\ \ a^i_{t+1}(s^t, s_{t+1}) \geq -\bar{A}^i\\
+	&\indent\indent\indent\indent\indent\indent\indent \text{for all $t$, $s^t \in S^t$, and $s_{t+1} \in S$}
+\end{align*}
+\indent b. Market clear
+\begin{align*}
+	\sum\limits_i \hat{c}^i_t(s^t) &= \sum\limits_i e^i_t(s^t),\ \forall\ t,\ s^t \in S^t\\
+	\sum\limits_i \hat{a}^i_{t+1}(s^t, s_{t+1}) &= 0,\ \forall\ t,\ s^t \in S^t,\ s_{t+1} \in S\\
+\end{align*}
+
+\subsubsection{Equivalence between ADE and SME}
+As in chapter 2, we can construct the equivalence between ADE and SME by 
+\begin{align*}
+	q_t(s^t, s_{t+1}) &= \frac{p_{t+1(s^{t+1})}}{p_t(s^t)}\\
+	p_t(s^t) &= p_0(s_0) * q_0(s_0, s_1) * \ldots * q_{t-1}(s^{t-1}, s_t)
+\end{align*}
+One thing we should pay attention to is that, we fix the initial state at $t = 0$ as $s_0$. However, in ADE, we form the trade before the realization of $s_0$. There are two way to handle it.\\
+\indent a. We can just assume that the state at $t = 0$ is certain, which is $s_0$.\\
+\indent b. We can assume that there is a period before $t = 0$ in SME. For all states $s_0$ in $t = 0$, agents will buy a full set of Arrow security that pay contingent on the realization of $s_0$, with prices $q_{-1}(s_0)$ and positions $a^i_0(s_0)$. With the market clear conditions, we have
+\begin{align*}
+	\sum\limits_i a^i_0(s_0) = 0
+\end{align*}
+\indent Also, since the agents do not have endowments prior to the realization of $s_0$, so the value of all Arrow securities for each agents must be 0
+\begin{align*}
+	\sum\limits_{s_0 \in S} q_{-1}(s_0) a^i_0(s_0) = 0,\ \forall\ i = 1, 2
+\end{align*}
+\indent Also, remember that we have the following equations
+\begin{align*}
+	\frac{q_{-1}(\hat{s}_0)}{q_{-1}(s_0)} = \frac{p_0(\hat{s}_0)}{p_0(s_0)}
+\end{align*}
+
+
+\subsection{Asset Pricing}
+Now we have the Arrow-Debreu prices. With these prices, we can price any additional asset in the economy. For example, an arbitrary asset $j$, defined by the dividends $d^j = \{d^j_t(s^t)\}$. Here, $d^j_t(s^t)$ means that it will give $d^j_t(s^t)$ units of goods at $t$. Then we can have the price of this asset is 
+\begin{align*}
+	P^j_0(d) = \sum\limits^\infty_{t=0} \sum\limits_{s^t} p_t(s^t) d^j_t(s^t)
+\end{align*}
+And the ex-dividend price of it at $s^t$ is
+\begin{align*}
+	P^j_t(d; s^t) = \frac{\sum^\infty_{\tau=t+1} \sum_{s^\tau|s^t} p_{\tau}(s^\tau) d^j_{\tau}(s^\tau)}{p_t(s^t)}
+\end{align*}
+As for the return rate between $t$ and $t+1$
+\begin{align*}
+	R^j_{t+1}(s^{t+1}) = \frac{P^j_{t+1}(d; s^{t+1}) + d^j_{t+1}(s^{t+1})}{P^j_t(d; s^t)}
+\end{align*}
+Knowing these notations, we can have some examples:\\
+\indent a) Considering an Arrow security from sequential markets equilibrium that purchased at $s^t$ and will pay off one unit of consumption in $\hat{s}^{t+1}$ and nothing in all other state $s_{t+1}$, then the price of this security at $s^t$ is:
+\begin{align*}
+	P^A_t(d; s^t) = \frac{p_{t+1}(\hat{s}^{t+1})}{p_t(s^t)} = q_t(s^t, \hat{s}^{t+1})
+\end{align*}
+\indent\ \ \, and the return rate between $s^t$ and $\hat{s}^{t+1}$ is:
+\begin{align*}
+	R^A_{t+1}(\hat{s}^{t+1}) = \frac{0 + 1}{P^A_t(d; s^t)} = \frac{1}{q_t(s^t, \hat{s}^{t+1})}
+\end{align*}
+\indent\ \ \, and if $s_{t+1} \neq \hat{s}^{t+1}$, $R^A_{t+1}(s_{t+1}) = 0$.\\\\
+\indent b) Considering a risk-free bond, that purchased at $s^t$ and will always pay off one unit of consumption in $s_{t+1}$ no matter what $s_{t+1}$ is, then the price is:
+\begin{align*}
+	P^B_{t}(d; s^t) = \frac{\sum_{s^{t+1}|s^t} p_{t+1}(s^{t+1})}{p_t(s^t)} = \sum\limits_{s^{t+1}} q_t(s^t, s^{t+1})
+\end{align*}
+\indent\ \ \, accordingly, the return rate is:
+\begin{align*}
+	R^B_{t+1}(s^{t+1}) = \frac{1}{P^B_{t}(d; s^t)} = \frac{1}{\sum\limits_{s^{t+1}} q_t(s^t, s^{t+1})}
+\end{align*}
+\indent\ \ \, actually, the return rate is uncorrelated with $s^{t+1}$, so it can be written as $R^B_{t+1}(s^{t})$.\\\\
+\indent c) A stock that pays dividend the aggregate endowment in each period (a so-called Lucas tree) has a price per share of:
+\begin{align*}
+	P^S_t(d; s^t) = \frac{\sum^\infty_{\tau=t+1} \sum_{s^\tau|s^t} p_{\tau}(s^\tau) e_{\tau}(s^\tau)}{p_t(s^t)}
+\end{align*}
+\indent d) A call option to buy one share of the Lucas tree at time $T$ for a price $K$ has a price at $s^t$ as:
+\begin{align*}
+	P^{call}_t(s^t) = \sum\limits_{s^T|s^t} \frac{p_T(s^T)}{p_t(s^t)}\ max\{P^S_T(d; s^T) - K, 0\}
+\end{align*}
+\indent e) Similarly, the put option has a price at $s^t$ as:
+\begin{align*}
+	P^{call}_t(s^t) = \sum\limits_{s^T|s^t} \frac{p_T(s^T)}{p_t(s^t)}\ max\{K - P^S_T(d; s^T), 0\}
+\end{align*}
+
+
+\subsection{Markov Processes}
+
+
+\subsection{Stochastic Neoclassical Growth Model}
+\subsubsection{Model Setting}
+If we put the risk into the neoclassical growth model, we have:\\
+\indent a) Technology:
+\begin{align*}
+	y_t = e^{z_t} F(k_t, n_t)
+\end{align*} 
+\indent\indent Here $z_t$ is a technology shock that has unconditional mean 0 and follows $N$-state Markov chain with state space $Z = \{z_1, z_2, \cdots, z_N$ and transition matrix $P$, with associated stationary ditribution $\pi$.\\
+\indent b) Evolution of capital stock:
+\begin{align*}
+	k_{t+1} = (1 - \delta)k_t + i_t
+\end{align*}
+\indent c) Resource constraint:
+\begin{align*}
+	y_t = c_t + i_t
+\end{align*}
+\indent d) Preferences:
+\begin{align*}
+	E_0 \sum\limits^\infty_{t=0} \beta^t U(c_t) = \sum\limits^\infty_{t=0} \sum\limits_{z^t \in Z^t} \beta^t \pi_t(z^t) U(c_t(z^t))
+\end{align*}
+If we add the assumption that the consumer values leisure time, then we can have the Bellman equation:
+\begin{align*}
+	&v(k, z) = \mathop{max}\limits_{k^\prime, n} \{U(e^z F(k, n) + (1 - \delta)k - k^\prime, 1 -n) + \beta \sum\limits_{z^\prime} \pi(z^\prime|z)v(k^\prime, z^\prime)\}\\
+	&s.t.\\
+	&\indent\indent\indent\indent\indent\indent 0 \leq k^\prime \leq e^z F(k, n) + (1 - \delta)k\\
+	&\indent\indent\indent\indent\indent\indent 0 \leq n \leq 1
+\end{align*}
+
+\subsubsection{Key Optimality Conditions}
+We consider the F.O.C.:\\
+\begin{align*}
+	&\frac{\partial v}{\partial k^\prime} = U_c(c, 1-n) + \beta \sum\limits_{z^\prime} \pi(z^\prime|z)v_{k^\prime}(k^\prime, z^\prime) = 0\\
+	&\frac{\partial v}{\partial n} = U_c(c, 1 - n) e^z F_n(k, n) + U_{1-n}(c, 1 - n)(-1) = 0
+\end{align*}
+And because of the Envelope condition:
+\begin{align*}
+	v_k(k, z) = U_c(c, 1 - n)(e^z F_k(k, n) + (1 - \delta))
+\end{align*}
+So we can have the \textbf{Euler equation} as:
+\begin{align*}
+	U_c(c, 1 - n) = \beta \sum\limits_{z^\prime} \pi(z^\prime|z) (e^{z^\prime} F_{k^\prime}(k^\prime, n^\prime) + (1 - \delta)) U_c(c^\prime, 1 - n^\prime)
+\end{align*}
+For \textbf{TVC}:
+
+\subsubsection{Recursive Competitive Equilibrium}
+Now we can define the equilibrium as:\\
+A recursive competitive equilibrium is a value function $v: R^3_+ \to R$ and policy functions $c, n, g: R^3_+ \to R$ for the representative household, a labor demand function for the representative firm $N: R^2_+ \to R_+$, pricing functions $w, r: R^2_+ \to R_+$ and an aggregate law of motion $H: R^2_+ \to R_+$ s.t.\\
+\indent 1. Given the functions $w$, $r$ and $H$, the value function $v$ solves the Bellman equation
+\begin{align*}
+	&v(k, z, K) = \mathop{max}\limits_{c, k^\prime, n \geq 0} \{U(c, n) + \beta \sum\limits_{z^\prime \in Z} \pi(z^\prime|z)v(k^\prime, z^\prime, K^\prime)\}\\
+	&s.t.\\
+	&\indent\indent c + k^\prime = w(z, K)n + (1 + r(z, K) - \delta)k\\
+	&\indent\indent\ \ \  \ K^\prime = H(z, K)
+\end{align*}
+\indent 2. The labor demand and pricing functions satisfy
+\begin{align*}
+	w(z, K) &= e^z F_n(K, N(z, K))\\
+	r(z, K) &= e^z F_k(K, N(z, K))
+\end{align*}
+\indent 3. Consistency
+\begin{align*}
+	H(z, K) = g(k, z, K)
+\end{align*}
+\indent 4. For all $K \in R_+$
+\begin{align*}
+	c(k, z, K) + g(k, z, K) &= e^z F(K, N(z, K)) + (1 - \delta)K\\
+	N(z, K) &= n(k, z, K)
+\end{align*}
+
+
+
+\newpage
+\section{Lecture 6: Search, Matching and Unemployment}
+\subsection{McCall's model of intertemporal job search}
+\subsubsection{Model Setting}
+The basic idea is that an unemployed worker searches for a job, draws one wage offer $w$ from distribution $F$ and chooses whether accept it or not. And his income is at $t$ is $y_t$.\\\\
+For distribution $F$:\\
+\indent $F(W) = Prob\{w \leq W\}$, with $F(0) = 0$ and $F(B) = 1$ for some $B < \infty$.\\\\
+For income $y_t$:
+\begin{align*}
+	y_t = \left\{
+				\begin{array}{lr}
+					w,\ \text{if employed}\\
+					c,\ \text{if unemployed}
+				\end{array}
+			\right.
+\end{align*}
+For preferences of an unemployed worker at $t = 0$:
+\begin{align*}
+	u = \sum\limits^\infty_{t=0} \beta^t y_t
+\end{align*}
+Then we can get the Bellman equation:
+\begin{align*}
+	v(w) = \mathop{max}\limits_{\text{accept, reject}} \{\frac{w}{1 - \beta}, c + \beta \int^B_0 v(w^\prime)dF(w^\prime)\}
+\end{align*}
+
+\subsubsection{Reservation Wage}
+\textbf{What is reservation wage}\\
+The solution of the Bellman equation is to choose accept or reject according to each $w$. We can summarize it by a cutoff wage $\bar{w}$, which means he will accept all wages above $\bar{w}$ and reject all below.\\
+Then the Bellman equation is:
+\begin{align*}
+	v(w) = 
+	\left\{
+			\begin{array}{lr}
+				c + \beta \int^B_0 v(w^\prime)dF(w^\prime),\ &\text{if $w \leq \bar{w}$}\\
+				\frac{w}{1 - \beta},\  &\text{if $w \geq \bar{w}$}
+			\end{array}
+	\right.	
+\end{align*}
+Here, we can get that:
+\begin{align*}
+	c + \beta \int^B_0 v(w^\prime)dF(w^\prime) = \frac{\bar{w}}{1 - \beta}
+\end{align*}
+Here is the proof:\\
+\indent When $w \leq \bar{w}$, if the best response is to reject the offer. Then the value utility must equal $\frac{\bar{w}}{1 - \beta}$.\\
+\indent If  $\frac{\bar{w}}{1 - \beta} = v$ is lower than $\frac{\bar{w}}{1 - \beta}$, then there exists a $\tilde{w} < \bar{w}$ s.t.
+\begin{align*}
+	\frac{\tilde{w}}{1 - \beta} = v
+\end{align*} 
+\indent Then, the reservation wage should be $\tilde{w}$.\\
+\indent Similarly, if it is higher than $\frac{\bar{w}}{1 - \beta}$, the reservation wage is higher than $\bar{w}$.\\\\
+\textbf{Solution and Reservation Wage}\\
+From before we know that:
+\begin{align*}
+	c + \beta \int^B_0 v(w^\prime)dF(w^\prime) = \frac{\bar{w}}{1 - \beta}
+\end{align*}
+At $\bar{w}$, we have that:
+\begin{align*}
+	\frac{\bar{w}}{1 - \beta} & = c + \beta \int^B_0 v(w^\prime)dF(w^\prime)\\
+	& = c + \beta \int^{\bar{w}}_0 \frac{\bar{w}}{1 - \beta} dF(w^\prime) + \beta \int^B_{\bar{w}} \frac{w^\prime}{1 - \beta} dF(w^\prime)
+\end{align*}
+Then, we have:
+\begin{align*}
+	\bar{w} & = (1 -\beta)c + \int^{\bar{w}}_0 \bar{w} dF(w^\prime) + \int^B_{\bar{w}} w^\prime  dF(w^\prime)\\
+	& = = (1 -\beta)c + \int^B_0 \bar{w} dF(w^\prime) - \int^B_{\bar{w}} \bar{w} dF(w^\prime) + \int^B_{\bar{w}} w^\prime  dF(w^\prime)\\
+	& =  (1 -\beta)c + \beta \bar{w} + \int^B_{\bar{w}} (w^\prime - \bar{w}) dF(w^\prime)
+\end{align*}
+So we can have:
+\begin{align*}
+	\bar{w} - c = \frac{\beta}{1 -\beta} \int^B_{\bar{w}} (w^\prime - \bar{w}) dF(w^\prime)
+\end{align*}
+The implication of this equation is that today's cost of foregoing $\bar{w}$ equals the expected benefit of searching another period.\\\\
+If we define:
+\begin{align*}
+	h(w) = \frac{\beta}{1 -\beta} \int^B_w (w^\prime - w) dF(w^\prime)
+\end{align*}
+We have:
+\begin{align*}
+	h(0) &= \frac{\beta}{1 -\beta} Ew\\
+	h(B) &= 0\\
+	h^\prime(w) &= -\frac{\beta}{1 - \beta}[1 - F(w)] < 0\\
+	h^{\prime \prime}(w) &= \frac{\beta}{1 - \beta}F^\prime(w) > 0
+\end{align*}
+So we can draft a plot:\\\\
+From the plot we can see that:\\
+\indent A rise in $c$ will lead to a rise in $\bar{w}$.\\
+\indent A rise in $\beta$ will lead to a rise in $\bar{w}$.\\\\
+Also we have:
+\begin{align*}
+	h(\bar{w}) &= \frac{\beta}{1 - \beta}[\int^B_{\bar{w}} (w^\prime - \bar{w}) dF(w^\prime) + \int^{\bar{w}}_0 (w^\prime - \bar{w}) dF(w^\prime) - \int^{\bar{w}}_0 (w^\prime - \bar{w}) dF(w^\prime)]\\
+	&= \frac{\beta}{1 - \beta}[Ew - \bar{w} - \int^{\bar{w}}_0 (w^\prime - \bar{w}) dF(w^\prime)]\\
+	&= \frac{\beta}{1 - \beta}[Ew - \bar{w} -  + \bar{w} F(\bar{w}) - \int^{\bar{w}}_0 w^\prime dF(w^\prime)]\\
+	&= \bar{w} - c
+\end{align*}
+So, we have:
+\begin{align*}
+	\bar{w} - c &= \beta (Ew - c) + \beta \bar{w} F(\bar{w}) - \beta \int^{\bar{w}}_0 w^\prime dF(w^\prime)\\
+	&= \beta (Ew - c) + \beta \bar{w} F(\bar{w}) - \beta(w^\prime F(w^\prime)|^{\bar{w}}_0 - \int^{\bar{w}}_0 F(w^\prime) dw^\prime)\\
+	&= \beta (Ew - c) + \int^{\bar{w}}_0 F(w^\prime) dw^\prime
+\end{align*}
+If we impose a mean-preserving increase in risk, the reservation wage will also increase.
+
+\subsubsection{Mean-Preserving Spread of Riskiness}
+\textbf{Definition 6.1.1}\\
+Let $Prob\{p \leq P\} = F(P, r)$ be a family of distributions over a set $[0, B]$ with a shift variable $r$. A distribution indexed by $r_2$ is said to have been obtained from a distribution indexed. by $r_1$ by mean-preserving spread if they satisfy:\\
+\indent a) The distributions have identical means:
+\begin{align*}
+	\int^B_0 [F(\theta, r_1) - F(\theta, r_2)]d\theta = 0
+\end{align*}
+\indent b) Two distributions $r_1$, $r_2$ satisfy the single-crossing property if there exists a $\hat{\theta} \in (0, B)$ s.t.
+\begin{align*}
+	F(\theta, r_2) \leq F(\theta, r_1), \theta \geq \hat{\theta}\\
+	F(\theta, r_2) \geq F(\theta, r_1), \theta \leq \hat{\theta}
+\end{align*}
+\indent c) For any $0 \leq y \leq B$:
+\begin{align*}
+	\int^y_0 [F(\theta, r_1) - F(\theta, r_2)]d\theta \geq 0
+\end{align*}
+Then, back to the McCall's model, if there is a mean-preserving increase in risk, $\int^w_0 F(w^\prime)dw^\prime$ must increases.
+
+
+\subsection{Diamond-Mortensen-Pissarides Model}
+\subsubsection{Basic Ideas}
+In DMP model, there are 3 elements we focus:\\
+\indent $w$: wage\\
+\indent $u$: unemployment\\
+\indent $v$: vacancy\\
+To solve these 3 elements, we will use three equations:\\
+\indent Beveridge curve: u-v relationship from firm-work flows.\\
+\indent Job creation equation: from firm's free entry condition.\\
+\indent Wage setting equation: from Nash bargaining.
+
+\subsubsection{Matching Function}
+To solve the DMP model, we also have to introduce the Matching function:
+\begin{align*}
+	m = m(u, v)
+\end{align*}
+where $m$ measures the successful job matches, $u$ measures the aggregate unemployed workers, and $v$ measures the aggregate job vacancies.\\
+We assume that $m$ is increasing in both arguments, concave and homogeneous of degree one.\\\\
+Then if we define the \textbf{labor market tightness} as:
+\begin{align*}
+	\theta \equiv \frac{v}{u}
+\end{align*} 
+Then because $m$ is homogeneous of degree one, we have:
+\begin{align*}
+	q(\theta) &= \frac{m(u, v)}{v} = m(\frac{u}{v}, 1)\\
+	\theta q(\theta) &= \frac{m(u, v)}{u} = \frac{v}{u} \frac{m(u, v)}{v}
+\end{align*}
+Here the intuition explanation is that:\\
+\indent $q(\theta)$: the probability that a vacancy is successfully filled by matching.\\
+\indent $\theta q(\theta)$: the probability that an unemployed worker successfully find a job by matching.\\\\
+Suppose we have the Cobb-Douglas form matching function:
+\begin{align*}
+	m(u, v) = Au^\alpha v^{1 - \alpha},\ \alpha \in (0, 1)
+\end{align*}
+Then, we have \textbf{Some Properties:}\\
+\indent a) Elasticity of match with $u$ is:
+\begin{align*}
+	\frac{\frac{\partial m}{\partial u}}{\frac{m}{u}} &= \frac{\alpha u^{\alpha-1} A v^{1 - \alpha}}{Au^{\alpha - 1}v^{1 - \alpha}} = \alpha
+\end{align*}
+\indent b) Elasticity of match with $v$ is:
+\begin{align*}
+	\frac{\frac{\partial m}{\partial v}}{\frac{m}{v}} &= \frac{(1 - \alpha)v^{-\alpha}A u^{\alpha}}{A u^{\alpha} v^{\alpha}} = (1 - \alpha)
+\end{align*}
+\indent c) Elasticity of $q(\theta)$ with $\theta$ is:
+\begin{align*}
+	\frac{\frac{\partial q(\theta)}{\partial \theta}}{\frac{q(\theta)}{\theta}} &= \frac{-\alpha \theta^{-\alpha - 1} A}{A \theta^{-\alpha - 1}} = -\alpha
+\end{align*}
+\indent c) Elasticity of $\theta q(\theta)$ with $\theta$ is:
+\begin{align*}
+	\frac{\frac{\partial \theta q(\theta)}{\partial \theta}}{\frac{\theta q(\theta)}{\theta}} &= \frac{(1 - \alpha)\theta^{-\alpha} A}{A\theta^{-\alpha}} = 1 - \alpha
+\end{align*}
+\indent d) rise of $\theta$ causes fall of $q(\theta)$:
+\begin{align*}
+	\frac{\partial q(\theta)}{\theta} = -\alpha A \theta^{-\alpha - 1} < 0
+\end{align*}
+\indent e) rise of $\theta$ causes rise of $\theta q(\theta)$:
+\begin{align*}
+	\frac{\partial \theta q(\theta)}{\theta} = (1 - \alpha)A\theta^{-\alpha} > 0
+\end{align*}
+
+\subsubsection{Beveridge Curve}
+With assumptions above we can first figure out the relationship between $u$ and $v$.\\
+We assume:\\
+\indent $\lambda$: the probability that a job is destroyed, which means the employed worker turn to unemployed.\\
+\indent $L$: total amount of workers.\\\\
+Then in each period, we have that:\\
+\indent $\lambda (1 - u) L$ workers are from unemployed to employed.\\
+\indent $\theta q(\theta) u L$ workers are from employed to unemployed.\\
+The total change in the amount of unemployed workers is:
+\begin{align*}
+	\Delta = \lambda(1 - u) L - \theta q(\theta) u L
+\end{align*}
+In the steady state, we know that $\Delta = 0$, then, we have:
+\begin{align*}
+	\lambda (1 - u) = \theta q(\theta) u
+\end{align*}
+which gives us the Beveridge curve:
+\begin{align}
+	u = \frac{\lambda}{\lambda + \theta q(\theta)} \label{eq: Beveridge}
+\end{align}
+Implication:\\
+\indent A rise in $\theta$ will cause a fall in $u$, which also means a rise in $v$ cause a fall in $u$.
+
+\subsubsection{Job Creation}
+We assume that:\\
+\indent $p$: the output value as given.\\
+\indent $r$: the interest rate as given.\\
+\indent $w$: wage (as given in this part).\\
+\indent $pc$: hiring cost\\\\
+Now we can find the value of a vacancy, $V$, is the present value and the discounted value of the expected profit it will give in then next period:
+\begin{align}
+	V = -pc + \beta \{q(\theta) J + [1 - q(\theta)] V\} \label{eq: Vacancy value function}
+\end{align}
+Then we can have that $V = 0$.\\\\ 
+The proof is that:
+\begin{align*}
+	V &= \frac{-pc + \beta q(\theta) J}{1 - \beta + \beta q(\theta)}\\
+	\frac{\partial V}{\partial q(\theta)} &= \frac{\beta J (1 - \beta) + \beta pc}{[1 - \beta + \beta q(\theta)]^2} > 0
+\end{align*}
+\indent If $V > 0$, firm create more vacancy, $v$ increases, $\theta$ increases, $q(\theta)$ decreases, $V$ decreases.\\
+\indent If $V < 0$, firm destroy more vacancy, $v$ decreases, $\theta$ decreases, $q(\theta)$ increases, $V$ increases.\\\\
+Then we have that:
+\begin{align}
+	J = \frac{pc}{\beta q(\theta)} \label{eq: J}
+\end{align}
+Now we consider the value of a job, $J$, is the present value and the discounted value of the expected profit  it will give in the next period:
+\begin{align}
+	J = p - w + \beta [\lambda V + (1 - \lambda) J] \label{eq: Job value function}
+\end{align}
+Combining \eqref{eq: J} and \eqref{eq: Job value function}, we can get the \textbf{job creation condition}:
+\begin{align*}
+	p - w - \frac{(r + \lambda)pc}{q(\theta)} = 0
+\end{align*}
+
+\subsubsection{Wage Determination}
+We assume that:\\
+\indent $w$: wage of a worker.\\
+\indent $z$: return of an unemployed.\\\\
+Now we can find the value of unemployment, $U$, is the present value of return of an unemployed and the discounted value of the expected value of the future:
+\begin{align}
+	U = z + \beta \{\theta q(\theta) W + [1 - \theta q(\theta)]U\} \label{eq: Wage determination unemployment}
+\end{align}
+And the value of working, $W$, is the present value of wage and the discounted value of the expected value of the future:
+\begin{align}
+	W = w + \beta [\lambda U + (1 - \lambda)W] \label{eq: Wage determination employment}
+\end{align}
+Now we consider the bargaining of the wage. We assume that the total return of a job ($S = W + J - U - V$) is shared by worker and firm according to Nash bargaining, which means the wage maximizes the weighted product of the return of the worker and the firm:
+\begin{align*}
+	&\indent\indent\indent w_i = arg\, max (W_i - U)^\phi (J_i - V)^{(1 - \phi)}\\
+	&\text{where $\phi \in [0, 1]$ represents a worker's bargaining strength.}
+\end{align*}
+Here we use the F.O.C.:
+\begin{align*}
+	&\frac{\partial (W_i - U)^\phi (J_i - V)^{(1 - \phi)}}{\partial w_i}\\ 
+	=& \phi (W_i - U)^{(\phi - 1)} \frac{\partial W_i}{\partial w_i} (J_i - V)^{(1 - \phi)} + (1 - \phi) (J_i - V)^{-\phi} \frac{\partial J_i}{\partial w_i} (W_i - U)^\phi\\
+	=& \frac{\phi}{1 - \beta + \beta \lambda} (W_i - U)^{(\phi - 1)} (J_i - V)^{(1 - \phi)} - \frac{(1 - \phi)}{1 - \beta + \beta \lambda} (J_i - V)^{-\phi} (W_i - U)^\phi\\
+	=& 0 
+\end{align*}
+Then we can get:
+\begin{align*}
+	(1 - \phi)(W_i - U) = \phi (J_i - V)
+\end{align*}
+which means that:
+\begin{align}
+	\left\{
+			\begin{array}{lr}
+				W_i - U = \phi S\\
+				J_i - V = (1 - \phi) S
+ 			\end{array}
+ 	\right. \label{eq: Wage determination: FOC}
+\end{align}
+firm and workers get the return of the job by proportion.\\\\
+Combining \eqref{eq: Job value function}, \eqref{eq: Wage determination employment} and \eqref{eq: Wage determination: FOC}, we can get:
+\begin{align*}
+	w_i = \phi p + (\beta - 1)[(\phi - 1) U + \phi V]
+\end{align*}
+We know that $\beta = \frac{1}{1 + r}$ and $V = 0$, so:
+\begin{align}
+	w_i = \frac{r}{1 + r}U + \phi (p - \frac{r}{1 + r} U) \label{eq: Wage determination 1}
+\end{align}Here $\frac{r}{1 + r}U$ is the annuity value of unemployment, which means if the discount rate is $\frac{1}{1 + r}$, then the value of getting $\frac{r}{1 + r}U$ in each period equals getting U in the first period. So the implication of \eqref{eq: Wage determination 1} is that the wage is the sum of unemployed plus workers' share of one period match surplus ($V = 0$).\\
+Combining equation \eqref{eq: J}, \eqref{eq: Wage determination unemployment} and \eqref{eq: Wage determination: FOC}, we get:
+\begin{align}
+	\frac{r}{1 + r} U = z + \frac{\phi \theta pc}{1 - \phi} \label{eq: Wage determination annuity unemployment}
+\end{align}
+Combining \eqref{eq: Wage determination 1} and \eqref{eq: Wage determination annuity unemployment}, we get the final \textbf{wage determination equation}:
+\begin{align}
+	w = (1 - \phi)z + \phi p(1 + c\theta) \label{eq: Wage determination}
+\end{align}
+In conclusion, we can have the important equation:\\
+\indent Beveridge curve:
+\begin{align*}
+	u = \frac{\lambda}{\lambda + \theta q(\theta)}
+\end{align*}
+\indent Job creation equation:
+\begin{align*}
+	p - w - \frac{(r + \lambda)pc}{q(\theta)} = 0
+\end{align*}
+\indent Wage setting equation:
+\begin{align*}
+	w = (1 - \phi)z + \phi p(1 + c\theta) 
+\end{align*}
+
+\subsubsection{Comparative Analysis}
+a) If $p$ $\uparrow$:\\
+\indent $\theta$ $\uparrow$, $w$ $\uparrow$, $u$ $\downarrow$, $v$ $\uparrow$.\\\\
+b) If $z$ increases:\\
+\indent $\theta$ $\downarrow$, $w$ $\uparrow$, $u$ $\uparrow$, $v$ $\downarrow$.\\\\
+c) If $\phi$ increases:\\
+\indent $\theta$ $\downarrow$, $w$ $\uparrow$, $u$ $\uparrow$, $v$ $\downarrow$.\\\\
+d) If $r$ increases:\\
+\indent $\theta$ $\downarrow$, $w$ $\downarrow$, $u$ $\uparrow$, $v$ $\downarrow$.\\\\
+e) If $\lambda$ increases:\\
+\indent $\theta$ $\downarrow$, $w$ $\downarrow$, $u$ $\uparrow$.\\\\
+f) If $A$ increases:\\
+\indent $\theta$ $\uparrow$, $w$ $\uparrow$, $u$ $\downarrow$, $v$ 
+
+
+\subsubsection{Welfare Analysis}
+Consider a planning problem problem to minimize the discounted value of output, leisure and vacancy costs, here is the optimal problem:
+\begin{align*}
+	&\mathop{max}\limits_{\{v_t, n_t\}^\infty_{t=0}} \sum\limits^\infty_{t=0} \beta^t [pn_t + z(1 - n_t) - pcv_t]\\
+	&s.t.\\
+	&\indent\indent n_{t+1} = (1 - \lambda)n_t + q(\theta_t)v_t
+\end{align*}
+We use the Lagrange method:
+\begin{align*}
+	\mathscr{L} &= \sum\limits^\infty_{t=0} \beta^t [pn_t + z(1 - n_t) - pcv_t] + \sum\limits^\infty_0 \mu_t (n_{t+1} - (1 - \lambda)n_t - q(\theta_t)v_t)\\
+	\frac{\partial \mathscr{L}}{\partial v_t} &= \beta^t(-pc) -\mu_t [q^\prime(\theta_t)\theta_t + q(\theta_t)] = 0\\
+	\frac{\partial \mathscr{L}}{\partial n_{t+1}} &= \beta^{t+1} (p -z) + \mu_{t} + \mu_{t+1}[-(1 - \lambda) - q^\prime(\theta_{t+1})\theta^2_{t+1}] =0
+\end{align*}
+
+\subsubsection{Endogenous Job Destruction}
+
+
+
+\newpage
+\section{Lecture 7: Overlapping Generations Model}
+\subsection{A Simple Two-period Exchange OLG model}
+\subsubsection{Model Setting}
+\textbf{Discrete time}: $t = 1, 2, 3, \ldots$\\
+\textbf{Agents}: In each time $t$, a new generation of measure 1 is born and lives for 2 periods, which means in each period, there are two generations alive.\\
+\textbf{Endowments}: the endowments for agents born at $t$ is:
+	\begin{align*}
+		(e^t_{t}, e^t_{t+1})
+	\end{align*} 
+\textbf{Consumption}: the consumption for agents born at $t$ is:
+	\begin{align*}
+		(c^t_{t}, c^t_{t+1})
+	\end{align*}
+\textbf{Initial period}:\\
+\indent \textbf{i)} In $t = 1$, there is an initial old generation born in $t = 0$ that has the endowment $e^0_1$ and consumes $c^0_1$.\\
+\indent \textbf{ii)} In some applications, we endow the initial generation with an amount of outside money $m$, which means that it is an asset of the private economy:
+	\begin{align*}
+		&\text{If}\ m \geq 0,\ m\ \text{can be interpreted as \textbf{fiat money}.}\\
+		&\text{If}\ m < 0, m\ \text{is the borrowing from the outside institution.}
+	\end{align*}
+\textbf{Preference}: the agents must consider 2 periods' consumption:
+	\begin{align*}
+		u_t(c) = U(c^t_t) + \beta U(c^t_{t+1})
+	\end{align*}
+$U$ is the $good$ utility function.
+
+\subsubsection{Arrow-Debreu Equilibrium}
+\textbf{Definition}\\
+Given $m$, and Arrow-Debreu equilibrium is an allocation $\hat{c}^0_1$, $\{\hat{c}^t_1, \hat{c}^t_{t+1}\}^\infty_{t=1}$ and prices $\{p_t\}^\infty_{t=1}$ s.t.\\
+\indent 1. Given $\{p_t\}^\infty_{t=1}$, for each $t \geq 1$, $(\hat{c}^t_t, \hat{c}^t_{t+1})$ solves:
+	\begin{align*}
+		&\mathop{max}\limits_{(\hat{c}^t_t, \hat{c}^t_{t+1}) \geq 0} u_t(c^t_t, c^t_{t+1})\\
+		&s.t.\\
+		&p_t c^t_t + p_{t+1}c^t_{t+1} \leq p_t e^t_t + p^t_{t+1} e^t_{t+1}
+	\end{align*} 
+\indent 2. Given $p_1$, $\hat{c}^0_1$ solves:
+	\begin{align*}
+		&\mathop{max}\limits_{c^0_1 \geq 0} u_0(c^0_1)\\
+		&s.t.\\
+		&p_1 c^0_1 \leq p_1 e^0_1 + m
+	\end{align*}
+\indent 3. For all $t \geq 1$:
+	\begin{align*}
+		c^{t-1}_t + c^t_t = e^{t-1}_t + e^t_t
+	\end{align*}
+
+\subsubsection{Sequential Market Equilibrium}
+\textbf{Definition}\\
+Given $m$, a sequential market equilibrium is an allocation $\hat{c}^0_1$, $\{\hat{c}^t_t, \hat{c}^t_{t+1}, \hat{s}^t_t\}^\infty_{t=1}$ and interest rates $\{r_t\}^\infty_{t=1}$ s.t.\\
+\indent 1. Given $\{r_t\}^\infty_{t=1}$, for each $t \geq 1$, $(\hat{c}^t_t, \hat{c}^t_{t+1}, \hat{s}^t_t )$ solves:
+\begin{align*}
+	&\mathop{max}\limits_{(\hat{c}^t_t, \hat{c}^t_{t+1}) \geq 0, s^t_t} u_t(c^t_t, c^t_{t+1})\\
+	&s.t.\\
+	&\indent c^t_t + s^t_t \leq e^t_t\\
+	&\indent\ \ \  c^t_{t+1} \leq e^t_{t+1} + (1 + r_{t+1}) s^t_t  
+\end{align*}
+\indent 2. Given $r_1$, $\hat{c}^0_1$ solves:
+\begin{align*}
+	&\mathop{max}\limits_{c^0_1 \geq 0} u_0(c^0_1)\\
+	&s.t.\\
+	&c^0_1 \leq e^0_1 + (1 + r_1)m
+\end{align*}
+\indent 3. For all $t \geq 1$:
+	\begin{align*}
+		c^{t-1}_t + c^t_t = e^{t-1}_t + e^t_t
+	\end{align*}
+If we have that $U$ is strictly increasing, then in the equilibrium, we have that:
+	\begin{align*}
+		c^{t+1}_{t+1} + s^{t+1}_{t+1} &= e^{t+1}_{t+1}\\
+		c^{t}_{t+1} &= e^t_{t+1} + (1 + r_{t+1}) s^t_t  
+	\end{align*}
+Add them together, we have:
+	\begin{align*}
+		c^{t+1}_{t+1} + s^{t+1}_{t+1} + c^{t}_{t+1} = e^{t+1}_{t+1} + e^t_{t+1} + (1 + r_{t+1}) s^t_t
+	\end{align*}
+By the market clear condition, we have:
+	\begin{align*}
+		s^{t+1}_{t+1} = (1 + r_{t+1}) s^t_t
+	\end{align*}
+And we know that for the initial generation:
+	\begin{align*}
+		s^0_0 = m
+	\end{align*}
+So we have that:
+	\begin{align*}
+		s^t_t = \prod\limits^t_{\tau=1} (1 + r_{\tau}) m
+	\end{align*}
+
+\subsubsection{Equivalence between ADE and SME}
+\textbf{Proposition 7.1.1}\\
+Given ADE prices $\{p_t\}^\infty_{t=1}$ with $p_t > 0$ for all $t$, define the interest rates as:
+	\begin{align*}
+		1 + r_{t+1} &= \frac{p_t}{p_{t+1}}\\
+		1 + r_1 &= \frac{1}{p_1}
+	\end{align*}
+These interest rates induce a SME with same allocations as those in the ADE.\\\\
+Conversely, given the interest rates $\{r_t\}^\infty_{t=1}$ in SME, with $r_t > -1$ for all $t$, define ADE prices as:
+	\begin{align*}
+		p_1 &= \frac{1}{1 + r_1}\\
+		p_{t+1} &= \frac{p_t}{1 + r_{t+1}}
+	\end{align*}
+These prices induce ADE allocations equivalent to those in the SME.
+
+\subsection{Offer Curves}
+\subsubsection{Settings}
+\indent i) The endowments are time invariant:
+	\begin{align*}
+		e^t_t &= w_1\\
+		e^t_{t+1} &= w_2 
+	\end{align*}
+\indent ii) For given $p_t$, $p_{t+1}$,\footnote{Here we consider the ADE.} we give the maximization problem of agent born in $t$: 
+	\begin{align*}
+		&c^t_t(p_t, p_{t+1})\\
+		&c^t_{t+1}(p_t, p_{t+1})
+	\end{align*}
+\indent iii) For agent born in $t$, his excess demand in each period are:
+	\begin{align*}
+		y(p_t, p_{t+1}) &= c^t_{t}(p_t, p_{t+1}) - w_1\\
+		z(p_t, p_{t+1}) &= c^t_{t+1}(p_t, p_{t+1}) - w_2
+	\end{align*}
+Here we know that $y$ and $z$ are determined by the ratio of $\frac{p_t}{p_{t+1}}$. Given any ratio of $\frac{p_t}{p_{t+1}}$, $y$ and $z$ are determined and we can draw a plot of $(y, z)$, which is the offer curve.
+
+\subsubsection{From the model}
+i) One thing important is that from the budget constraint we know:
+	\begin{align*}
+		p_t c^t_t + p_{t+1} c^t_{t+1} = p_t w_1 p_{t+1} w_2
+	\end{align*}
+which means:
+	\begin{align*}
+		p_t y(p_t, p_{t+1}) + p_{t+1} z(p_t, p_{t+1}) = 0
+	\end{align*} 
+So we can see that, the slope of the line between a point on the offer curve and the origin is $-\frac{p_t}{p_{t+1}}$.\\
+ii) Also, $(0, 0)$ is on the offer curve because this means that there is no trade in each period.\\
+iii) We have:
+	\begin{align*}
+		y(p_t, p_{t+1}) &\geq -w_1\\
+		z(p_t, p_{t+1}) &\geq -w_2
+	\end{align*}
+
+\subsubsection{An Example}
+Suppose:
+\begin{align*}
+	U(c) &= log\, c\\
+	\beta &= 1
+\end{align*}
+Then for agent born in $t$, the Lagrange problem is:
+	\begin{align*}
+		\mathscr{L} = log\, c^t_t + log\, c^t_{t+1} + \lambda^t (p_t w_1 + p_{t+1} w_2 - p_t c^t_t - p_{t+1} c^t_{t+1})
+	\end{align*}
+From the F.O.C. condition we have:
+	\begin{align*}
+		p_t c^t_t = p_{t+1} c^t_{t+1}
+	\end{align*}
+Then from the budget constrain we can have:
+	\begin{align*}
+		c^t_t(p_t, p_{t+1}) &= \frac{1}{2}(w_1 + \frac{p_{t+1}}{p_t} w_2)\\
+		c^t_{t+1}(p_t, p_{t+1}) &= \frac{1}{2}(\frac{p_t}{p_{t+1}} w_1 + w_2)
+	\end{align*}
+Then, we have the excess demands function:
+	\begin{align*}
+		y(p_t, p_{t+1}) &= \frac{1}{2}(\frac{p_{t+1}}{p_t} w_2 - w_1)\\
+		z(p_t, p_{t+1}) &= \frac{1}{2}(\frac{p_{t}}{p_{t+1}} w_1 - w_2)
+	\end{align*}
+We can have the offer curve as:
+	\begin{align}
+		z = \frac{w_1 w_2}{4y + 2w_1} - \frac{w_2}{2} \label{eq: offer curve}
+	\end{align}
+Now, we introduce the market clear condition to pin down the price ratio. We have:
+	\begin{align}
+		y(p_t + p_{t+1}) + z_(p_{t-1} + p_{t}) = 0 \label{eq: market clear}
+	\end{align}
+Here, we give the basic steps about how we pin down the price:\\
+\indent i) For the initial generation, his second term excess demands is:
+	\begin{align*}
+		z_0(p_0, p_1) = c^0_1 - w_2 = \frac{m}{p_1}
+	\end{align*}
+\indent ii) Combine it with \eqref{eq: market clear}, we have the excess demand for agent born in $t = 1$ in $t = 1$:
+	\begin{align*}
+		y_1(p_1, p_2) = -\frac{m}{p_1}
+	\end{align*}
+\indent iii) Combine it with \eqref{eq: offer curve}, we have the excess demand for agent born in $t = 1$ in $t = 2$:
+	\begin{align*}
+		z_1(p_1, p_2) = \frac{w_1 w_2 p_1}{2w_1 p_1 - 4m} - \frac{w_2}{2}
+	\end{align*}
+\indent iv) We repeat these steps to get the sequences of excess demands $\{(y_t(p_t, p_{t+1}), z_t(p_t, p_{t+1}))\}^\infty_{t=1}$, and we can compute the price sequence and consumption sequence:
+	\begin{align*}
+		p_t &= \prod\limits^{t-1}_{\tau=1}\frac{y_{\tau}(p_{\tau}, p_{\tau+1})}{z_{\tau}(p_{\tau}, p_{\tau+1})} p_1\\
+		c^t_t(p_t, p_{t+1}) &= y_{t}(p_t, p_{t+1}) + w_1\\
+		c^t_{t+1}(p_t, p_{t+1}) &= y_{t}(p_t, p_{t+1}) + w_2
+	\end{align*}
+These means, for a given $p_1$ and $m$, we can compute out the equilibrium.
+
+\subsubsection{Autarkic Equilibrium}
+When we set $m = 0$, for any $p_1 > 0$, we have:
+	\begin{align*}
+		z_0 = 0
+	\end{align*}
+Then we can have that $z = y =0$, $\forall\ t \geq 1$. Every agent will only consume their endowments in each period. The trade collapses.\\
+From the F.O.C. we know that:
+	\begin{align*}
+		\frac{p_{t}}{p_{t+1}} = \frac{U^\prime(e^t_t)}{\beta U^\prime(e^t_{t+1})} = \frac{U^\prime(w_1)}{\beta U^\prime(w_2)}
+	\end{align*}
+And this is the absolute value of the slope of the indifference curve at origin. Why? Because at this ratio:
+	\begin{align*}
+		y = z =0
+	\end{align*}
+Define the autarkic interest rate as:
+	\begin{align*}
+		1 + \bar{r} = \frac{U^\prime(w_1)}{\beta U^\prime(w_2)}
+	\end{align*} 
+Depending on the value of $\bar{r}$, we separate the condition as:\\
+\indent i) Samuelson case: $\bar{r} < 0$.\\
+\indent ii) Classical case: $\bar{r} \geq 0$.
+
+
+\subsection{Features about OLG model}
+\subsubsection{Feature 1}
+Competitive equilibria in OLG may not be Pareto efficient.\\\\
+Here, we give an example, which is the autarkic equilibrium. For the autarkic equilibrium under the Samuelson case, this competitive equilibrium is not Pareto efficient.\\\\
+\textbf{Proof}:\\
+\indent From above we know that the absolute value of the slope of the offer curve at origin is $\frac{U^\prime(w_1)}{\beta U^\prime(w_2)}$. And it is also the tangent point of the indifference curve and the offer curve. And this indifference curve must lie outside of the offer curve. (Why? Because for every point on the offer curve, which means for any price ratio, the autarkic equilibrium can always be taken, then the utility must at least the same as the autarkic one.)\\
+\indent So for the intersection point of the resource constraint point and the offer curve, which is in the second orthant, all generation is at least as good as the autarkic allocation, $\forall\ t \geq 1$.\\
+\indent For the initial generation, it is always better off to switch $z_0 = 0$ to some $z_0 > 0$.\\
+\indent Hence, the autarkic cannot be a \textbf{Pareto Efficient}.\\\\
+For the Samuelson case, we can give a \textbf{Pareto improvement}:\\
+\indent For the initial generation, we improve their consumption by $\delta_0$.\\
+\indent Then for the first generation, he has to reduce $\delta_0$ consumption in $t = 1$.\\
+\indent If we want to make the first generation's utility unchanged, we have add $\delta_1$ in $t = 2$ s.t.
+	\begin{align*}
+		\delta_0 U^\prime(e^1_1) = \delta_1 \beta U^\prime(e^1_2)
+	\end{align*}
+\indent So, we have that:
+	\begin{align*}
+		\delta_1 = \frac{U^\prime(e^1_1)}{\beta U^\prime(e^1_2)} \delta_0 = (1 + r_2)\delta_0
+	\end{align*}
+\indent So for generation born in $t$, in his second period, he has to reduce:
+	\begin{align*}
+		\delta_t = \delta_0 \prod\limits^t_{\tau=1}(1 + r_{\tau+1})
+	\end{align*}
+\indent As we know that $r_{\tau_1} < 0$, this sequence converges.
+
+\subsubsection{Feature 2}
+Outside money may have positive value.
+
+\subsubsection{Feature 3}
+There may be a continuum of equilibria
+
+
+\subsection{Topics for OLG}
+\subsubsection{Population Growth}
+Suppose that the population grows at a constant rate $n$. All other settings are the same, then, we know that the only difference is the resource constraint:
+	\begin{align*}
+		c^{t-1}_t + (1 + n)c^t_t = e^{t-1}_t + (1 + n)e^t_t
+	\end{align*}
+Then, we know that the offer curve in the population growth case is the same, except that the change of the resource line:
+	\begin{align*}
+		z(p_{t-1}, p_t) + (1 + n)y(p_t, p_{t+1}) = 0
+	\end{align*}
+Then, the slope of the resource line change into $-(1 + n)$.
+
+\subsubsection{Social Security}
+\textbf{PAYGO Social Security}:\\
+The young pay tax $\tau \in [0, w_1)$ and receive benefits $b$ when old. And $b$ is exactly the next young generation paid:
+	\begin{align*}
+		b = \tau (1 + n)
+	\end{align*}
+And we can see the optimal problem change into:
+	\begin{align*}
+		&\mathop{max}\limits_{(c^t_t, c^t_{t+1}) \geq 0} u_t(c^t_t, c^t_{t+1})\\
+		&s.t.\\
+		&p_t c^t_t + p_{t+1} c^t_{t+1} \leq p_t (e^t_t - \tau) + p_{t+1} [e^t_{t+1} + (1 + n)\tau]
+	\end{align*}
+Here we assume that:
+	\begin{align*}
+		u_t(c^t_t, c^t_{t+1}) &= U(c^t_t) + \beta U(c^t_{t+1})\\
+		e^t_t &= w_1\\
+		e^t_{t+1} &= w_2
+	\end{align*}
+We can still give the offer curve:
+	\begin{align*}
+		y(p_t, p_{t+1}) &= c^t_t(p^t_t, p^t_{t+1}) - (w_1 - \tau)\\
+		z(p_t, p_{t+1}) &= c^t_{t+1}(p^t_t, p^t_{t+1}) - [w_2 + (1 + n)\tau]\\
+		p_t y(p_t, p_{t+1}) &= -p_{t+1} z(p_t, p_{t+1})\\
+		\frac{p_t}{p_{t+1}} &= \frac{z(p_t, p_{t+1})}{y(p_t, p_{t+1})} = \frac{U^\prime (c^t_t)}{\beta U^\prime(c^t_{t+1})}
+	\end{align*}
+And we also can get the resource constraint line:
+	\begin{align*}
+		(1 + n) c^t_{t} + c^{t-1}_t = (1 + n)(w_1 - \tau) + [w_2 + (1+n) \tau]\\
+		(1 + n) y(p_t, p_{t+1}) + z(p_{t-1}, p_t) = 0
+	\end{align*}
+So we can see that still the unique equilibrium is the autarkic equilibrium, which means for all generation born in $t \geq 1$, we have that:
+	\begin{align*}
+		(c^t_t, c^t_{t+1}) = (w_1 - \tau, w_2 + (1 + n)\tau)
+	\end{align*} 
+Then, we can define the interest rate as:
+	\begin{align*}
+		1 + r_{t+1} = 1 + r = \frac{p_t}{p_{t+1}} = \frac{U^\prime(w_1 - \tau)}{\beta U^\prime(w_2 + (1 + n)\tau)}
+	\end{align*}
+\textbf{Welfare Analysis}\\
+Comparing with the autarkic equilibrium without social security.\\\\
+For the initial generation, he can receive $(1 + n)\tau$ in $t = 1$, so he is better off.\\\\
+For the generation born in $t \geq 1$, his utility is:
+	\begin{align*}
+		V(\tau) = U(w_1 - \tau) + \beta U(w_2 + (1 + n)\tau)
+	\end{align*}
+If there is no social security, his utility is:
+	\begin{align*}
+		V(0) = U(w_1) + \beta U(w_2)
+	\end{align*}
+The introduction of social security can make him better off iff.
+	\begin{align*}
+		V^\prime(0) = -U^\prime(w_1) + \beta U^\prime(w_2)(1 + n) > 0
+	\end{align*}
+which means that:
+	\begin{align*}
+		n > \frac{U^\prime(w_1)}{\beta U^\prime(w_2)} - 1 = \bar{r}
+	\end{align*}
+For the optimal social security $\tau^\star$, we have that:
+	\begin{align*}
+		V^\prime(\tau^\star) = -U^\prime(w_1 - \tau^\star) + \beta U^\prime(w_2 + (1 +n)\tau^\star)(1 + n) = 0
+	\end{align*}
+which means that:
+	\begin{align*}
+		1 + n = \frac{U^\prime(w_1 - \tau^\star)}{\beta U^\prime(w_2 + (1 + n)\tau^\star)}
+	\end{align*}
+
+\subsubsection{Ricardian Equivalence}
+\textbf{Ricardian Equivalence}:\\
+There is no difference between:\\
+\indent i) Tax current generations; or\\
+\indent ii) Issue government debt and tax future generations.\\\\
+\textbf{Infinite Horizon: Agents Live Forever}\\
+First, we consider the ADE. Model settings are:\\
+\indent i) $\{G_t\}^\infty_{t=1}$: an exogenous stream of government expenditures, which yields no utility of agents.\\
+\indent ii) $B_1$: initial total outstanding real government bond held by the public.\\
+\indent iii) $b^i_1$: initial endowment of government bond held by agent $i \in I$
+	\begin{align*}
+		\sum\limits_{i \in I}b^i_1 = B_1
+	\end{align*}
+The ADE \textbf{Definition} is\\
+Given a sequence of government expenditures $\{G_t\}^\infty_{t=1}$ and initial government debt $B_1$ and $(b^i_1)_{i \in I}$, an ADE is given by allocations $\{(\hat{c}^i_t)_{i \in I}\}^\infty_{t=1}$, prices $\{\hat{p}_t\}^\infty_{t=1}$ and taxes $\{(\tau^i_t)_{i \in I}\}^\infty_{t=1}$ s.t.\\
+\indent 1. Given prices $\{\hat{p}_t\}^\infty_{t=1}$ and taxes $\{(\tau^i_t)_{i \in I}\}^\infty_{t=1}$ for all $i \in I$, $\{\hat{c}^i_t\}^\infty_{t=1}$ solves:
+	\begin{align*}
+		&\mathop{max}\limits_{\{c_t\}^\infty_{t=1}} \sum\limits^\infty_{t=1} \beta^{t-1} U(c_t)\\
+		&s.t.\\
+		&\sum\limits^\infty_{t=1} \hat{p}_t(c_t + \tau^i_t) \leq \sum\limits^\infty_{t=1}\hat{p}_te^i_t + \hat{p}_1 b^i_t
+	\end{align*}
+\indent 2. Given prices $\{\hat{p}_t\}^\infty_{t=1}$, the tax policy satisfies:
+	\begin{align*}
+		\sum\limits^\infty_{t=1}\hat{p}_t G_t + \hat{p}_1 B_1 = \sum\limits^\infty_{t=1} \sum\limits_{i \in I}\hat{p}_t \tau^i_t
+	\end{align*}
+\indent 3. For all $t \geq 1$
+	\begin{align*}
+		\sum\limits_{i \in I}\hat{c}^i_t + G_t = \sum\limits_{i \in I}e^i_t
+	\end{align*}
+Here, we can give a \textbf{Theorem}\\
+Take as given as sequence of government expenditures $\{G_t\}^\infty_{t=1}$ and initial government debt $B_1$, $(b^i_1)_{i \in I}$. Suppose that allocation $\{(\hat{c}^i_t)_{i \in I}\}^\infty_{t=1}$, prices $\{\hat{p}_t\}^\infty_{t=1}$ and taxes $\{(\tau^i_t)_{i \in I}\}^\infty_{t=1}$ form an ADE. Let $\{(\hat{\tau}^i_t)_{i \in I}\}^\infty_{t=1}$ be an arbitrary alternative tax system satisfying:
+	\begin{align*}
+		\sum\limits^\infty_{t=1} \hat{p}_t \tau^i_t = \sum\limits^\infty_{t=1} \hat{p}_t \hat{\tau}^i_t,\ \forall\ i \in I 
+	\end{align*}
+Then allocation $\{(\hat{c}^i_t)_{i \in I}\}^\infty_{t=1}$, prices $\{\hat{p}_t\}^\infty_{t=1}$ and taxes $\{(\hat{\tau}^i_t)_{i \in I}\}^\infty_{t=1}$ form an ADE.\\
+\textbf{Proof:}
+The budget constraint of individual is that:
+	\begin{align*}
+		\sum\limits^\infty_{t=1} \hat{p}_t c_t + \sum\limits^\infty_{t=1} \hat{p}_t \hat{\tau}^i_t = \sum\limits^\infty_{t=1} \hat{p}_t(c_t + \tau^i_t) \leq \sum\limits^\infty_{t=1}\hat{p}_te^i_t + \hat{p}_1 b^i_t 
+	\end{align*}
+which is not changed. So the optimal consumption choice is not changed. Also the resource feasibility and government budget constraint are also satisfied. So it is also an ADE.\\\\
+Also as for the \textbf{SME} case:\\\\
+\textbf{Finite Horizon: Agents Live 2 period}\\
+For a finite horizon problem, what we will do is that we connect generations by altruism. Here are the \textbf{Model Settings}:\\
+\indent i) No population growth.\\
+\indent ii) Agents are altruistic, which means they care the next generation.\\
+\indent iii) Endowments $e^t_t$ only when agents are young.\\
+\indent iv) Savings and bequest:\\
+\indent\indent $a^t_t$: savings of the young generation for the second stage of their life.\\
+\indent\indent $a^t_{t+1}$: savings of the old for the next generation.\\
+\indent\indent Agents receive bequest when they are old from the deceased generation.\\
+\indent v) Government Bond:\\
+\indent\indent Assume that the initial old is endowed with $B$ units bond.\\
+\indent\indent Bonds is zero coupon with maturity of one period.\\
+\indent\indent Outstanding debt is kept at $B$.\\
+\indent\indent Government budget constraint as:
+	\begin{align*}
+		\frac{B}{1 + r} + \tau = B
+	\end{align*}
+Then we can define the optimal problem for the initial old:
+	\begin{align*}
+		&V_0(B) = \mathop{max}\limits_{\{c^0_1, a^0_1\} \geq 0} \{\beta U(c^0_1) + \alpha V_1(e_1)\}\\
+		&s.t.\\
+		&\indent\indent c^0_1 + \frac{a^0_1}{1 + r} = B\\
+		&\indent\indent e_1 = w + \frac{a^0_1}{1 + r} - \tau
+	\end{align*}
+We can combine the budget constraint:
+	\begin{align*}
+		c^0_1 + e_1 = w + B - \tau
+	\end{align*}
+Some if we raise the bond $B$ by $\Delta B$ and raise the tax $\tau$ by $\Delta \tau$, the constraint doesn't change, so the optimal choice doesn't change. So it is a Ricardian equivalence.\\
+In a more general way, we know that:
+	\begin{align*}
+		&V_1(e_1) = \mathop{max}\limits_{(c^1_1, c^1_2, a^1_2) \geq0, a^1_1} \{U(c^1_1) + \beta U(c^1_2) + \alpha V_2(a^1_2)\}\\
+		&s.t.\\
+		&\indent\indent c^1_1 + \frac{a^1_1}{1 + r} = w - \tau\\
+		&\indent\indent c^1_2 + \frac{a^1_2}{1 + r} = a^1_1 + a^0_1
+	\end{align*} 
+which change the initial old's optimal problem into:
+	\begin{align*}
+		&V_0(B) = \mathop{max}\limits_{(c^0_1, a^0_1, c^1_1, c^1_2, a^1_2) \geq0, a^1_1} \{\beta U(c^0_1) + \alpha U(c^1_1) + \alpha \beta U(c^1_2) + \alpha^2 V_2(a^1_2)\}\\
+		&s.t.\\
+		&\indent\indent c^0_1 + \frac{a^0_1}{1 + r} = B\\
+		&\indent\indent c^1_1 + \frac{a^1_1}{1 + r} = w - \tau\\
+		&\indent\indent c^1_2 + \frac{a^1_2}{1 + r} = a^1_1 + a^0_1
+	\end{align*}
+repeating we can find that:
+	\begin{align*}
+		&V_0(B) = \mathop{max}\limits_{\{c^{t-1}_t, c^t_t, a^{t-1}_t\}^\infty_{t=1} \geq 0} \{\beta U(c^0_1) + \sum\limits^\infty_{t=1} \alpha^t(U(c^t_t) + \beta U(c^t_{t+1}))\\
+		&s.t.\\
+		&c^0_1 + \frac{a^0_1}{1 + r} = B\\
+		&c^t_t + \frac{c^t_{t+1}}{1 + r} + \frac{a^t_{t+1}}{(1 + r)^2} = w - \tau + \frac{a^{t-1}_t}{1 + r}
+	\end{align*}
+which just become an infinitely lived agent problem.
+
+\subsubsection{OLG with Production}
+\textbf{Model Settings}\\
+\indent $N^t_t$: number of young people in period $t$.\\
+\indent $N^{t-1}_t$: number of old people in period $t$.\\
+\indent $N^0_0$: initial old generation, normalized to 1, endowed with capital stock $\bar{k} > 0$\\
+\indent $n$: population growth rate, which means:
+	\begin{align*}
+		N^t_t = (1 + n)^t N^0_0
+	\end{align*}
+\indent Preference of generation $t$ as:
+	\begin{align*}
+		u(c^t_t, c^t_{t+1}) = U(c^t_t) + \beta U(c^t_{t+1})
+	\end{align*}
+\indent Preference of generation $0$ as:
+	\begin{align*}
+		u(c^0_1) = U(c^0_1)
+	\end{align*}
+\indent Production function is constant returns to scale technology, given as:
+	\begin{align*}
+		Y_t = F(K_t, L_t)
+	\end{align*}
+\textbf{Sequential Market Equilibrium}\\
+\textbf{Definition}\\
+\indent Given $\bar{k}$, sequential markets equilibrium is allocations for households $\hat{c}^0_1$, $\{\hat{c}^t_t, \hat{c}^t_{t+1}, \hat{s}^t_t\}^\infty_{t=0}$, allocations for the firm $\{\hat{K}_t, \hat{L}_t\}^\infty_{t=0}$ and prices $\{\hat{r}_t, \hat{w}_t\}^\infty_{t=0}$, s.t.\\
+\indent 1. For all $t \geq 1$, given $(\hat{r}_t, \hat{w}_t)$, $(\hat{c}^t_t, \hat{c}^t_{t+1}, \hat{s}^t_t)$ solves:
+	\begin{align*}
+		&\mathop{max}\limits_{(\hat{c}^t_t, \hat{c}^t_{t+1}) \geq 0, s^t_t} U(c^t_t) + \beta U(c^t_{t+1})\\
+		s.t.&\\
+		&\indent\indent c^t_t + s^t_t \leq \hat{w}_t\\
+		&\indent\indent\ \ \ c^t_{t+1} \leq (1 + \hat{r}_{t+1} - \delta)s^t_t
+	\end{align*}
+\indent 2. Given $\bar{k}$ and $\hat{r}_1$, $\hat{c}^0_1$ solves:
+	\begin{align*}
+		&\mathop{max}\limits_{c^0_1 \geq 0} U(c^0_1)\\
+		s.t.&\\
+		& c^0_1 \leq (1 + \hat{r}_1 - \delta)\bar{k}
+	\end{align*}
+\indent 3. For all $t \geq 1$ given $(\hat{r}_t, \hat{w}_t)$, $(\hat{K}_t, \hat{L}_t)$ solves:
+	\begin{align*}
+		\mathop{max}\limits_{(\hat{K}_t, \hat{L}_t) \geq 0} F(K_t, L_t) - \hat{r}_t K_t - \hat{w}_t L_t
+	\end{align*}
+\indent 4. For all $t \geq 1$,
+	\begin{align*}
+		F(\hat{K}_t, \hat{L}_t) &= N^t_t c^t_t + N^{t-1}_t c^{t-1}_t + \hat{K}_{t+1} - (1 - \delta)\hat{K}_t\\
+		N^t_t \hat{s}^t_t &= \hat{K}_{t+1}\\
+		N^t_t &= \hat{L}_t
+	\end{align*}
+\textbf{Investment and Savings}\\
+\indent Investment:
+	\begin{align*}
+		\hat{K}_{t+1} - (1 - \delta)\hat{K}_t = F(\hat{K}_t, \hat{L}_t) - (N^t_t c^t_t + N^{t-1}_t c^{t-1}_t)
+	\end{align*}
+\indent Savings:
+	\begin{align*}
+		N^t_t \hat{s}^t_t - 	(1 - \delta)\hat{K}_t
+	\end{align*}
+\indent So we have:
+	\begin{align*}
+		N^t_t \hat{S}^t_t = \hat{K}_{t+1}
+	\end{align*}
+\textbf{Steady State}\\
+\indent Consider the market clear condition:
+	\begin{align*}
+		F(\hat{K}_t, \hat{L}_t) &= N^t_t c^t_t + N^{t-1}_t c^{t-1}_t + \hat{K}_{t+1} - (1 - \delta)\hat{K}_t
+	\end{align*}
+\indent Divided by population:
+	\begin{align*}
+		f(\hat{k}_t) = \hat{c}^t_t + \frac{\hat{c}^{t-1}_t}{1 + n} + (1 + n) \hat{k}_{t+1} - (1 - \delta) \hat{k}_t
+	\end{align*}
+\indent In steady state:
+	\begin{align*}
+		f(k^\star) = c^\star_1 + \frac{c^\star_2}{1 + n} + (1 + n)k^\star - (1 - \delta)k^\star
+	\end{align*}
+\indent rewritten as:
+	\begin{align*}
+		c^\star = f(k^\star) - (n + \delta)k^\star
+	\end{align*}
+\indent Compute the derivative:
+	\begin{align*}
+		\frac{d c^\star}{d k^\star} = f^\prime (k^\star) - (n + \delta)
+	\end{align*}
+\indent If $\frac{d c^\star}{d k^\star} < 0$, it is not Pareto effcient.
+
+
+
+\newpage
+\section{Lecture 8: Incomplete Market and Inequality}
+\subsection{Aiyagari's Model}
+\subsubsection{Model Settings}
+The \textbf{Household Problem} is defined as:
+	\begin{align*}
+		&\mathop{max} E_0 \{\sum\limits^\infty_{t=0} \beta^t U(c_t)\}\\
+		s.t.&\\
+		&c_t + a_{t+1} = w l_t + (1 + r) a_t\\
+		&\indent\ \,  a_{t+1} \geq \phi 
+	\end{align*}
+For labor supply $l_t$:\\
+\indent Labor supply is exogenous. $l_t$ differs across individuals and is stochastic.\\
+For borrowing limit $\phi$:\\
+\indent i) If $r \leq 0$, the borrowing limit $b$ is imposed exogenously to exclude Ponzi game.\\
+\indent ii) If $r > 0$, we can impose the natural borrowing limit $\frac{wl_{min}}{r}$, which represent the worst situation.\\\\
+Then, we can give the \textbf{Recursive Problem}:
+	\begin{align*}
+		&V(a, l) = \mathop{max}\limits_{c, a^\prime} \{U(c) + \beta EV(a^\prime, l^\prime)\}\\
+		s.t.&\\
+		&\indent\indent c + a^\prime = wl + (1 + r)a\\
+		&\indent\indent\indent\ \, c \geq 0\\
+		&\indent\indent\indent\, a^\prime \geq \phi
+	\end{align*}
+
+\subsubsection{Stationary Competitive Equilibrium}
+In this model we suppose that the shock is idiosyncratic, which means the distribution of households over the state space is constant. Then $r$ and $w$ are constant. (Equals to the marginal production of $K$ and $L$.)\\
+Then for a state $(a, l)$, we use $m(a, l)$ measure the probability of this state, which is an endogenously computed, equilibrium object.\\\\
+Then we give the definition of \textbf{Stationary Competitive Equilibrium}:\\
+\textbf{Definition:}\\
+A stationary competitive equilibrium is a policy function $a^\prime = g(a, l)$, a distribution $m(a, l)$, and real numbers $K$, $r$ and $w$ s.t.\\
+\indent 1. prices are determined competitively, that is:
+	\begin{align*}
+		r &= F_K(K, L) - \delta\\
+		w &= F_L(K, L)
+	\end{align*}  
+\indent 2. The policy function $g(a, l)$ solves the household's optimization problem.\\ 
+\indent 3. The probability distribution $m(a, l)$ is stationary and associated with the policy function and the distribution of $l$.\\
+\indent 4. The capital $K$ equals the sum of households' savings:
+	\begin{align*}
+		K = \sum\limits_a \sum\limits_l g(a, l)\cdot m(a, l)
+	\end{align*}
+\indent\ \ \  The labor $L$ equals the sum of labor supplied by each household:
+	\begin{align*}
+		L = \sum\limits_a \sum\limits_l l \cdot m(a, l)
+	\end{align*}
+
+\subsubsection{Equilibrium in Capital Market}
+In the incomplete market equilibrium, we have:
+	\begin{align*}
+		u^\prime(c_t) \geq \beta (1 + r)Eu^\prime(c_{t+1})
+	\end{align*}
+The inequality because there is a borrowing constraints.\\\\
+We know that in complete market, $r = \lambda$, what about incomplete market?\\
+\indent i) If $r > \lambda$, \\
+\indent\ \ \ we have that:
+	\begin{align*}
+		\beta(1 + r) > 1
+	\end{align*}
+\indent\ \ \ Then we have:
+	\begin{align*}
+		u^\prime(c_t) > Eu^\prime(c_{t+1})
+	\end{align*}
+\indent\ \ \ Because of the Jensen's inequality, we have that:
+	\begin{align*}
+		E(c_{t+1}) > c_t
+	\end{align*}
+\indent\ \ \ which means that $\lim_{t \to \infty}Ec_t = \infty$, which is impossible.\\\\
+\indent ii) If $r = \lambda$,\\
+\indent\ \ \ if we have:
+	\begin{align*}
+		u^\prime(c_t) > Eu^\prime(c_{t+1})
+	\end{align*} 
+\indent\ \ \ which is the same as i), skipped.\\
+\indent\ \ \ if we have:
+	\begin{align*}
+		u^\prime(c_t) = Eu^\prime(c_{t+1})
+	\end{align*}
+\indent\ \ \ Similarly, because of Jensen's inequality, we have:
+	\begin{align*}
+		E(c_{t+1}) \geq c_t
+	\end{align*}	
+\indent\ \ \ The only possible situation is that:
+	\begin{align*}
+		c = \bar{c}
+	\end{align*}
+So we have that:
+	\begin{align*}
+		r < \lambda
+	\end{align*}
+And as $r \to \lambda$, we have that $Ea(r) \to \infty$.
+
+
+\end{document}
