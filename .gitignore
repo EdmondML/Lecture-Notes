@@ -1,0 +1,62 @@
+# --------------------------
+# LaTeX intermediate files
+# --------------------------
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.loa
+*.lol
+*.idx
+*.ilg
+*.ind
+*.nav
+*.snm
+
+# --------------------------
+# glossaries / nomencl
+# --------------------------
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
+*.nlo
+*.nls
+
+# --------------------------
+# minted / listings
+# --------------------------
+_minted*/
+*.pyg
+
+# --------------------------
+# biblatex / biber
+# --------------------------
+*.blx.bib
+
+# --------------------------
+# build directories
+# --------------------------
+build/
+out/
+dist/
+
+# --------------------------
+# editor / OS specific
+# --------------------------
+*.DS_Store
+.vscode/
+*.code-workspace
+*.texpadtmp
